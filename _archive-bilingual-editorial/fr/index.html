@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amad Louis — Designer UX/UI freelance | Ouagadougou</title>
+<meta name="description" content="TODO — méta description FR (voir §10 cahier des charges).">
+<link rel="canonical" href="https://pelerain.com/fr/">
+<link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/">
+<link rel="alternate" hreflang="en" href="https://pelerain.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/">
+<meta name="color-scheme" content="light dark">
+
+<link rel="preload" href="/assets/fonts/fraunces/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/source-serif-4/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href="/assets/css/fonts.css">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("pref-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/fr/">Amad <span>Louis</span></a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <ul class="site-nav__list">
+        <li><a href="/fr/etudes-de-cas/" class="text-link">Études de cas</a></li>
+        <li><a href="/fr/autres-realisations/" class="text-link">Autres réalisations</a></li>
+        <li><a href="/fr/a-propos/" class="text-link">À propos</a></li>
+        <li><a href="/fr/contact/" class="text-link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__controls">
+      <div class="lang-switch" data-lang-switch>
+        <a href="/fr/" hreflang="fr" aria-current="true">FR</a>
+        <span aria-hidden="true">/</span>
+        <a href="/en/" hreflang="en">EN</a>
+      </div>
+
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Basculer le thème clair/sombre" aria-pressed="false">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+
+      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" width="20" height="20"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" data-mobile-nav data-open="false">
+    <ul class="mobile-nav__list container">
+      <li><a href="/fr/etudes-de-cas/">Études de cas</a></li>
+      <li><a href="/fr/autres-realisations/">Autres réalisations</a></li>
+      <li><a href="/fr/a-propos/">À propos</a></li>
+      <li><a href="/fr/contact/">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <!--
+    §6.1 Accueil — 1. Héro : phrase de positionnement + accroche visuelle.
+    TODO contenu réel : phrase de positionnement définitive FR (§13 cahier des charges).
+    Le titre ci-dessous est un exemple de calibrage — à remplacer mot pour mot.
+  -->
+  <section class="hero">
+    <span class="hero__ghost" aria-hidden="true">AL</span>
+    <div class="container hero__grid" data-load-in>
+      <div>
+        <p class="eyebrow">Design UX/UI freelance — Ouagadougou</p>
+        <h1 class="hero__headline">Un design qui part du terrain.</h1>
+        <p class="hero__dek">[TODO — sous-titre d'une phrase : preuve immédiate, contexte ouest-africain, résultat mesurable.]</p>
+      </div>
+      <dl class="hero__meta">
+        <div>
+          <dt>Basé à</dt>
+          <dd>Ouagadougou, BF</dd>
+        </div>
+        <div>
+          <dt>Spécialisation</dt>
+          <dd>Produits digitaux, Afrique de l'Ouest</dd>
+        </div>
+        <div>
+          <dt>Collectif</dt>
+          <dd>Kraafte</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!--
+    §6.1 Accueil — 2. Études de cas (2–3 cartes).
+    TODO contenu réel (§13) : flagship (nom à trouver), Kraafte, 3e étude à confirmer.
+    Cartes ci-dessous à titre d'exemple de mise en page — textes entre crochets à remplacer.
+  -->
+  <section aria-labelledby="case-studies-heading">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Preuve par l'exemple</p>
+        <h2 id="case-studies-heading">Études de cas</h2>
+      </div>
+      <div class="grid grid--case-studies">
+        <a class="card" href="/fr/etudes-de-cas/" data-reveal>
+          <div class="card__media">
+            <span class="card__index" aria-hidden="true">01</span>
+          </div>
+          <div class="card__body">
+            <p class="card__eyebrow">Application mobile · transport</p>
+            <h3 class="card__title">[Étude de cas phare — nom à venir]</h3>
+            <p class="card__result">[Résultat chiffré à venir]</p>
+          </div>
+        </a>
+        <a class="card" href="/fr/etudes-de-cas/" data-reveal>
+          <div class="card__media">
+            <span class="card__index" aria-hidden="true">02</span>
+          </div>
+          <div class="card__body">
+            <p class="card__eyebrow">Identité de marque · collectif</p>
+            <h3 class="card__title">Kraafte</h3>
+            <p class="card__result">[Sous réserve d'avancement — §13]</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    §6.1 Accueil — 3. Bande « autres réalisations » : aperçu compact, preuve de polyvalence.
+    TODO contenu : sélection d'items réels de la galerie légère.
+  -->
+  <section class="band" aria-labelledby="other-work-heading">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Polyvalence</p>
+        <h2 id="other-work-heading">Autres réalisations</h2>
+      </div>
+      <div class="grid grid--gallery">
+        <div class="card card--pending" data-reveal>
+          <p class="meta">[Aperçu à venir]</p>
+        </div>
+        <div class="card card--pending" data-reveal>
+          <p class="meta">[Aperçu à venir]</p>
+        </div>
+        <div class="card card--pending" data-reveal>
+          <p class="meta">[Aperçu à venir]</p>
+        </div>
+      </div>
+      <p style="margin-top: var(--space-5);">
+        <a class="arrow-link" href="/fr/autres-realisations/">
+          <span class="arrow-link__label">Voir toutes les réalisations</span>
+          <svg class="arrow-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!--
+    §6.1 Accueil — 4. À propos condensé : 3–4 lignes + photo, lien vers la page complète.
+    TODO contenu réel + photo.
+  -->
+  <section aria-labelledby="about-heading">
+    <div class="container" style="max-width: var(--measure-narrow)">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">À propos</p>
+        <h2 id="about-heading">Le designer</h2>
+      </div>
+      <p class="has-drop-cap" data-reveal>[TODO — 3 à 4 lignes de présentation : parcours, philosophie, spécialisation. Le premier paragraphe porte la lettrine signature ; garder un ton personnel mais concis, comme l'exige le §6.4.]</p>
+      <p style="margin-top: var(--space-4);" data-reveal>
+        <a class="arrow-link" href="/fr/a-propos/">
+          <span class="arrow-link__label">Lire la suite</span>
+          <svg class="arrow-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!--
+    §6.1 Accueil — 5. Appel à l'action final : invitation claire à prendre contact.
+  -->
+  <section class="band" aria-labelledby="cta-heading">
+    <div class="container" style="max-width: var(--measure-narrow); text-align: center;">
+      <h2 id="cta-heading" data-reveal>Un projet en tête ?</h2>
+      <p data-reveal>Parlons de ce que le design peut faire pour vous.</p>
+      <p style="margin-top: var(--space-4);" data-reveal>
+        <a class="btn btn--primary" href="/fr/contact/">Parlons-en</a>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>&copy; 2026 Amad Louis.</p>
+    <div class="site-footer__links">
+      <a class="text-link" href="mailto:contact@pelerain.com">contact@pelerain.com</a>
+      <a class="text-link" href="/fr/contact/">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/theme.js"></script>
+<script src="/assets/js/nav.js"></script>
+<script src="/assets/js/reveal.js"></script>
+<script src="/assets/js/lang.js"></script>
+</body>
+</html>

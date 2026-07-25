@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="0; url=/fr/">
+<title>Amad Louis — Portfolio</title>
+<script>
+  (function () {
+    var stored = null;
+    try { stored = localStorage.getItem("pref-lang"); } catch (e) {}
+    var lang = stored;
+    if (!lang) {
+      lang = (navigator.language || navigator.userLanguage || "fr").slice(0, 2).toLowerCase() === "en" ? "en" : "fr";
+    }
+    location.replace("/" + lang + "/");
+  })();
+</script>
+</head>
+<body>
+<noscript>
+  <p>Redirection… Si rien ne se passe, <a href="/fr/">continuer en français</a> / <a href="/en/">continue in English</a>.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://pelerain.com/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/"/>
+  </url>
+  <url>
+    <loc>https://pelerain.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/"/>
+  </url>
+
+  <url>
+    <loc>https://pelerain.com/fr/etudes-de-cas/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/etudes-de-cas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/case-studies/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/etudes-de-cas/"/>
+  </url>
+  <url>
+    <loc>https://pelerain.com/en/case-studies/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/etudes-de-cas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/case-studies/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/etudes-de-cas/"/>
+  </url>
+
+  <url>
+    <loc>https://pelerain.com/fr/autres-realisations/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/autres-realisations/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/other-work/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/autres-realisations/"/>
+  </url>
+  <url>
+    <loc>https://pelerain.com/en/other-work/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/autres-realisations/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/other-work/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/autres-realisations/"/>
+  </url>
+
+  <url>
+    <loc>https://pelerain.com/fr/a-propos/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/a-propos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/a-propos/"/>
+  </url>
+  <url>
+    <loc>https://pelerain.com/en/about/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/a-propos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/a-propos/"/>
+  </url>
+
+  <url>
+    <loc>https://pelerain.com/fr/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/contact/"/>
+  </url>
+  <url>
+    <loc>https://pelerain.com/en/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pelerain.com/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/contact/"/>
+  </url>
+
+  <!--
+    À ajouter une fois créées : les pages individuelles de chaque étude de cas
+    (/fr/etudes-de-cas/<slug>.html + /en/case-studies/<slug>.html).
+  -->
+
+</urlset>

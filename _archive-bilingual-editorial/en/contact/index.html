@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Amad Louis</title>
+<meta name="description" content="TODO — EN meta description.">
+<link rel="canonical" href="https://pelerain.com/en/contact/">
+<link rel="alternate" hreflang="fr" href="https://pelerain.com/fr/contact/">
+<link rel="alternate" hreflang="en" href="https://pelerain.com/en/contact/">
+<link rel="alternate" hreflang="x-default" href="https://pelerain.com/fr/contact/">
+<meta name="color-scheme" content="light dark">
+
+<link rel="stylesheet" href="/assets/css/fonts.css">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("pref-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/en/">Amad <span>Louis</span></a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul class="site-nav__list">
+        <li><a href="/en/case-studies/" class="text-link">Case studies</a></li>
+        <li><a href="/en/other-work/" class="text-link">Other work</a></li>
+        <li><a href="/en/about/" class="text-link">About</a></li>
+        <li><a href="/en/contact/" class="text-link" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__controls">
+      <div class="lang-switch" data-lang-switch>
+        <a href="/fr/contact/" hreflang="fr">FR</a>
+        <span aria-hidden="true">/</span>
+        <a href="/en/contact/" hreflang="en" aria-current="true">EN</a>
+      </div>
+
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle light/dark theme" aria-pressed="false">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+
+      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" width="20" height="20"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" data-mobile-nav data-open="false">
+    <ul class="mobile-nav__list container">
+      <li><a href="/en/case-studies/">Case studies</a></li>
+      <li><a href="/en/other-work/">Other work</a></li>
+      <li><a href="/en/about/">About</a></li>
+      <li><a href="/en/contact/">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+  <section>
+    <div class="container" style="max-width: var(--measure-narrow)">
+      <p class="eyebrow" data-reveal>Let's talk</p>
+      <h1 data-reveal>Contact</h1>
+
+      <p>
+        <a class="text-link" href="mailto:contact@pelerain.com" style="font-family: var(--font-ui); font-size: var(--step-1); font-weight: 600;">contact@pelerain.com</a>
+      </p>
+
+      <!-- TODO content: professional social links (LinkedIn, Behance, etc. — TBC) -->
+      <ul class="site-footer__links" style="margin-block: var(--space-4);">
+        <!-- <li><a class="text-link" href="[TODO]">LinkedIn</a></li> -->
+      </ul>
+
+      <!-- TODO content: usual response time -->
+      <p class="meta">Usual response time: [TODO]</p>
+
+      <!--
+        Optional form (§6.5: 3 fields max). Skeleton ready, action to wire up to a
+        static form-handling service (e.g. Formspree, Cloudflare Pages Functions) once
+        the domain and hosting are decided (§13).
+      -->
+      <form class="contact-form" method="POST" action="#" aria-label="Contact form">
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+        <div class="form-field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary">Send</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>&copy; 2026 Amad Louis.</p>
+    <div class="site-footer__links">
+      <a class="text-link" href="mailto:contact@pelerain.com">contact@pelerain.com</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/theme.js"></script>
+<script src="/assets/js/nav.js"></script>
+<script src="/assets/js/reveal.js"></script>
+<script src="/assets/js/lang.js"></script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+/* Mise en page : conteneur, header, héro, sections, panneau contact, footer */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .container { padding-inline: var(--space-6); }
+}
+
+section {
+  padding-block: var(--space-7);
+}
+
+@media (min-width: 900px) {
+  section { padding-block: var(--space-8); }
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-bg);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}
+
+.site-header__brand img {
+  height: 2.75rem;
+  width: auto;
+  transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.site-header__brand:hover img,
+.site-header__brand:focus-visible img {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+.site-nav {
+  display: none;
+}
+
+@media (min-width: 780px) {
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+}
+
+.site-nav__list {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--step-ui);
+}
+
+.site-nav__list a {
+  display: inline-flex;
+  padding: 0.6em 0.75em;
+  color: #000000;
+  font-weight: 500;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.site-nav__list a[aria-current="page"] {
+  color: var(--color-accent-text);
+  font-weight: 700;
+}
+
+/* Trait qui glisse d'un lien à l'autre au survol (positionné en JS, voir nav.js) */
+.site-nav__indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--color-accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: left var(--duration-fast) var(--ease-out-expo),
+              width var(--duration-fast) var(--ease-out-expo),
+              opacity var(--duration-fast) var(--ease-standard);
+}
+
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+@media (min-width: 780px) {
+  .nav-toggle { display: none; }
+}
+
+.mobile-nav {
+  display: none;
+  border-top: 1px solid #EEEEEE;
+  background: var(--color-bg);
+}
+
+.mobile-nav[data-open="true"] {
+  display: block;
+}
+
+@media (min-width: 780px) {
+  .mobile-nav { display: none !important; }
+}
+
+.mobile-nav__list {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--step-md);
+  padding-block: var(--space-3);
+}
+
+.mobile-nav__list a {
+  display: block;
+  padding: var(--space-2) var(--space-4);
+}
+
+.mobile-nav__list a[aria-current="page"] {
+  color: var(--color-accent-text);
+  font-weight: 700;
+}
+
+@keyframes mobile-nav-item-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.mobile-nav[data-open="true"] .mobile-nav__list li {
+  animation: mobile-nav-item-in var(--duration-base) var(--ease-out-expo) both;
+}
+
+.mobile-nav[data-open="true"] .mobile-nav__list li:nth-child(1) { animation-delay: 40ms; }
+.mobile-nav[data-open="true"] .mobile-nav__list li:nth-child(2) { animation-delay: 90ms; }
+.mobile-nav[data-open="true"] .mobile-nav__list li:nth-child(3) { animation-delay: 140ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav[data-open="true"] .mobile-nav__list li { animation: none; }
+}
+
+/* ---------- Héro (portrait + carte décalée) ---------- */
+
+.hero__grid {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start; /* le haut de la photo est aligné au haut du texte dans la maquette (y=287 des deux côtés sur "Qui suis-je") */
+}
+
+@media (min-width: 860px) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    gap: var(--space-7);
+  }
+
+  /* Page "Mes lectures" : la colonne illustrée est plus large pour la
+     pile de livres (image large, pas un portrait). */
+  .hero__grid--wide {
+    grid-template-columns: minmax(0, 1fr) 34rem;
+  }
+}
+
+.hero__headline {
+  margin-top: 0.15em;
+}
+
+.hero__body {
+  margin-top: var(--space-4);
+}
+
+/* Home et Mes lectures uniquement (paragraphe direct) — la bio de "Qui suis-je"
+   utilise .hero__body sur le conteneur, pas sur les <p>, donc n'est pas visée. */
+p.hero__body {
+  font-size: 1.25rem; /* 20px */
+  letter-spacing: -0.03em;
+}
+
+.hero__portrait {
+  position: relative;
+  justify-self: center;
+}
+
+.hero__portrait::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-3) calc(var(--space-3) * -1) calc(var(--space-3) * -1) var(--space-3);
+  background: var(--color-portrait-card);
+  z-index: 0;
+}
+
+.hero__portrait img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 20rem;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.hero__portrait--about img {
+  object-position: 25% 30%;
+}
+
+/* ---------- Sous-section numérotée ("01 Projets freelance…") ---------- */
+
+.subsection-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.subsection-head__index {
+  font-family: var(--font-display);
+  font-size: var(--step-md);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-accent);
+}
+
+.subsection-head__label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step-md);
+  letter-spacing: -0.04em;
+  color: var(--color-heading);
+}
+
+.project-group + .project-group {
+  margin-top: var(--space-6);
+}
+
+/* ---------- Panneau contact (bloc sombre) ---------- */
+
+.contact-panel {
+  background: var(--color-contact-bg);
+  padding: var(--space-5);
+}
+
+@media (min-width: 640px) {
+  .contact-panel { padding: var(--space-6); }
+}
+
+.contact-panel__heading {
+  font-family: var(--font-display);
+  font-size: var(--step-lg);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-contact-heading);
+  margin-bottom: var(--space-4);
+}
+
+.contact-panel__grid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .contact-panel__grid { grid-template-columns: 1fr 1fr; }
+}
+
+.contact-pill {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: var(--color-pill-bg);
+  border: 6px solid var(--color-pill-border);
+  padding: var(--space-4) var(--space-3);
+}
+
+.contact-pill__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.contact-pill__label {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--step-ui);
+  color: var(--color-meta);
+}
+
+.contact-pill__value {
+  display: block;
+  margin-top: 0.4em;
+  color: var(--color-accent-text);
+  font-weight: 700;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  padding-block: var(--space-7);
+  text-align: center;
+}
+
+/* Le sélecteur générique "p { max-width: var(--measure) }" (base.css) cape la
+   largeur des paragraphes à 60ch sans marge auto : dans un conteneur plus
+   large, la boîte reste collée à gauche et seul le texte s'y centre — d'où
+   le décalage. On neutralise ce plafond pour les lignes du footer. */
+.site-footer .accent-line,
+.site-footer__copyright {
+  max-width: none;
+}
+
+.site-footer__note {
+  margin: var(--space-3) auto 0;
+  max-width: 40ch;
+  font-size: var(--step-ui);
+  font-weight: 500;
+  color: var(--color-footer-note);
+}
+
+.site-footer__note .heart-icon {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.65em;
+  margin: 0 0.15em -0.05em;
+}
+
+.site-footer__copyright {
+  margin-top: var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  font-family: var(--font-display);
+  font-size: var(--step-copyright);
+  letter-spacing: var(--tracking-display);
+  color: #000000;
+}
+
+/* ---------- Bande (fond distinct, pages projet) ---------- */
+
+.band {
+  background: var(--color-bg-muted);
+}
+
+/*
+  Largeur de lecture pour une sous-section, SANS re-centrer : contrairement à
+  "max-width" posé directement sur .container (qui a margin-inline:auto et se
+  recentre donc dans toute la largeur de la page, désalignant le contenu par
+  rapport aux autres sections), .prose se contente de limiter la largeur à
+  l'intérieur d'un .container déjà correctement positionné — son bord gauche
+  reste aligné avec celui du héro et des autres sections.
+*/
+.prose {
+  max-width: var(--measure);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step-ui);
+  color: var(--color-meta);
+}
+
+.back-link:hover {
+  color: var(--color-accent-text);
+}
+
+.project-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: var(--space-4);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--step-ui);
+  color: var(--color-meta);
+}
+
+.project-hero__media {
+  aspect-ratio: 16 / 9;
+  background: var(--color-placeholder);
+  margin-top: var(--space-6);
+}
+
+/* ---------- Fiche projet (missions confidentielles, sans étude de cas narrative) ---------- */
+
+.project-meta {
+  display: grid;
+  gap: var(--space-5) var(--space-4);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 700px) {
+  .project-meta {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.project-meta__item dt {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step-ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-meta);
+}
+
+.project-meta__item dd {
+  margin: 0.35em 0 0;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--step-body);
+  color: var(--color-heading);
+}
+
+/* Variante typographique — projets sous NDA sans visuel réel (voir components.css) */
+.project-hero__media--dark,
+.project-hero__media--accent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-5);
+}
+
+.project-hero__media--dark { background: var(--color-btn-bg); }
+.project-hero__media--accent { background: var(--color-accent); }
+
+.project-hero__media--dark span,
+.project-hero__media--accent span {
+  font-family: var(--font-display);
+  font-size: var(--step-xl);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+.project-hero__media--dark span { color: var(--color-btn-text); }
+.project-hero__media--accent span { color: var(--color-btn-bg); }
+
+/* ---------- Grilles ---------- */
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 700px) {
+  .grid--projects { grid-template-columns: repeat(2, 1fr); }
+}
