@@ -378,11 +378,21 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.03em; }
 .folio {
   font-family: "Space Mono", monospace;
   font-size: var(--t-mono);
+  line-height: var(--lh);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-soft);
   margin: 0;
 }
+
+/* pagination : calée sur la marge de droite, comme un numéro de page */
+.folio--num {
+  text-align: right;
+  color: var(--accent-text);
+  font-weight: 700;
+}
+
+.slab .folio--num { color: var(--accent); }
 
 /* ---------- Accessibilité ---------- */
 
