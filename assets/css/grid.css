@@ -130,6 +130,10 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   .band { grid-template-columns: repeat(var(--cols), 1fr); }
 }
 
+/* Bande de titre de section : 24px de row-gap + 16px = 40px avant le contenu
+   (40 = 5 × baseline, le rythme vertical reste intact). */
+.band--head { margin-bottom: 16px; }
+
 /* ---------- Overlay de grille (MÊME boîte de contenu que le contenu) ---------- */
 
 .guides {
@@ -266,6 +270,47 @@ h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.03em; }
   font-size: var(--t-mono);
   line-height: var(--lh);
   color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ---------- Parcours : tableau éditorial (dates / poste / mission) ---------- */
+
+.cv-date {
+  font-family: "Space Mono", monospace;
+  font-size: var(--t-mono);
+  line-height: var(--lh);
+  letter-spacing: 0.06em;
+  color: var(--accent-text);
+  margin: 0;
+}
+
+.cv-role {
+  font-family: "Satoshi", sans-serif;
+  font-size: 20px;
+  line-height: var(--lh);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.cv-org {
+  font-family: "Space Mono", monospace;
+  font-size: var(--t-mono);
+  line-height: var(--lh);
+  color: var(--ink-soft);
+  margin: 8px 0 0;
+}
+
+/* sous-titre de groupe à l'intérieur du parcours */
+.cv-group {
+  font-family: "Space Mono", monospace;
+  font-size: var(--t-mono);
+  font-weight: 700;
+  line-height: var(--lh);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
   margin: 0;
 }
 
