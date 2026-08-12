@@ -33,11 +33,33 @@
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/layout.css">
 <link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/motion.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Aller au contenu</a>
 
 <header class="site-header">
+  <!--
+    Bande technique : d'où je travaille et quelle heure il est là-bas. L'heure
+    est celle de Ouagadougou, pas celle du visiteur — voir assets/js/meta-bar.js.
+  -->
+  <div class="meta-bar">
+    <div class="container meta-bar__inner">
+      <span class="meta-bar__item">Ouagadougou, (BF)</span>
+      <span class="meta-bar__sep" aria-hidden="true">//</span>
+      <span class="meta-bar__item meta-bar__time">
+        <span class="meta-bar__dot" aria-hidden="true"></span>
+        <time data-clock>--:--:--</time>
+      </span>
+      <span class="meta-bar__focus" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M1 5V1h4M11 1h4v4M15 11v4h-4M5 15H1v-4"/>
+          <path d="M8 6.5v3M6.5 8h3"/>
+        </svg>
+      </span>
+      <span class="meta-bar__item meta-bar__status">Disponible — projets 2026</span>
+    </div>
+  </div>
   <div class="container site-header__inner">
     <a class="site-header__brand" href="/">
       <img src="/assets/img/logo-amad.png" alt="Amad Louis" width="193" height="80">
@@ -45,8 +67,8 @@
 
     <nav class="site-nav" aria-label="Navigation principale">
       <ul class="site-nav__list">
-        <li><a href="/">Mon travail</a></li>
-        <li><a href="/mes-lectures/" aria-current="page">Mes lectures</a></li>
+        <li><a href="/">Mon travail<span class="site-nav__count" aria-hidden="true">(3)</span></a></li>
+        <li><a href="/mes-lectures/" aria-current="page">Mes lectures<span class="site-nav__count" aria-hidden="true">(5)</span></a></li>
         <li><a href="/qui-suis-je/">Qui suis je?</a></li>
         <span class="site-nav__indicator" aria-hidden="true"></span>
       </ul>
@@ -71,13 +93,46 @@
   <section>
     <div class="container hero__grid hero__grid--wide" data-load-in>
       <div>
-        <h1>Mes lectures</h1>
+        <h1 data-focus-in>Mes lectures</h1>
         <p class="accent-line accent-line--md" style="margin-top: var(--space-2);">Pourquoi j'aime lire?</p>
         <p class="hero__body">Je m'interesse à plein de domaines (design, tech, entrepreneuriat, développement personnel) et l'une des manières d'ettofer cette curiosité, c'est de lire. Chaque livre m'apporte un angle différent pour penser mon travail autrement. Voici ceux qui m'ont vraiment marqué, et que je recommande sans hésiter.</p>
       </div>
       <div>
         <img class="bookshelf-img" src="/assets/img/bookshelf.png" alt="Étagère illustrant cinq livres : L'Alchimiste de Paulo Coelho, Steve Jobs de Walter Isaacson, Jony Ive de Leander Kahney, The Almanack of Naval Ravikant d'Eric Jorgenson, So Good They Can't Ignore You de Cal Newport" width="722" height="480">
       </div>
+    </div>
+  </section>
+
+  <!--
+    Deuxième série de lectures, en registre et non en cartes : l'étagère
+    illustrée ci-dessus porte déjà les visuels de la page.
+
+    Le titre de l'entrée 02 a été déduit de son seul auteur : « The ONE Thing »
+    est l'ouvrage de référence de Gary Keller. Noté ici pour que la provenance
+    de l'information reste traçable si quelqu'un se demande d'où elle sort.
+  -->
+  <section class="band" aria-labelledby="autres-lectures-heading">
+    <div class="container">
+      <h2 id="autres-lectures-heading" data-focus-in>Et aussi</h2>
+      <p style="margin-top: var(--space-3);">D'autres livres qui comptent, dans un tout autre registre.</p>
+
+      <ol class="reading-list">
+        <li class="reading-list__item" data-reveal>
+          <span class="reading-list__num" aria-hidden="true">01</span>
+          <span class="reading-list__title">Cahier d'un retour au pays natal</span>
+          <span class="reading-list__author">Aimé Césaire</span>
+        </li>
+        <li class="reading-list__item" data-reveal>
+          <span class="reading-list__num" aria-hidden="true">02</span>
+          <span class="reading-list__title">The ONE Thing</span>
+          <span class="reading-list__author">Gary Keller</span>
+        </li>
+        <li class="reading-list__item" data-reveal>
+          <span class="reading-list__num" aria-hidden="true">03</span>
+          <span class="reading-list__title">Steal Like an Artist</span>
+          <span class="reading-list__author">Austin Kleon</span>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -116,7 +171,17 @@
   </div>
 </footer>
 
-<script src="/assets/js/nav.js"></script>
-<script src="/assets/js/reveal.js"></script>
+<!--
+  GSAP est chargé en defer : il ne bloque pas le premier rendu, et motion.js
+  n'anime que du contenu déjà visible.
+-->
+<script defer src="/assets/vendor/gsap.min.js"></script>
+<script defer src="/assets/vendor/ScrollTrigger.min.js"></script>
+
+<script defer src="/assets/js/nav.js"></script>
+<script defer src="/assets/js/reveal.js"></script>
+<script defer src="/assets/js/meta-bar.js"></script>
+<script defer src="/assets/js/focus-ring.js"></script>
+<script defer src="/assets/js/motion.js"></script>
 </body>
 </html>

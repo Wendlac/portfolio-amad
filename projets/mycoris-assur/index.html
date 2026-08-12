@@ -33,11 +33,33 @@
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/layout.css">
 <link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/motion.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Aller au contenu</a>
 
 <header class="site-header">
+  <!--
+    Bande technique : d'où je travaille et quelle heure il est là-bas. L'heure
+    est celle de Ouagadougou, pas celle du visiteur — voir assets/js/meta-bar.js.
+  -->
+  <div class="meta-bar">
+    <div class="container meta-bar__inner">
+      <span class="meta-bar__item">Ouagadougou, (BF)</span>
+      <span class="meta-bar__sep" aria-hidden="true">//</span>
+      <span class="meta-bar__item meta-bar__time">
+        <span class="meta-bar__dot" aria-hidden="true"></span>
+        <time data-clock>--:--:--</time>
+      </span>
+      <span class="meta-bar__focus" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M1 5V1h4M11 1h4v4M15 11v4h-4M5 15H1v-4"/>
+          <path d="M8 6.5v3M6.5 8h3"/>
+        </svg>
+      </span>
+      <span class="meta-bar__item meta-bar__status">Disponible — projets 2026</span>
+    </div>
+  </div>
   <div class="container site-header__inner">
     <a class="site-header__brand" href="/">
       <img src="/assets/img/logo-amad.png" alt="Amad Louis" width="193" height="80">
@@ -45,8 +67,8 @@
 
     <nav class="site-nav" aria-label="Navigation principale">
       <ul class="site-nav__list">
-        <li><a href="/" aria-current="page">Mon travail</a></li>
-        <li><a href="/mes-lectures/">Mes lectures</a></li>
+        <li><a href="/" aria-current="page">Mon travail<span class="site-nav__count" aria-hidden="true">(3)</span></a></li>
+        <li><a href="/mes-lectures/">Mes lectures<span class="site-nav__count" aria-hidden="true">(5)</span></a></li>
         <li><a href="/qui-suis-je/">Qui suis je?</a></li>
         <span class="site-nav__indicator" aria-hidden="true"></span>
       </ul>
@@ -80,7 +102,7 @@
         <img class="bolt-icon" src="/assets/icons/bolt.svg" alt="" width="15" height="10">
         <span>Assurances</span>
       </p>
-      <h1 data-reveal>Application mobile Mycoris Assur</h1>
+      <h1 data-focus-in>Application mobile Mycoris Assur</h1>
       <div class="project-hero__media project-hero__media--dark" style="margin-top: var(--space-5);" data-reveal><span>Mycoris Assur</span></div>
     </div>
   </section>
@@ -152,7 +174,17 @@
   </div>
 </footer>
 
-<script src="/assets/js/nav.js"></script>
-<script src="/assets/js/reveal.js"></script>
+<!--
+  GSAP est chargé en defer : il ne bloque pas le premier rendu, et motion.js
+  n'anime que du contenu déjà visible.
+-->
+<script defer src="/assets/vendor/gsap.min.js"></script>
+<script defer src="/assets/vendor/ScrollTrigger.min.js"></script>
+
+<script defer src="/assets/js/nav.js"></script>
+<script defer src="/assets/js/reveal.js"></script>
+<script defer src="/assets/js/meta-bar.js"></script>
+<script defer src="/assets/js/focus-ring.js"></script>
+<script defer src="/assets/js/motion.js"></script>
 </body>
 </html>

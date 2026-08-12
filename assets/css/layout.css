@@ -140,22 +140,14 @@ section {
   font-weight: 700;
 }
 
-@keyframes mobile-nav-item-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: none; }
-}
-
-.mobile-nav[data-open="true"] .mobile-nav__list li {
-  animation: mobile-nav-item-in var(--duration-base) var(--ease-out-expo) both;
-}
-
-.mobile-nav[data-open="true"] .mobile-nav__list li:nth-child(1) { animation-delay: 40ms; }
-.mobile-nav[data-open="true"] .mobile-nav__list li:nth-child(2) { animation-delay: 90ms; }
-.mobile-nav[data-open="true"] .mobile-nav__list li:nth-child(3) { animation-delay: 140ms; }
-
-@media (prefers-reduced-motion: reduce) {
-  .mobile-nav[data-open="true"] .mobile-nav__list li { animation: none; }
-}
+/*
+  L'apparition des entrées du menu mobile vivait ici, avec un délai codé en dur
+  par rang (:nth-child(1), (2), (3)…). Elle est reprise par motion.css, qui
+  pilote le panneau plein écran et calcule le délai depuis --rank : plus de
+  règle à ajouter quand une entrée s'ajoute au menu. Les anciennes règles ont
+  été retirées plutôt que laissées en place — à spécificité supérieure, elles
+  auraient gagné contre les nouvelles.
+*/
 
 /* ---------- Héro (portrait + carte décalée) ---------- */
 
