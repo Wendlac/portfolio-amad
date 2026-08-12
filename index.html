@@ -70,7 +70,7 @@
 <header class="site-header">
   <!--
     Bande technique : d'où je travaille et quelle heure il est là-bas. L'heure
-    est celle de Ouagadougou, pas celle du visiteur — voir assets/js/meta-bar.js.
+    est celle de Ouagadougou, pas celle du visiteur, voir assets/js/meta-bar.js.
   -->
   <div class="meta-bar">
     <div class="container meta-bar__inner">
@@ -86,7 +86,7 @@
           <path d="M8 6.5v3M6.5 8h3"/>
         </svg>
       </span>
-      <span class="meta-bar__item meta-bar__status">Disponible — projets 2026</span>
+      <span class="meta-bar__item meta-bar__status">Disponible, projets 2026</span>
     </div>
   </div>
 
@@ -140,7 +140,7 @@
   <!--
     Refonte "liens directs" (cahier des charges du 25/07/2026) : chaque carte
     pointe vers le livrable réel (site hébergé ou PDF), pas vers une étude de
-    cas interne. Le contenu est piloté depuis assets/js/projects-data.js —
+    cas interne. Le contenu est piloté depuis assets/js/projects-data.js,
     ajouter/retirer un projet ne nécessite aucune modification de ce balisage.
   -->
   <section aria-labelledby="projects-heading">
@@ -159,7 +159,7 @@
           <div class="showcase__meta" data-showcase-meta></div>
         </div>
 
-        <div class="dial" data-dial tabindex="0" role="group" aria-label="Sélecteur de projet — flèches gauche et droite">
+        <div class="dial" data-dial tabindex="0" role="group" aria-label="Sélecteur de projet, flèches gauche et droite">
           <div class="dial__ticks dial__ticks--major" data-dial-ticks aria-hidden="true"></div>
           <div class="dial__track" data-dial-track></div>
           <div class="dial__ticks" data-dial-ticks aria-hidden="true"></div>
@@ -220,7 +220,7 @@
 
 <!--
   GSAP est chargé en defer : il ne bloque pas le premier rendu, et motion.js
-  n'anime que du contenu déjà visible. Three.js n'apparaît pas ici — il est
+  n'anime que du contenu déjà visible. Three.js n'apparaît pas ici, il est
   importé dynamiquement par webgl-media.js, uniquement à l'approche de la
   vitrine (voir assets/vendor/README.md).
 -->

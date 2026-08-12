@@ -1,5 +1,5 @@
 /*
-  Design tokens — valeurs exactes extraites du fichier Figma "mi-portfolio"
+  Design tokens, valeurs exactes extraites du fichier Figma "mi-portfolio"
   (node 0:1, pages HOME_PORTFOLIO / WHOIAM / LIBRARY). Une seule langue, pas
   de mode sombre : ces éléments ne figurent pas dans la maquette.
 */
@@ -13,7 +13,7 @@
   --color-body: #484848;          /* paragraphes longs */
   --color-meta: #4D4D4D;          /* "B2B ⚡ Assurances" */
   --color-accent: #F26430;        /* grandes surfaces / décoratif (numéros, icônes) */
-  --color-accent-text: #B8460F;   /* accent assombri — texte, liens (AA : 5.4:1 blanc, 4.7:1 crème) */
+  --color-accent-text: #B8460F;   /* accent assombri, texte, liens (AA : 5.4:1 blanc, 4.7:1 crème) */
   --color-placeholder: #D9D9D9;   /* images de projet en attente */
 
   --color-portrait-card: #1B0700; /* carte décalée derrière les portraits */
@@ -35,7 +35,10 @@
   --font-body: "Satoshi", -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Échelle (valeurs Figma en desktop, fluides en dessous) */
-  --step-body: clamp(1.05rem, 0.95rem + 0.4vw, 1.5rem);       /* 24px */
+  /* Texte courant : 16px fixes à toutes les largeurs. C'était auparavant une
+     valeur fluide (16,8px à 24px) qui grossissait avec l'écran, et qui ne
+     coïncidait avec le héro de l'accueil (20px fixes) qu'autour de 1280px. */
+  --step-body: 1rem;                                           /* 16px */
   --step-ui: 1rem;                                             /* 16px */
   --step-copyright: clamp(0.9rem, 0.85rem + 0.2vw, 1.25rem);   /* 20px */
   --step-md: clamp(1.4rem, 1.2rem + 0.9vw, 2rem);              /* 32px */

@@ -145,7 +145,7 @@ section {
   par rang (:nth-child(1), (2), (3)…). Elle est reprise par motion.css, qui
   pilote le panneau plein écran et calcule le délai depuis --rank : plus de
   règle à ajouter quand une entrée s'ajoute au menu. Les anciennes règles ont
-  été retirées plutôt que laissées en place — à spécificité supérieure, elles
+  été retirées plutôt que laissées en place, à spécificité supérieure, elles
   auraient gagné contre les nouvelles.
 */
 
@@ -178,12 +178,14 @@ section {
   margin-top: var(--space-4);
 }
 
-/* Home et Mes lectures uniquement (paragraphe direct) — la bio de "Qui suis-je"
-   utilise .hero__body sur le conteneur, pas sur les <p>, donc n'est pas visée. */
-p.hero__body {
-  font-size: 1.25rem; /* 20px */
-  letter-spacing: -0.03em;
-}
+/*
+   Il y avait ici une exception qui portait le paragraphe de héro de l'accueil
+   et de "Mes lectures" à 20px fixes, alors que la bio de "Qui suis-je" restait
+   sur la règle générique. Les deux ne se rejoignaient qu'autour de 1280px : en
+   dessous le héro était plus gros, au-dessus plus petit. Tout le texte courant
+   passe maintenant par --step-body, à 16px, donc l'exception n'a plus d'objet.
+   Son letter-spacing était de toute façon déjà celui du <body>.
+*/
 
 .hero__portrait {
   position: relative;
@@ -306,7 +308,7 @@ p.hero__body {
 
 /* Le sélecteur générique "p { max-width: var(--measure) }" (base.css) cape la
    largeur des paragraphes à 60ch sans marge auto : dans un conteneur plus
-   large, la boîte reste collée à gauche et seul le texte s'y centre — d'où
+   large, la boîte reste collée à gauche et seul le texte s'y centre, d'où
    le décalage. On neutralise ce plafond pour les lignes du footer. */
 .site-footer .accent-line,
 .site-footer__copyright {
@@ -351,7 +353,7 @@ p.hero__body {
   "max-width" posé directement sur .container (qui a margin-inline:auto et se
   recentre donc dans toute la largeur de la page, désalignant le contenu par
   rapport aux autres sections), .prose se contente de limiter la largeur à
-  l'intérieur d'un .container déjà correctement positionné — son bord gauche
+  l'intérieur d'un .container déjà correctement positionné, son bord gauche
   reste aligné avec celui du héro et des autres sections.
 */
 .prose {
@@ -420,7 +422,7 @@ p.hero__body {
   color: var(--color-heading);
 }
 
-/* Variante typographique — projets sous NDA sans visuel réel (voir components.css) */
+/* Variante typographique, projets sous NDA sans visuel réel (voir components.css) */
 .project-hero__media--dark,
 .project-hero__media--accent {
   display: flex;

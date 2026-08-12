@@ -3,7 +3,7 @@
 
   Un plan, une texture, un shader : déformation de l'image vers le pointeur,
   léger décalage RVB en périphérie de la zone touchée, grain animé, et fondu
-  enchaîné entre deux projets. Rien de plus — l'idée est de donner de la matière
+  enchaîné entre deux projets. Rien de plus, l'idée est de donner de la matière
   à une photo, pas de faire une démo de moteur 3D.
 
   Trois garde-fous, dans l'ordre où ils comptent :
@@ -14,7 +14,7 @@
 
   2. Si WebGL manque, si l'import échoue ou si le visiteur a demandé moins
      d'animations, on ne fait rien du tout. Les <img> de la vitrine restent
-     affichées — ce sont elles qui portent le contenu, le canvas n'est qu'un
+     affichées, ce sont elles qui portent le contenu, le canvas n'est qu'un
      vernis par-dessus.
 
   3. Le rendu s'arrête hors écran et onglet masqué.
@@ -49,7 +49,7 @@
     "  return (uv - 0.5) / scale + 0.5;",
     "}",
 
-    // Bruit bon marché — suffisant pour un grain, inutile d'aller chercher
+    // Bruit bon marché, suffisant pour un grain, inutile d'aller chercher
     // un simplex complet pour trois pixels de texture.
     "float hash(vec2 p) {",
     "  return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);",

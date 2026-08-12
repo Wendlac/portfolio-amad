@@ -1,14 +1,13 @@
 /*
   Navigation : menu mobile plein écran et indicateur glissant du menu de bureau.
 
-  Le menu mobile est traité comme une amorce de film qu'on déroule : perforations
-  35 mm sur les deux bords, entrées numérotées comme des plans, ouverture par un
-  volet qui descend, et pied de panneau reprenant les informations techniques de
-  la barre méta.
+  Le menu mobile s'ouvre en plein écran sur fond sombre : un volet qui descend,
+  des entrées numérotées comme des plans, et un pied reprenant les informations
+  techniques de la barre méta qu'il recouvre.
 
-  Tout l'habillage (numéros, perforations, pied) est ajouté ICI et non dans le
-  HTML : le même bloc <nav> est répété dans les sept pages du site, et le
-  dupliquer sept fois garantissait qu'il finirait par diverger.
+  Tout l'habillage (numéros, pied) est ajouté ICI et non dans le HTML : le même
+  bloc <nav> est répété dans les sept pages du site, et le dupliquer sept fois
+  garantissait qu'il finirait par diverger.
 */
 (function () {
   "use strict";
@@ -106,13 +105,6 @@
     toggle.lastElementChild.classList.add("nav-toggle__close");
     if (toggle.firstElementChild) toggle.firstElementChild.classList.add("nav-toggle__open");
 
-    ["left", "right"].forEach(function (side) {
-      var perf = document.createElement("span");
-      perf.className = "mobile-nav__perf mobile-nav__perf--" + side;
-      perf.setAttribute("aria-hidden", "true");
-      menu.appendChild(perf);
-    });
-
     Array.prototype.forEach.call(list.children, function (item, index) {
       item.classList.add("mobile-nav__item");
       /* Le délai est porté par une variable CSS plutôt que par une règle par
@@ -140,7 +132,7 @@
       '<span>Ouagadougou, (BF)</span>' +
       '<span class="mobile-nav__time"><span class="meta-bar__dot" aria-hidden="true"></span>' +
       '<time data-clock>--:--:--</time></span>' +
-      '<span class="mobile-nav__foot-end">Disponible — projets 2026</span>';
+      '<span class="mobile-nav__foot-end">Disponible, projets 2026</span>';
     menu.appendChild(foot);
   }
 

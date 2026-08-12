@@ -112,11 +112,14 @@
   color: var(--color-btn-bg);
 }
 
+/* Taille posée explicitement : c'est un titre de carte, il doit rester au-dessus
+   du texte courant. Il suivait --step-body, qui vaut désormais 16px, la carte
+   aurait perdu toute hiérarchie entre son titre et sa description. */
 .project-card__title {
   margin-top: var(--space-3);
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: var(--step-body);
+  font-size: 1.25rem;
   color: #000000;
 }
 
@@ -139,7 +142,7 @@
   margin-top: var(--space-3);
 }
 
-/* Carte "typographique" — projets confidentiels (sous NDA) sans visuel réel :
+/* Carte "typographique", projets confidentiels (sous NDA) sans visuel réel :
    un traitement graphique bold plutôt qu'un écran, cohérent avec l'identité
    du site (Bebas Neue + couleurs de marque). */
 .project-card__media--type {
@@ -174,7 +177,7 @@
   color: var(--color-btn-bg);
 }
 
-/* Carte "à venir" — état vide soigné */
+/* Carte "à venir", état vide soigné */
 .project-card--pending .project-card__media {
   display: flex;
   align-items: center;

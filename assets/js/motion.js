@@ -8,7 +8,7 @@
   - la page s'ouvre en fondu et se referme avant de naviguer.
 
   Rien ici n'est nécessaire à la lecture du site. Si GSAP n'est pas là, le
-  fichier sort immédiatement et tout reste en place — les titres sont déjà
+  fichier sort immédiatement et tout reste en place, les titres sont déjà
   visibles dans le HTML, ce sont les animations qui viennent après coup, jamais
   l'inverse. C'est aussi pour ça qu'on ne pose jamais d'opacité 0 en CSS sur du
   contenu : une animation qui ne se déclenche pas ne doit pas pouvoir effacer
@@ -67,7 +67,7 @@
   /*
     Le trait plein se remplit au scroll et les pastilles s'allument au passage.
     Appelé même en mouvement réduit : dans ce cas ScrollTrigger ne fait que
-    poser une classe au bon moment, sans rien animer — l'information « où en
+    poser une classe au bon moment, sans rien animer, l'information « où en
     suis-je dans la frise » reste utile, c'est le mouvement qui ne l'est pas.
   */
   function timeline() {
@@ -107,7 +107,7 @@
   /*
     Le bouton suit le curseur sur un tiers de l'écart, plafonné : au-delà, il se
     décolle visiblement de sa place et la cible devient plus difficile à
-    atteindre qu'un bouton immobile — l'effet se retourne contre l'utilisateur.
+    atteindre qu'un bouton immobile, l'effet se retourne contre l'utilisateur.
   */
   function magneticButtons() {
     if (!window.matchMedia("(pointer: fine)").matches) return;
@@ -156,7 +156,7 @@
   /*
     Un fondu au départ vers une autre page du site, pour éviter le clignotement
     blanc entre deux chargements. Volontairement conservateur : on ne détourne
-    que les clics simples, sur des liens internes, sans modificateur — un
+    que les clics simples, sur des liens internes, sans modificateur, un
     ctrl-clic, un clic milieu, une ancre ou un lien externe passent tout droit.
     Et le fondu est court : si la page suivante est lente, mieux vaut un flash
     qu'une attente ajoutée à une attente.

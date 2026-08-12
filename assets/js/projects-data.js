@@ -5,11 +5,11 @@
 
   Champs :
   - title       : titre du projet
-  - description : une seule ligne — nature du projet, rôle tenu (pas d'année,
+  - description : une seule ligne, nature du projet, rôle tenu (pas d'année,
                    choix délibéré pour garder le portfolio intemporel)
   - type        : "site" (lien vers le livrable hébergé) | "pdf" (document PDF)
   - url         : lien externe vers le livrable réel
-  - image       : chemin vers l'aperçu (obligatoire — un projet sans image
+  - image       : chemin vers l'aperçu (obligatoire, un projet sans image
                    d'aperçu ne doit pas être ajouté ici, cf. EF-05 du cahier
                    des charges)
   - imageAlt    : texte alternatif de l'aperçu

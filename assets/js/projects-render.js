@@ -1,7 +1,7 @@
 /*
   Construit les cartes de la section "Projets" à partir de window.PROJECTS
   (assets/js/projects-data.js). Rien ici ne doit être modifié pour ajouter
-  ou retirer un projet — voir EF-02 du cahier des charges.
+  ou retirer un projet, voir EF-02 du cahier des charges.
 */
 (function () {
   "use strict";

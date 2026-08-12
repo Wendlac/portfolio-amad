@@ -17,7 +17,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     /* Plusieurs horloges par page : celle de la barre méta, et celle que
-       nav.js pose au pied du panneau mobile — la barre méta étant masquée
+       nav.js pose au pied du panneau mobile, la barre méta étant masquée
        derrière lui quand il est ouvert. */
     var clocks = document.querySelectorAll("[data-clock]");
     if (!clocks.length) return;

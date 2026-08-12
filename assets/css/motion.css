@@ -1,10 +1,10 @@
 /*
-  Couche interactive — barre méta, curseur de mise au point, vitrine projets à
+  Couche interactive, barre méta, curseur de mise au point, vitrine projets à
   molette, micro-animations.
 
   Cette feuille s'ajoute aux précédentes sans rien remplacer : elle n'introduit
   aucune couleur ni aucune graisse qui ne soit déjà dans tokens.css. Tout ce qui
-  bouge ici est un enrichissement — si le JS ne s'exécute pas, la page reste
+  bouge ici est un enrichissement, si le JS ne s'exécute pas, la page reste
   celle d'avant, en état lisible (voir les classes .no-js ci-dessous).
 */
 
@@ -12,7 +12,7 @@
 
 /*
   [hidden] ne vient que de la feuille de style du navigateur : la moindre classe
-  qui pose un display la neutralise. .grid le faisait — la grille de repli
+  qui pose un display la neutralise. .grid le faisait, la grille de repli
   restait affichée sous la vitrine, et la page montrait deux fois les mêmes
   projets. On rend l'attribut réellement contraignant.
 */
@@ -38,7 +38,7 @@ body {
 }
 
 :root {
-  --meta-size: 0.6875rem;        /* 11px — l'échelle « technique » de la barre méta */
+  --meta-size: 0.6875rem;        /* 11px, l'échelle « technique » de la barre méta */
   --meta-tracking: 0.09em;
   --rule: #E7E2DE;               /* filet clair, sur fond blanc comme sur fond crème */
   --tick: #CFC7C1;
@@ -131,7 +131,7 @@ body {
   Quatre équerres qui suivent le pointeur et se verrouillent sur l'élément
   survolé, à la manière d'un collimateur d'autofocus. Réservé aux pointeurs
   fins : au doigt il n'y a pas de survol, et sur un écran tactile le curseur
-  resterait figé dans un coin. Le curseur natif n'est jamais masqué — si le
+  resterait figé dans un coin. Le curseur natif n'est jamais masqué, si le
   script tombe, on ne se retrouve pas sans pointeur.
 */
 
@@ -192,13 +192,12 @@ body {
 /* ---------- Menu mobile : le panneau ---------- */
 
 /*
-  Une amorce de film qu'on déroule : le panneau descend comme un volet, les
-  perforations 35 mm tiennent les deux bords, les entrées sont numérotées comme
-  des plans et le pied reprend les informations techniques de la barre méta —
-  masquée derrière le panneau une fois celui-ci ouvert.
+  Le panneau descend comme un volet sur un fond sombre nu, les entrées sont
+  numérotées comme des plans, et le pied reprend les informations techniques de
+  la barre méta, masquée derrière le panneau une fois celui-ci ouvert.
 
-  Numéros, perforations et pied sont injectés par nav.js : le même bloc <nav>
-  est répété dans les sept pages, le dupliquer sept fois le condamnait à diverger.
+  Numéros et pied sont injectés par nav.js : le même bloc <nav> est répété dans
+  les sept pages, le dupliquer sept fois le condamnait à diverger.
 */
 
 .is-nav-open {
@@ -207,7 +206,7 @@ body {
 
 /*
   Le header reste au-dessus du panneau (z-index 100 contre 90) pour que le
-  bouton de fermeture demeure atteignable — mais son fond blanc poserait alors
+  bouton de fermeture demeure atteignable, mais son fond blanc poserait alors
   un bandeau clair en travers du panneau sombre. On le rend transparent, et on
   efface la barre méta : son contenu est repris au pied du panneau.
 */
@@ -233,7 +232,7 @@ body {
   overscroll-behavior: contain;
 
   /* Le volet descend. visibility retire le panneau de l'ordre de tabulation
-     quand il est fermé — clip-path seul le masque sans le rendre inatteignable. */
+     quand il est fermé, clip-path seul le masque sans le rendre inatteignable. */
   visibility: hidden;
   clip-path: inset(0 0 100% 0);
   transition: clip-path 560ms var(--ease-out-expo),
@@ -247,37 +246,16 @@ body {
               visibility 0s;
 }
 
-/* Perforations 35 mm sur les deux bords. Un dégradé répété plutôt que des
-   éléments : c'est un seul nœud par bord et rien à recalculer. */
-.mobile-nav__perf {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 14px;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0 11px,
-    var(--color-contact-heading) 11px 27px,
-    transparent 27px 38px
-  );
-  opacity: 0.16;
-  pointer-events: none;
-}
-
-.mobile-nav__perf--left  { left: 6px; }
-.mobile-nav__perf--right { right: 6px; }
-
 .mobile-nav__list {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   min-height: 100%;
   justify-content: center;
-  /* Dégage le header en surimpression au-dessus, et le pied en dessous. */
+  /* Dégage le header en surimpression au-dessus, et le pied en dessous. Le
+     retrait latéral vient de .container : le menu s'aligne ainsi sur le bord
+     gauche du reste du site. */
   padding-block: 8rem 9rem;
-  /* Et dégage les perforations sur les côtés : le retrait de .container les
-     frôlait à 4px près. */
-  padding-inline: 2.75rem;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(2.25rem, 1.3rem + 5.2vw, 3.5rem);
@@ -344,9 +322,6 @@ body {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  /* Aligné sur la liste, perforations dégagées. */
-  padding-inline: 2.75rem;
-  max-width: none;
   white-space: nowrap;
   font-family: var(--font-body);
   font-size: var(--meta-size);
@@ -500,7 +475,7 @@ body {
 
 .showcase__desc {
   margin-top: var(--space-3);
-  font-size: 1.0625rem;
+  font-size: var(--step-body);
   color: var(--color-body);
   max-width: 34ch;
 }
@@ -510,7 +485,7 @@ body {
 }
 
 /*
-  Un panneau par projet, tous présents dans le DOM — seul l'actif est affiché.
+  Un panneau par projet, tous présents dans le DOM, seul l'actif est affiché.
   On ne réécrit pas le texte d'un panneau unique : le contenu des autres projets
   reste ainsi indexable, et la bascule se réduit à un changement de visibilité.
 */
@@ -732,7 +707,10 @@ body {
 
 @media (min-width: 780px) {
   .timeline__entry {
-    grid-template-columns: 8.5rem minmax(0, 1fr);
+    /* Calée sur le libellé le plus long, « 2020 – aujourd'hui », point de
+       mission en cours compris. Plus étroite, c'est la seule ligne de la frise
+       qui passerait sur deux niveaux. */
+    grid-template-columns: 10.5rem minmax(0, 1fr);
     column-gap: var(--space-4);
     row-gap: 0.15rem;
     align-items: baseline;
@@ -780,6 +758,31 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/*
+  Mission en cours. Le point reprend celui de la barre méta, où il signale la
+  disponibilité : même signe, même sens, « ceci est vrai maintenant ».
+*/
+.timeline__when--live {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+.timeline__live {
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+  /* Aligné sur l'œil des capitales plutôt que sur la ligne de base, où il
+     paraîtrait posé trop bas. */
+  transform: translateY(-0.15em);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .timeline__live { animation: meta-pulse 2.4s var(--ease-standard) infinite; }
+}
+
 .timeline__title {
   font-family: var(--font-display);
   font-size: var(--step-md);
@@ -795,6 +798,67 @@ body {
   font-weight: 500;
   color: var(--color-meta);
   max-width: 46ch;
+}
+
+/* ---------- Hobbies ---------- */
+
+/*
+  Cinq entrées courtes, traitées comme une fiche technique : un filet, un
+  numéro, un nom. Pas d'effet au survol, rien ici n'est cliquable, et un
+  changement d'état laisserait croire le contraire.
+*/
+.hobbies {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 700px) {
+  .hobbies { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Au-delà de 980px les cinq tiennent sur une seule ligne. */
+@media (min-width: 980px) {
+  .hobbies {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}
+
+.hobbies__item {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.hobbies__num {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--meta-size);
+  letter-spacing: var(--meta-tracking);
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.hobbies__name {
+  display: block;
+  margin-top: 0.35em;
+  font-family: var(--font-display);
+  font-size: var(--step-md);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  color: var(--color-headline);
+}
+
+.hobbies__note {
+  display: block;
+  margin-top: 0.25em;
+  font-family: var(--font-body);
+  font-size: var(--step-ui);
+  font-weight: 500;
+  color: var(--color-meta);
 }
 
 /* ---------- Liste de lectures ---------- */
@@ -883,7 +947,7 @@ body {
   - une animation CSS se termine toujours, même onglet en arrière-plan, alors
     qu'un tween piloté par le rAF laisserait le titre invisible ;
   - sans JavaScript, la classe n'est jamais posée et le titre s'affiche
-    simplement — le texte ne dépend d'aucune animation pour exister ;
+    simplement, le texte ne dépend d'aucune animation pour exister ;
   - rien n'est découpé en <span>, donc le titre reste un nœud de texte unique
     pour les lecteurs d'écran, sans aria-label de rattrapage.
 */
@@ -919,8 +983,8 @@ body {
 /* ---------- Repli sans JavaScript ---------- */
 
 /*
-  La vitrine est rendue par showcase.js. Tant qu'elle ne l'est pas — script en
-  échec, JS coupé —, c'est la liste statique qui reste visible ; showcase.js la
+  La vitrine est rendue par showcase.js. Tant qu'elle ne l'est pas, script en
+  échec, JS coupé , c'est la liste statique qui reste visible ; showcase.js la
   masque lui-même une fois qu'il a pris la main.
 */
 .showcase[hidden] { display: none; }

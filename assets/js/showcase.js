@@ -26,7 +26,7 @@
 
   var GAP = 72;            /* espace entre deux noms, en px (écran large) */
   var GAP_NARROW = 26;     /* resserré sous 600px, pour que le nom suivant reste
-                              visible au bord — sinon la bague a l'air vide et
+                              visible au bord, sinon la bague a l'air vide et
                               rien n'indique qu'il y a d'autres projets */
   var SNAP_MS = 520;
   var WHEEL_SENSITIVITY = 0.0022;
@@ -185,7 +185,7 @@
       if (prevBtn) prevBtn.disabled = index === 0;
       if (nextBtn) nextBtn.disabled = index === last;
 
-      /* Signal pour webgl-media.js — et point d'accroche pour tout ce qu'on
+      /* Signal pour webgl-media.js, et point d'accroche pour tout ce qu'on
          voudrait brancher plus tard sans toucher à ce fichier. */
       root.dispatchEvent(new CustomEvent("showcase:change", {
         detail: { index: index, image: projects[index].image, title: projects[index].title }
@@ -199,7 +199,7 @@
       if (!tween) return;
 
       var t = Math.min((now - tween.start) / tween.duration, 1);
-      /* easeOutExpo — même courbe que --ease-out-expo côté CSS */
+      /* easeOutExpo, même courbe que --ease-out-expo côté CSS */
       var e = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
       position = tween.from + (tween.to - tween.from) * e;
       render();

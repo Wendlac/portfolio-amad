@@ -2,7 +2,7 @@
   Curseur « collimateur d'autofocus ».
 
   Quatre équerres suivent le pointeur, puis se verrouillent sur l'élément
-  survolé en épousant sa boîte — comme un appareil qui accroche son sujet. Un
+  survolé en épousant sa boîte, comme un appareil qui accroche son sujet. Un
   libellé optionnel ([data-focus-label]) s'affiche sous la cible.
 
   Deux partis pris :
