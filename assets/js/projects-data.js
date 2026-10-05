@@ -8,6 +8,7 @@
   - description : une seule ligne, nature du projet, rôle tenu (pas d'année,
                    choix délibéré pour garder le portfolio intemporel)
   - type        : "site" (lien vers le livrable hébergé) | "pdf" (document PDF)
+                   | "etude" (page d'étude de cas sur ce site, lien interne)
   - url         : lien externe vers le livrable réel
   - image       : chemin vers l'aperçu (obligatoire, un projet sans image
                    d'aperçu ne doit pas être ajouté ici, cf. EF-05 du cahier
@@ -20,6 +21,17 @@
 */
 
 window.PROJECTS = [
+  {
+    title: "Kalaan",
+    // Produit personnel : lecteur d'EPUB et de PDF publié sur le Play Store.
+    // Seul projet du portfolio dont tout est montrable, d'où l'étude de cas.
+    description: "Application mobile de lecture publiée sur le Play Store, conception produit, UI et illustrations",
+    type: "etude",
+    url: "/projets/kalaan/",
+    image: "/assets/img/projects/kalaan.png",
+    imageAlt: "Bannière de Kalaan : le logotype, la promesse « Lis tes livres, tiens ta série » et l'écureuil mascotte",
+    status: null
+  },
   {
     title: "Faissel",
     // Site vitrine pour un prestataire réseau informatique : catalogue de

@@ -92,11 +92,20 @@
       var cta = document.createElement("a");
       cta.className = "btn btn--dark showcase__cta";
       cta.href = project.url;
-      cta.target = "_blank";
-      cta.rel = "noopener";
+      // Une étude de cas vit sur ce site : elle reste dans le même onglet.
+      if (/^https?:/.test(project.url)) {
+        cta.target = "_blank";
+        cta.rel = "noopener";
+      }
       cta.setAttribute("data-magnetic", "");
-      cta.setAttribute("data-focus-label", project.type === "pdf" ? "Ouvrir le PDF" : "Ouvrir le site");
-      cta.textContent = project.type === "pdf" ? "Voir le PDF" : "Voir le site";
+      cta.setAttribute("data-focus-label",
+        project.type === "pdf" ? "Ouvrir le PDF"
+          : project.type === "etude" ? "Ouvrir l'étude de cas"
+          : "Ouvrir le site");
+      cta.textContent =
+        project.type === "pdf" ? "Voir le PDF"
+          : project.type === "etude" ? "Voir l'étude de cas"
+          : "Voir le site";
 
       var arrow = document.createElement("img");
       arrow.className = "btn__arrow";

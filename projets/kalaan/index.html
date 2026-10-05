@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalaan - Amad Louis</title>
+<meta name="description" content="Kalaan, lecteur d'EPUB et de PDF pour Android : produit personnel conçu, dessiné et publié sur le Play Store par Amad Louis.">
+<link rel="canonical" href="https://amadlouis.site/projets/kalaan/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Amad Louis">
+<meta property="og:title" content="Kalaan - Amad Louis">
+<meta property="og:description" content="Kalaan, lecteur d'EPUB et de PDF pour Android : produit personnel conçu, dessiné et publié sur le Play Store par Amad Louis.">
+<meta property="og:url" content="https://amadlouis.site/projets/kalaan/">
+<meta property="og:image" content="https://amadlouis.site/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kalaan - Amad Louis">
+<meta name="twitter:description" content="Kalaan, lecteur d'EPUB et de PDF pour Android : produit personnel conçu, dessiné et publié sur le Play Store par Amad Louis.">
+<meta name="twitter:image" content="https://amadlouis.site/assets/img/og-image.png">
+
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
+
+<link rel="stylesheet" href="/assets/css/fonts.css">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/motion.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<header class="site-header">
+  <!--
+    Bande technique : d'où je travaille et quelle heure il est là-bas. L'heure
+    est celle de Ouagadougou, pas celle du visiteur, voir assets/js/meta-bar.js.
+  -->
+  <div class="meta-bar">
+    <div class="container meta-bar__inner">
+      <span class="meta-bar__item">Ouagadougou, (BF)</span>
+      <span class="meta-bar__sep" aria-hidden="true">//</span>
+      <span class="meta-bar__item meta-bar__time">
+        <span class="meta-bar__dot" aria-hidden="true"></span>
+        <time data-clock>--:--:--</time>
+      </span>
+      <span class="meta-bar__focus" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M1 5V1h4M11 1h4v4M15 11v4h-4M5 15H1v-4"/>
+          <path d="M8 6.5v3M6.5 8h3"/>
+        </svg>
+      </span>
+      <span class="meta-bar__item meta-bar__status">Disponible, projets 2026</span>
+    </div>
+  </div>
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/">
+      <img src="/assets/img/logo-amad.png" alt="Amad Louis" width="193" height="80">
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <ul class="site-nav__list">
+        <li><a href="/" aria-current="page">Mon travail<span class="site-nav__count" aria-hidden="true">(4)</span></a></li>
+        <li><a href="/mes-lectures/">Mes lectures<span class="site-nav__count" aria-hidden="true">(5)</span></a></li>
+        <li><a href="/qui-suis-je/">Qui suis je?</a></li>
+        <span class="site-nav__indicator" aria-hidden="true"></span>
+      </ul>
+    </nav>
+
+    <button class="nav-toggle" type="button" data-nav-toggle aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" width="22" height="22"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" data-mobile-nav data-open="false">
+    <ul class="mobile-nav__list container">
+      <li><a href="/" aria-current="page">Mon travail</a></li>
+      <li><a href="/mes-lectures/">Mes lectures</a></li>
+      <li><a href="/qui-suis-je/">Qui suis je?</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- §6.2.1 : le résultat d'abord, accroche + visuel dès le haut de page -->
+  <section>
+    <div class="container">
+      <a class="back-link" href="/">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Retour aux projets
+      </a>
+      <p class="project-hero__eyebrow" data-reveal>
+        <span>Produit personnel</span>
+        <img class="bolt-icon" src="/assets/icons/bolt.svg" alt="" width="15" height="10">
+        <span>Lecture</span>
+      </p>
+      <h1 data-focus-in>Kalaan, un lecteur de livres qui donne envie de revenir</h1>
+      <figure class="case-figure" style="margin-top: var(--space-5);" data-reveal>
+        <img src="/assets/img/projects/kalaan.png" alt="Bannière de Kalaan : le logotype, la promesse « Lis tes livres, tiens ta série » et l'écureuil mascotte tenant un livre" width="984" height="654">
+      </figure>
+    </div>
+  </section>
+
+  <!-- Produit personnel, publié : contrairement aux missions en sous-traitance
+       de ce portfolio, tout est montrable ici, d'où l'étude de cas complète. -->
+  <section aria-labelledby="info-heading">
+    <div class="container">
+      <div class="prose">
+        <p data-reveal>Kalaan ouvre les livres EPUB et PDF que l'utilisateur possède déjà sur son téléphone, les range dans une bibliothèque, et transforme la lecture en habitude tenue jour après jour. Aucun compte, aucun catalogue, aucune donnée collectée : l'application ne vend pas de livres, elle sert ceux qu'on a.</p>
+        <p data-reveal>C'est mon produit personnel, de la première décision au dépôt sur le Play Store. J'ai tenu les deux bouts, la règle du jeu et le pixel.</p>
+      </div>
+      <h2 id="info-heading" class="visually-hidden">Informations sur le projet</h2>
+      <dl class="project-meta" style="margin-top: var(--space-6);" data-reveal>
+        <div class="project-meta__item">
+          <dt>Rôle</dt>
+          <dd>Conception produit, architecture des écrans, identité visuelle, illustrations, interface, publication</dd>
+        </div>
+        <div class="project-meta__item">
+          <dt>Plateforme</dt>
+          <dd>Android, en français et en anglais</dd>
+        </div>
+        <div class="project-meta__item">
+          <dt>Date de réalisation</dt>
+          <dd>2026, de la première maquette à la mise en ligne</dd>
+        </div>
+        <div class="project-meta__item">
+          <dt>État</dt>
+          <dd><a class="text-link" href="https://play.google.com/store/apps/details?id=com.pelerain.kalaan" target="_blank" rel="noopener">En ligne sur Google Play</a>, dans 177 pays</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section aria-labelledby="probleme-heading">
+    <div class="container">
+      <p class="subsection-head" data-reveal>
+        <span class="subsection-head__index">01</span>
+        <span class="subsection-head__label" id="probleme-heading">Le problème</span>
+      </p>
+      <div class="prose">
+        <p data-reveal>Sur Android, les applications utilitaires fonctionnent, mais elles se contentent souvent de fonctionner. Les lecteurs de livres existants ouvrent un fichier et s'arrêtent là : interface dense, réglages partout, aucune raison de revenir demain. À côté, les applications grand public les mieux faites savent exactement où poser un bouton et quand se taire.</p>
+        <p data-reveal>La question de départ est restée épinglée en haut de ma spécification pendant tout le projet : peut-on faire sur Android une application utilitaire qui a la simplicité et la qualité d'une excellente application grand public, tout en utilisant intelligemment certaines mécaniques des jeux vidéo?</p>
+        <p data-reveal>Il y avait un second problème, plus personnel : j'achète des livres numériques et je ne les finis pas. Ce n'est pas un problème de lecteur de fichiers, c'est un problème d'habitude. Une application ne peut pas lire à ma place, mais elle peut rendre visible le fait que j'ai lu hier, et avant-hier.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="parti-pris-heading">
+    <div class="container">
+      <p class="subsection-head" data-reveal>
+        <span class="subsection-head__index">02</span>
+        <span class="subsection-head__label" id="parti-pris-heading">La lecture d'abord, le jeu en coulisses</span>
+      </p>
+      <div class="prose">
+        <p data-reveal>J'ai écrit neuf principes avant de dessiner le premier écran, et je m'y suis tenu quand il a fallu arbitrer. Quatre ont vraiment fait le produit : la lecture reste prioritaire, les livres appartiennent à l'utilisateur, l'interface reste calme, et quelques fonctionnalités très bien exécutées valent mieux qu'une accumulation.</p>
+        <p data-reveal>Le premier principe a une conséquence structurelle que j'ai résumée d'une formule : <strong>le lecteur est un sanctuaire</strong>. Tout ce qui relève du jeu, l'expérience gagnée, la série, les emblèmes, vit dans les transitions entre les écrans. Pendant la lecture, il ne reste qu'un bouton flottant et l'heure en petit.</p>
+      </div>
+      <figure class="case-figure case-figure--pair" style="margin-top: var(--space-6);" data-reveal>
+        <img src="/assets/img/projects/kalaan/bibliotheque.png" alt="Écran Bibliothèque de Kalaan : la carte « Reprends ta lecture » et les rayons de livres" width="540" height="960" loading="lazy">
+        <img src="/assets/img/projects/kalaan/lecteur.png" alt="Écran du lecteur de Kalaan : une page de texte, sans aucune commande visible" width="540" height="960" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="decisions-heading">
+    <div class="container">
+      <p class="subsection-head" data-reveal>
+        <span class="subsection-head__index">03</span>
+        <span class="subsection-head__label" id="decisions-heading">Les décisions qui ont fait le produit</span>
+      </p>
+      <div class="prose">
+        <p data-reveal><strong>Pas de barre d'onglets.</strong> Une barre aurait donné trois destinations de même poids à une application qui n'en a qu'une : la bibliothèque est le hub, et une puce rang et série, en haut à droite, ouvre le profil. Le profil se mérite d'un geste, il ne réclame pas sa place.</p>
+        <p data-reveal><strong>Un appui sur un livre reprend la lecture.</strong> Pas de fiche intermédiaire : le geste le plus fréquent est le moins coûteux, et les détails passent par un appui long. La carte « Reprends ta lecture » ramène au dernier livre ouvert, à la page exacte.</p>
+        <p data-reveal><strong>Le débrief n'apparaît que s'il y a quelque chose à fêter.</strong> Un palier franchi, un rang gagné, un emblème, une série prolongée : alors seulement un écran court s'intercale. Sinon, retour direct à la bibliothèque. C'est la décision dont je suis le plus content : féliciter quelqu'un qui n'a rien accompli, c'est lui apprendre à ignorer les félicitations.</p>
+        <p data-reveal><strong>Un fichier introuvable n'est jamais retiré tout seul.</strong> Si le livre a été déplacé, Kalaan le signale et propose d'aller le rechercher dans un dossier. La progression, elle, reste intacte.</p>
+      </div>
+      <h3 class="visually-hidden">Les règles de progression</h3>
+      <dl class="project-meta" style="margin-top: var(--space-6);" data-reveal>
+        <div class="project-meta__item">
+          <dt>Série : 3 minutes par jour</dt>
+          <dd>Assez bas pour être tenu un mauvais soir, assez haut pour vouloir dire quelque chose</dd>
+        </div>
+        <div class="project-meta__item">
+          <dt>Expérience : 1 point par % de livre avancé</dt>
+          <dd>Ouvrir et refermer ne rapporte rien : on gagne en lisant, pas en revenant</dd>
+        </div>
+        <div class="project-meta__item">
+          <dt>Rangs : Apprenti, Aventurier, Maître, Sage</dt>
+          <dd>Cinq rangs chacun. Un livre moyen vaut 200 points, soit un rang tous les deux à trois livres</dd>
+        </div>
+        <div class="project-meta__item">
+          <dt>Rappel de série : jamais après 22 h 30</dt>
+          <dd>Personne ne doit être réveillé à minuit pour un gland</dd>
+        </div>
+      </dl>
+      <figure class="case-figure case-figure--pair" style="margin-top: var(--space-6);" data-reveal>
+        <img src="/assets/img/projects/kalaan/profil.png" alt="Écran Profil de Kalaan : rang, série, calendrier de lecture et statistiques" width="540" height="960" loading="lazy">
+        <img src="/assets/img/projects/kalaan/session.png" alt="Écran de fin de session de Kalaan : le palier franchi et la série du jour" width="540" height="960" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="visuel-heading">
+    <div class="container">
+      <p class="subsection-head" data-reveal>
+        <span class="subsection-head__index">04</span>
+        <span class="subsection-head__label" id="visuel-heading">Le système visuel</span>
+      </p>
+      <div class="prose">
+        <p data-reveal>Ma spécification disait noir sur blanc qu'une mascotte n'était pas nécessaire. J'ai dessiné l'écureuil quand même, et il a emporté le reste : il ramène des glands, donc un jour de lecture tenu vaut un gland, donc la série se raconte toute seule. Une décision graphique a fixé une mécanique de produit.</p>
+        <p data-reveal>La palette tient en quatre couleurs, rouge, crème, bleu nuit et gris ardoise, et la typographie est la même du titre au pied de page. J'ai dessiné <strong>cinquante-six illustrations</strong>, et aucune n'est décorative : elles couvrent les moments où l'utilisateur doute. Une recherche sans résultat, un fichier illisible, un import qui dure, un livre terminé. Les écrans de chargement sont des séquences de trois ou quatre dessins, parce qu'un dessin qui bouge dit « ça travaille » mieux qu'un indicateur de progression.</p>
+        <p data-reveal>L'animation suit la même règle que le jeu : elle n'intervient qu'aux moments forts. Sur l'écran « Livre terminé », le dessin reste fixe et seules trois étoiles scintillent. Si le téléphone est réglé pour limiter les animations, elles s'arrêtent.</p>
+        <p data-reveal>Pour l'iconographie, j'ai remplacé le jeu Material par Phosphor en graisse Bold : un trait plus franc, plus proche de celui de mes illustrations. Material était neutre au point d'appartenir à Android plutôt qu'à Kalaan. Enfin, six ambiances de lecture, dont une qui suit simplement le thème clair ou sombre du téléphone.</p>
+      </div>
+      <figure class="case-figure case-figure--shot" style="margin-top: var(--space-6);" data-reveal>
+        <img src="/assets/img/projects/kalaan/themes.png" alt="Feuille « Thèmes et réglages » de Kalaan, avec les six ambiances de lecture" width="540" height="960" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="tests-heading">
+    <div class="container">
+      <p class="subsection-head" data-reveal>
+        <span class="subsection-head__index">05</span>
+        <span class="subsection-head__label" id="tests-heading">Ce que les tests ont changé</span>
+      </p>
+      <div class="prose">
+        <p data-reveal>J'ai fait tester l'application sur plusieurs téléphones avant de la publier, et le parcours le plus utilisé n'était pas celui que j'avais dessiné. J'avais conçu l'entrée principale autour du sélecteur de fichiers d'Android. Dans la vraie vie, les gens reçoivent leurs livres par WhatsApp, par Telegram ou par mail, et appuient sur « Ouvrir avec ».</p>
+        <p data-reveal>Ce parcours-là cassait de trois façons : le livre ne s'ouvrait pas du premier coup, il se grisait dans la bibliothèque au lancement suivant, et le tout premier livre était perdu derrière l'écran d'accueil.</p>
+        <p data-reveal>Le deuxième point m'a obligé à casser un de mes neuf principes. « Aucun stockage de livres dans Kalaan » était une règle de confiance, pas un détail technique : Android ne prête son autorisation de lecture que le temps d'une ouverture. J'y ai ajouté une exception, écrite noir sur blanc dans la spécification : un livre prêté par une autre application est copié dans l'espace privé de Kalaan, parce que l'alternative était un livre qui disparaît. Un principe qui ne plie jamais devant un usage réel n'est pas un principe, c'est un entêtement.</p>
+        <p data-reveal>À trois jours de la publication, un testeur m'a envoyé un livre dont les pages sont dessinées à taille fixe, comme un PDF, et que le lecteur n'arrivait pas à afficher correctement. J'ai tranché pour la solution honnête plutôt que pour la solution complète : refuser ces livres à l'import avec un message clair, l'écrire dans la fiche du Store, et offrir un bouton « Retirer de la bibliothèque » à ceux qui en avaient déjà un. Publier avec un trou documenté valait mieux que ne pas publier. J'y suis revenu après la mise en ligne, et ces livres s'ouvrent désormais.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="livraison-heading">
+    <div class="container">
+      <p class="subsection-head" data-reveal>
+        <span class="subsection-head__index">06</span>
+        <span class="subsection-head__label" id="livraison-heading">Livraison</span>
+      </p>
+      <div class="prose">
+        <p data-reveal>Kalaan est en ligne sur Google Play depuis septembre 2026, en déploiement complet dans 177 pays, avec une fiche en français et une en anglais. L'application pèse 16 Mo à l'installation.</p>
+        <p data-reveal>La fiche promet trois choses et l'application les tient : aucun compte, aucune publicité, aucune donnée collectée. Une sauvegarde exporte la progression, l'expérience, les emblèmes et les surlignages dans un fichier que l'utilisateur garde, de quoi changer de téléphone sans rien perdre.</p>
+        <p data-reveal><strong>Ce que je retiens.</strong> Les trois décisions dont je suis le plus fier ne sont pas des écrans : ne féliciter que lorsqu'il y a quelque chose à fêter, fixer la série à trois minutes, et ne jamais notifier après 22 h 30. Ce sont des règles, pas des maquettes, et ce sont elles qui décident si quelqu'un rouvre l'application demain.</p>
+        <p data-reveal><strong>Ce que je ferais autrement.</strong> J'ai dessiné le parcours d'entrée autour du sélecteur de fichiers parce que c'était le chemin propre, celui que la plateforme documente. Dix minutes de test sur de vrais téléphones, avant le premier écran, auraient montré que les livres arrivent par les messageries.</p>
+      </div>
+      <p style="margin-top: var(--space-5);" data-reveal>
+        <a class="btn btn--dark" href="https://play.google.com/store/apps/details?id=com.pelerain.kalaan" target="_blank" rel="noopener">
+          Voir Kalaan sur Google Play
+          <img class="btn__arrow" src="/assets/icons/arrow-right-line.svg" alt="" width="24" height="24">
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Appel à l'action -->
+  <section aria-labelledby="contact-heading">
+    <div class="container">
+      <span class="accent-line" id="contact-heading" data-reveal>Un projet similaire? Parlons-en.</span>
+      <div class="contact-panel" style="margin-top: var(--space-5);" data-reveal>
+        <p class="contact-panel__heading">Contactez-moi via</p>
+        <div class="contact-panel__grid">
+          <a class="contact-pill" href="mailto:hello@amadlouis.site">
+            <img class="contact-pill__icon" src="/assets/icons/mail-send-fill.svg" alt="" width="24" height="24">
+            <span>
+              <span class="contact-pill__label">Mon adresse email</span>
+              <span class="contact-pill__value">hello@amadlouis.site</span>
+            </span>
+          </a>
+          <a class="contact-pill" href="https://www.linkedin.com/in/amad-louis-loure" target="_blank" rel="noopener">
+            <img class="contact-pill__icon" src="/assets/icons/linkedin-box-fill.svg" alt="" width="24" height="24">
+            <span>
+              <span class="contact-pill__label">Mon compte LinkedIn</span>
+              <span class="contact-pill__value">amad-louis-loure</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="accent-line accent-line--md" style="color: var(--color-footer-accent);">C'etait Amad Louis!</p>
+    <p class="site-footer__note">Ce site web a été conçu avec amour <img class="heart-icon" src="/assets/icons/heart.svg" alt="" width="11" height="10">, rigueur et il continuera à s'améliorer. J'espère te revoir très bientôt pour parler de tes projets!</p>
+    <p class="site-footer__copyright"><span>©</span><span>Copyrights 2026. TOUS DROITS RESERVés</span></p>
+  </div>
+</footer>
+
+<!--
+  GSAP est chargé en defer : il ne bloque pas le premier rendu, et motion.js
+  n'anime que du contenu déjà visible.
+-->
+<script defer src="/assets/vendor/gsap.min.js"></script>
+<script defer src="/assets/vendor/ScrollTrigger.min.js"></script>
+
+<script defer src="/assets/js/nav.js"></script>
+<script defer src="/assets/js/reveal.js"></script>
+<script defer src="/assets/js/meta-bar.js"></script>
+<script defer src="/assets/js/focus-ring.js"></script>
+<script defer src="/assets/js/motion.js"></script>
+</body>
+</html>

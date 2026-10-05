@@ -7,7 +7,15 @@
   "use strict";
 
   function badgeLabel(type) {
-    return type === "pdf" ? "PDF" : "Site en ligne";
+    if (type === "pdf") return "PDF";
+    if (type === "etude") return "Étude de cas";
+    return "Site en ligne";
+  }
+
+  function ctaLabel(type) {
+    if (type === "pdf") return "Voir le PDF";
+    if (type === "etude") return "Voir l'étude de cas";
+    return "Voir le site";
   }
 
   function buildCard(project) {
@@ -54,9 +62,12 @@
     var cta = document.createElement("a");
     cta.className = "btn btn--dark project-card__cta";
     cta.href = project.url;
-    cta.target = "_blank";
-    cta.rel = "noopener";
-    cta.textContent = project.type === "pdf" ? "Voir le PDF" : "Voir le site";
+    // Une étude de cas vit sur ce site : elle reste dans le même onglet.
+    if (/^https?:/.test(project.url)) {
+      cta.target = "_blank";
+      cta.rel = "noopener";
+    }
+    cta.textContent = ctaLabel(project.type);
 
     article.appendChild(media);
     article.appendChild(title);

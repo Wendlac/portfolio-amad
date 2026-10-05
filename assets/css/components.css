@@ -196,6 +196,41 @@
   height: auto;
 }
 
+/* ---------- Visuels d'une étude de cas (pages de projet) ----------
+   Une figure pleine largeur, ou une paire d'écrans côte à côte qui
+   retombe en colonne sous 40rem. Les captures d'écrans sont livrées à
+   540 px de large : on ne les agrandit jamais au-delà. */
+
+.case-figure {
+  margin: 0;
+  max-width: 61.5rem; /* 984 px, la largeur native de la bannière */
+}
+
+.case-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Un écran de téléphone seul : jamais plus large que sa taille native */
+.case-figure--shot {
+  max-width: 20rem;
+}
+
+.case-figure--pair {
+  max-width: 44rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: start;
+}
+
+@media (max-width: 40rem) {
+  .case-figure--pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* ---------- Apparitions au scroll (discrètes) ---------- */
 
 [data-reveal] {
