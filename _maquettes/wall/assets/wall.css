@@ -49,6 +49,10 @@
   --rouge:       #FF7877;
   --rouge-texte: #BA5857;
 
+  /* Le survol, un seul geste pour tout ce qui est cliquable. */
+  --survol:       #A8E7FE;
+  --survol-encre: #032430;
+
   --stepper-vide: #A3B8BC;
   --stepper-plein:#083038;
 
@@ -158,10 +162,7 @@ body {
   transition: filter 200ms var(--entree);
 }
 
-/* Le survol n'est pas dans le SVG : j'assombris le tout d'un cran plutôt
-   que d'inventer une seconde paire de teintes. */
-.projet:hover { filter: brightness(0.97); }
-.projet:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
+.projet:focus-visible { outline: none; }
 
 .projet__nom {
   margin: 0;
@@ -190,6 +191,7 @@ body {
 
 .projet__annee { color: var(--encre); justify-self: start; }
 .projet__lien { color: var(--cyan-texte); justify-self: end; }
+
 .projet svg { width: 14px; height: 14px; flex: none; }
 
 /* ---------- Qui suis je ---------- */
@@ -203,8 +205,6 @@ body {
 .prose p:last-child { margin-bottom: 0; }
 
 .prose a { text-decoration: none; }
-.prose a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.prose a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 
 .a-cyan  { color: var(--cyan-texte); }
 .a-rouge { color: var(--rouge-texte); }
@@ -245,8 +245,7 @@ body {
   text-decoration: none;
 }
 
-.lien-ligne:hover .lien-ligne__aller { text-decoration: underline; text-underline-offset: 3px; }
-.lien-ligne:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
+.lien-ligne:focus-visible { outline: none; }
 
 .lien-ligne__ou {
   display: inline-flex;
@@ -288,6 +287,39 @@ body {
   font-size: 13px;
   line-height: 18px;
   color: var(--texte);
+}
+
+/* ---------- Le survol ----------
+
+   Un seul geste pour tout ce qui est cliquable : fond #A8E7FE, contenu
+   #032430, 4px en vertical et 8px en horizontal.
+
+   Le padding est posé EN PERMANENCE et annulé par une marge négative de
+   même valeur. Sans ça, l'arrivée du fond au survol repousserait le texte
+   de 8px et tout bougerait sous le pointeur. Là, rien ne se déplace :
+   seules la couleur et le fond apparaissent.
+
+   La même règle sert au focus clavier, d'où la suppression des contours
+   pointillés : la cible est désignée de la même façon à la souris et au
+   clavier. */
+
+.projet__lien,
+.lien-ligne__aller,
+.prose a {
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: 4px;
+  transition: background-color 160ms var(--entree), color 160ms var(--entree);
+}
+
+.projet:hover .projet__lien,
+.projet:focus-visible .projet__lien,
+.lien-ligne:hover .lien-ligne__aller,
+.lien-ligne:focus-visible .lien-ligne__aller,
+.prose a:hover,
+.prose a:focus-visible {
+  background-color: var(--survol);
+  color: var(--survol-encre);
 }
 
 /* ---------- Le stepper latéral ----------
