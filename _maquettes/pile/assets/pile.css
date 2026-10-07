@@ -188,32 +188,60 @@ body[data-grille="true"] .grille { opacity: 1; }
 
 /* ---------- Couverture ---------- */
 
+/*
+  Relevé sur la maquette du bandeau (image 1312 de large, fond transparent
+  — elle ne dit donc rien de la couleur du papier, qui ne bouge pas) :
+
+    nom      encre x 63..161, lignes à y 118 et 172
+             → hauteur d'encre 31px, interligne 54px
+    rôle     deux lignes, encre #14110F, départ x 501
+    lieu     quatre lignes, encre #575451, aligné à droite
+    lignes   16px d'une ligne à l'autre pour les deux étiquettes
+             → c'est l'étiquette du site, 11/16, inchangée
+
+  Le corps du nom est résolu par DEUX contraintes au lieu d'une, ce qui
+  tranche aussi la graisse : à 40px, le 700 donne 30,8px d'encre pour 31
+  relevés et 101px de largeur pour 99, soit 1px d'écart sur chacune. Le 900
+  tombe juste en hauteur mais rate la largeur de 5%. C'est donc du 700.
+
+  Le nom descend ainsi de 96px à 40px — la taille des titres de dossier.
+  Même corps pour le nom et pour les sections : la hiérarchie se fait à la
+  place et non à l'échelle, et le nom cesse de crier.
+
+  Les trois blocs sont centrés sur un même axe : sur la maquette, l'encre
+  du nom (118..202), celle du rôle (148..172) et celle du lieu (132..188)
+  ont toutes 160 pour milieu.
+
+  Horizontalement, le rôle démarre à 501 sur 1312, soit entre deux
+  colonnes. Je le pose sur la colonne 5 — 35px à gauche de la maquette,
+  mais sur la grille, et la maquette est une capture recadrée dont je ne
+  peux pas déduire les marges au pixel.
+*/
 .masthead {
   grid-column: 1 / 13;
   grid-row: 1;
   display: grid;
   grid-template-columns: subgrid;
+  align-items: center;
   padding-bottom: 128px;
 }
 
 .masthead__nom {
-  grid-column: 1 / 7;
+  grid-column: 1 / 5;
   margin: 0;
-  font-size: 96px;
-  line-height: 96px;
-  font-weight: 900;
+  font-size: 40px;
+  line-height: 56px;
+  font-weight: 700;
   letter-spacing: var(--serre);
 }
 
 .masthead__role {
-  grid-column: 7 / 10;
+  grid-column: 5 / 8;
   margin: 0;
-  align-self: end;
 }
 
 .masthead__lieu {
   grid-column: 10 / 13;
-  align-self: end;
   text-align: right;
 }
 
@@ -567,18 +595,23 @@ body[data-ouvert] .page { visibility: visible; }
   :root { --marge: 40px; }
   .enveloppe { grid-template-rows: none; }
   .pied { grid-row: auto; }
+  /* Le corps du nom ne bouge plus : à 40px il tient à toutes les largeurs,
+     ce sont les colonnes qui se resserrent. */
   .masthead { padding-bottom: 96px; }
-  .masthead__nom { grid-column: 1 / 9; font-size: 72px; line-height: 72px; }
-  .masthead__role { grid-column: 9 / 13; }
-  .masthead__lieu { grid-column: 1 / 13; margin-top: 24px; text-align: left; }
+  .masthead__nom { grid-column: 1 / 5; }
+  .masthead__role { grid-column: 5 / 9; }
+  .masthead__lieu { grid-column: 9 / 13; }
   .pile { grid-column: 1 / 13; grid-row: auto; }
 }
 
 @media (max-width: 720px) {
   :root { --marge: 24px; --chevauche: 24px; --lever: 32px; }
-  .masthead { padding-bottom: 64px; }
-  .masthead__nom { font-size: 48px; line-height: 48px; }
-  .masthead__role { grid-column: 1 / 13; margin-top: 16px; }
+  /* En une colonne, les trois blocs se suivent : plus d'axe commun à tenir,
+     donc on les cale en haut. */
+  .masthead { padding-bottom: 64px; align-items: start; }
+  .masthead__nom { grid-column: 1 / 13; }
+  .masthead__role { grid-column: 1 / 13; margin-top: 24px; }
+  .masthead__lieu { grid-column: 1 / 13; margin-top: 24px; text-align: left; }
   .feuille { grid-template-columns: 1fr 24px; gap: 16px; padding: 28px 20px var(--reserve); }
   .feuille__titre { font-size: 28px; line-height: 32px; }
   .feuille__meta { display: none; }   /* l'info reste dans la page ouverte */
