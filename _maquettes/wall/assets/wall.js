@@ -49,7 +49,7 @@ var LIENS = [
   { icone: "tiktok",   ou: "Sur Tiktok",
     quoi: "Vous trouverez du contenu sur le design, et mes chroniques sur la tech",
     aller: "Visiter", url: null },
-  { icone: "youtube",  ou: "Sur Tiktok",
+  { icone: "youtube",  ou: "Sur Youtube",
     quoi: "Vous y trouverez aussi du contenu sur le design, et mes chroniques sur la tech",
     aller: "Visiter", url: null },
   { icone: "linkedin", ou: "Sur linkedIn",
