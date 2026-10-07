@@ -1,0 +1,583 @@
+/*
+  LA PILE — exploration : suisse moderne + minimalisme japonais + 2D.
+
+  LE PARTI PRIS, EN UNE PHRASE
+  Le site est monochrome. La couleur n'apparaît QUE pendant la transition,
+  dans les traits du loader. C'est ce qui réconcilie les trois références :
+  le minimalisme japonais demande la retenue, le suisse demande un système,
+  et la 2D d'Arcane frappe d'autant plus fort qu'elle est rationnée. Si la
+  couleur était partout, elle ne vaudrait plus rien nulle part.
+
+  LA GRILLE
+  12 colonnes, gouttière 24px, marges 64px, maximum 1440.
+  Ligne de base de 8px : toutes les hauteurs et tous les espacements sont
+  des multiples de 8, interlignes compris, sans exception.
+
+  L'ÉCHELLE TYPOGRAPHIQUE
+  Suisse : des paliers, pas du fluide. Un rapport constant de 1,5 environ,
+  et des interlignes en px entiers pour ne pas casser la ligne de base.
+     96 / 96   titre de couverture (900)
+     40 / 48   titre de page ouverte (700)
+     24 / 32   intertitre (500)
+     16 / 24   texte courant (400)
+     11 / 16   micro-libellé, chasse fixe, interlettrage +0,10em, capitales
+
+  LA 2D
+  Trois moyens, aucun ne demande d'image :
+    1. un grain en feTurbulence sur toute la page — c'est la texture
+       peinte, le grain de papier ;
+    2. des plans de couleur plats cernés d'un trait d'encre, dans la
+       marque de couverture : le vocabulaire d'Arcane réduit à sa grammaire
+       la plus simple, et qui redit le motif de la pile ;
+    3. les traits du loader, qui sont de la peinture pure.
+*/
+
+:root {
+  /* --- encre et papier --- */
+  --paper:    #F2F0EA;
+  --paper-up: #F7F5F1;   /* feuille soulevée, plus claire que le fond */
+  --ink:      #14110F;
+  --ink-70:   #575451;   /* texte secondaire — 6,6:1 sur le papier */
+  --ink-40:   #8F8C88;
+  --ink-16:   rgba(20, 17, 15, 0.16);
+  --ink-08:   rgba(20, 17, 15, 0.08);
+
+  /* --- les cinq traits. La seule couleur du site. --- */
+  --t1: #1E6F6B;   /* vert-bleu profond */
+  --t2: #D1495B;   /* rouge */
+  --t3: #E9A23B;   /* or */
+  --t4: #3D348B;   /* violet */
+  --t5: #4FB0C6;   /* cyan */
+
+  /* --- grille --- */
+  --marge: 64px;
+  --gout: 24px;
+  --max: 1440px;
+  --bl: 8px;              /* ligne de base */
+
+  /* --- la pile --- */
+  --feuille-h: 112px;     /* 14 lignes de base */
+  --feuille-tirer: 32px;  /* de combien une feuille sort au survol */
+
+  /* --- mouvement --- */
+  --sortie: cubic-bezier(0.65, 0, 0.35, 1);
+  --entree: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Satoshi", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Le grain ----------
+   Posé une fois sur toute la page, en multiply très faible. C'est ce qui
+   empêche l'aplat de papier de ressembler à du #F2F0EA et le rapproche
+   d'une surface peinte. */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: multiply;
+}
+
+.grain svg { width: 100%; height: 100%; }
+
+/* ---------- Grille de repérage ----------
+   La grille suisse, visible. On la montre, c'est la méthode qui parle. */
+
+.grille {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 240ms var(--sortie);
+}
+
+body[data-grille="true"] .grille { opacity: 1; }
+
+.grille__inner {
+  max-width: var(--max);
+  height: 100%;
+  margin-inline: auto;
+  padding-inline: var(--marge);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gout);
+}
+
+.grille__inner span { background: rgba(209, 73, 91, 0.06); }
+
+/* ---------- Trame générale ---------- */
+
+/*
+  Quatre rangées, posées explicitement. Sans ça, le placement automatique
+  met la marque et le titre de la pile dans la même rangée — donc la
+  rangée prend la hauteur de la marque — et la liste tombe en dessous au
+  lieu de se tenir à côté. La marque enjambe les rangées 2 et 3.
+*/
+.enveloppe {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding: var(--marge);
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto auto auto 1fr;
+  gap: var(--gout);
+}
+
+/* ---------- Micro-libellé ---------- */
+
+.mono {
+  font-family: "Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink-70);
+}
+
+.mono--ink { color: var(--ink); }
+
+/* ---------- En-tête : le bloc d'identité ---------- */
+
+.masthead {
+  grid-column: 1 / 13;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: subgrid;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.masthead__nom {
+  grid-column: 1 / 7;
+  margin: 0;
+  font-size: 96px;
+  line-height: 96px;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+
+.masthead__role {
+  grid-column: 7 / 10;
+  margin: 0;
+  align-self: end;
+}
+
+.masthead__lieu {
+  grid-column: 10 / 13;
+  align-self: end;
+  text-align: right;
+}
+
+.masthead__lieu p { margin: 0; }
+
+/* ---------- La marque 2D ----------
+   Des plans de couleur plats, cernés d'un trait d'encre, qui se recouvrent :
+   c'est le motif de la pile, dit en peinture plutôt qu'en interface. */
+
+.marque {
+  grid-column: 1 / 5;
+  grid-row: 2 / span 2;
+  margin-top: 64px;
+  align-self: start;
+}
+
+.marque svg { display: block; width: 100%; height: auto; }
+
+.marque__plan { transition: transform 900ms var(--entree); }
+
+/* ---------- La pile ---------- */
+
+.pile-titre {
+  grid-column: 5 / 13;
+  grid-row: 2;
+  align-self: end;
+  margin: 64px 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.pile {
+  grid-column: 5 / 13;
+  grid-row: 3;
+  align-self: start;
+  margin: 0 0 96px;
+  padding: 0;
+  list-style: none;
+  /* la pile a sa propre ombre : c'est une liasse posée sur le papier */
+  filter: drop-shadow(0 24px 48px rgba(20, 17, 15, 0.10));
+}
+
+.feuille {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: var(--feuille-h);
+  padding: 0 24px;
+  border: 0;
+  border-top: 1px solid var(--ink);
+  background: var(--paper-up);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 48px 1fr auto 32px;
+  align-items: center;
+  gap: 24px;
+  transition: transform 420ms var(--entree),
+              background 240ms var(--sortie);
+}
+
+.pile li:last-child .feuille { border-bottom: 1px solid var(--ink); }
+
+/* On tire la feuille hors de la liasse. C'est le geste, pas une décoration :
+   la pile ne se lit comme une pile que quand une feuille en sort. */
+.feuille:hover,
+.feuille:focus-visible {
+  transform: translateX(var(--feuille-tirer));
+  background: var(--paper);
+}
+
+.feuille:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.feuille__num { color: var(--ink-40); }
+
+.feuille__titre {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.feuille__meta { text-align: right; }
+
+.feuille__fleche {
+  width: 32px;
+  height: 8px;
+  position: relative;
+  justify-self: end;
+}
+
+.feuille__fleche::before {
+  content: "";
+  position: absolute;
+  inset: 3px 0 auto 0;
+  height: 1px;
+  background: var(--ink);
+  transform: scaleX(0.4);
+  transform-origin: left;
+  transition: transform 420ms var(--entree);
+}
+
+.feuille__fleche::after {
+  content: "";
+  position: absolute;
+  right: 0; top: 0;
+  width: 8px; height: 8px;
+  border-top: 1px solid var(--ink);
+  border-right: 1px solid var(--ink);
+  transform: rotate(45deg);
+}
+
+.feuille:hover .feuille__fleche::before,
+.feuille:focus-visible .feuille__fleche::before { transform: scaleX(1); }
+
+/* ---------- Pied ---------- */
+
+.pied {
+  grid-column: 1 / 13;
+  grid-row: 4;
+  align-self: end;
+  padding-top: 24px;
+  border-top: 1px solid var(--ink-16);
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.pied button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Le loader ----------
+   Cinq traits, cinq couleurs, qui se tirent de gauche à droite en décalé.
+   C'est la seule couleur du site, et elle ne dure que le temps d'ouvrir
+   une page. Le panneau monte, les traits se tirent, le panneau sort par le
+   haut en découvrant la page déjà en place dessous. */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  background: var(--paper);
+  transform: translateY(100%);
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  gap: 24px;
+  pointer-events: none;
+}
+
+body[data-phase="monte"] .loader,
+body[data-phase="traits"] .loader {
+  transform: translateY(0);
+  transition: transform 360ms var(--sortie);
+}
+
+body[data-phase="sort"] .loader {
+  transform: translateY(-100%);
+  transition: transform 420ms var(--entree);
+}
+
+.loader__traits {
+  display: grid;
+  gap: var(--bl);
+  width: min(480px, 60vw);
+}
+
+.loader__trait {
+  height: var(--bl);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.loader__trait:nth-child(1) { background: var(--t1); }
+.loader__trait:nth-child(2) { background: var(--t2); }
+.loader__trait:nth-child(3) { background: var(--t3); }
+.loader__trait:nth-child(4) { background: var(--t4); }
+.loader__trait:nth-child(5) { background: var(--t5); }
+
+body[data-phase="traits"] .loader__trait,
+body[data-phase="sort"] .loader__trait {
+  transform: scaleX(1);
+  transition: transform 320ms var(--sortie);
+}
+
+/* le décalage : chaque trait part 56ms après le précédent */
+body[data-phase="traits"] .loader__trait:nth-child(1),
+body[data-phase="sort"] .loader__trait:nth-child(1) { transition-delay: 0ms; }
+body[data-phase="traits"] .loader__trait:nth-child(2),
+body[data-phase="sort"] .loader__trait:nth-child(2) { transition-delay: 56ms; }
+body[data-phase="traits"] .loader__trait:nth-child(3),
+body[data-phase="sort"] .loader__trait:nth-child(3) { transition-delay: 112ms; }
+body[data-phase="traits"] .loader__trait:nth-child(4),
+body[data-phase="sort"] .loader__trait:nth-child(4) { transition-delay: 168ms; }
+body[data-phase="traits"] .loader__trait:nth-child(5),
+body[data-phase="sort"] .loader__trait:nth-child(5) { transition-delay: 224ms; }
+
+.loader__legende {
+  display: flex;
+  justify-content: space-between;
+  width: min(480px, 60vw);
+}
+
+/* ---------- La page ouverte ---------- */
+
+.page {
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--paper);
+  visibility: hidden;
+}
+
+body[data-ouvert] .page { visibility: visible; }
+
+.page__inner {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding: var(--marge);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gout);
+  align-content: start;
+}
+
+.page__tete {
+  grid-column: 1 / 13;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.page__num { grid-column: 1 / 2; }
+
+.page__titre {
+  grid-column: 2 / 9;
+  margin: 0;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.fermer {
+  grid-column: 11 / 13;
+  justify-self: end;
+  padding: 8px 16px;
+  margin: -8px -16px -8px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.fermer:hover { text-decoration: underline; text-underline-offset: 4px; }
+.fermer:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.page__corps { grid-column: 1 / 13; padding-block: 48px 96px; }
+
+/* ---------- Liste de projets, à la suisse ----------
+   Pas de vignette qui flotte : une ligne par projet, les colonnes
+   alignées sur la grille, et l'aperçu qui n'arrive qu'au survol. */
+
+.projets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+
+.projet { border-bottom: 1px solid var(--ink-16); }
+
+.projet__lien {
+  display: grid;
+  grid-template-columns: 48px 1fr 1fr 96px;
+  gap: var(--gout);
+  align-items: baseline;
+  padding: 24px 0;
+  color: inherit;
+  text-decoration: none;
+  transition: padding-left 420ms var(--entree);
+}
+
+.projet__lien:hover { padding-left: 16px; }
+.projet__lien:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+.projet__titre {
+  margin: 0;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.projet__quoi { margin: 0; color: var(--ink-70); }
+.projet__sortie { justify-self: end; }
+
+/* l'aperçu suit le pointeur, hors du flux : c'est la seule chose du site
+   qui bouge librement, et elle disparaît dès qu'on ne la demande plus */
+.apercu {
+  position: fixed;
+  z-index: 750;
+  width: 280px;
+  aspect-ratio: 4 / 3;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.96);
+  transition: opacity 240ms var(--sortie), transform 420ms var(--entree);
+  box-shadow: 0 16px 40px rgba(20, 17, 15, 0.18);
+  overflow: hidden;
+}
+
+.apercu[data-visible="true"] { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.apercu img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---------- Coquilles ---------- */
+
+.coquille {
+  display: grid;
+  gap: 8px;
+  padding: 48px 0;
+  border-top: 1px solid var(--ink-16);
+}
+
+/* ---------- Adaptation ---------- */
+
+@media (max-width: 1080px) {
+  :root { --marge: 40px; }
+  .enveloppe { grid-template-rows: none; }
+  .pied { grid-row: auto; }
+  .masthead__nom { grid-column: 1 / 9; font-size: 72px; line-height: 72px; }
+  .masthead__role { grid-column: 9 / 13; }
+  .masthead__lieu { grid-column: 1 / 13; margin-top: 24px; text-align: left; }
+  .marque { grid-column: 1 / 13; grid-row: auto; margin-top: 48px; max-width: 320px; }
+  .pile-titre, .pile { grid-column: 1 / 13; grid-row: auto; }
+  .pile-titre { margin-top: 48px; }
+}
+
+@media (max-width: 720px) {
+  :root { --marge: 24px; --feuille-h: 96px; --feuille-tirer: 16px; }
+  .masthead__nom { font-size: 48px; line-height: 48px; }
+  .masthead__role { grid-column: 1 / 13; margin-top: 16px; }
+  .feuille { grid-template-columns: 32px 1fr 24px; gap: 16px; }
+  .feuille__titre { font-size: 28px; line-height: 32px; }
+  .feuille__meta { display: none; }   /* l'info reste dans la page ouverte */
+  .page__titre { grid-column: 2 / 13; font-size: 28px; line-height: 32px; }
+  .fermer { grid-column: 1 / 13; justify-self: start; margin-top: 16px; }
+  /* Les quatre colonnes se replient en une seule, et chaque enfant de la
+     grille reçoit sa rangée. Placer .projet__quoi ne servirait à rien :
+     ce n'est pas un enfant de la grille, il vit dans .projet__corps. */
+  .projet__lien { grid-template-columns: 32px 1fr; gap: 8px 16px; padding: 24px 0; }
+  .projet__num    { grid-column: 1; grid-row: 1; }
+  .projet__corps  { grid-column: 2; grid-row: 1; }
+  .projet__rendu  { grid-column: 2; grid-row: 2; }
+  .projet__sortie { grid-column: 2; grid-row: 3; justify-self: start; margin-top: 8px; }
+  .apercu { display: none; }          /* pas de pointeur, pas d'aperçu */
+}
+
+/* ---------- Mouvement réduit ----------
+   Le loader garde ses couleurs mais ne se tire plus : les traits sont
+   là d'emblée, et tout le reste se coupe net. */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .loader__trait { transform: scaleX(1); }
+}
