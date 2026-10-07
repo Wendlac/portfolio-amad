@@ -1,5 +1,5 @@
 /*
-  LA PILE — ouverture d'une feuille.
+  LE CLASSEUR — ouverture d’un dossier.
 
   Le déroulé, en quatre temps. Chacun est une valeur de body[data-phase],
   ce qui veut dire que toute la chorégraphie est dans le CSS et que ce
@@ -114,16 +114,11 @@
       titre: "Qui suis je?",
       corps: function () { return coquille("Le parcours, la méthode, le collectif Kraafte."); }
     },
-    contact: {
-      num: "04",
-      titre: "Contact",
-      corps: function () { return coquille("hello@amadlouis.site, LinkedIn."); }
-    }
   };
 
   /* ---------- Ouverture ---------- */
 
-  var feuilleAppelante = null;
+  var dossierAppelant = null;
 
   function phase(nom) {
     if (nom) body.dataset.phase = nom;
@@ -141,16 +136,16 @@
 
   /* La page ouverte est un dialogue modal : tant qu'elle est là, la pile
      derrière ne doit être ni tabulable ni défilable. Sans ça, on tabule
-     dans des feuilles qu'on ne voit plus, et la molette fait glisser le
+     dans des dossiers qu'on ne voit plus, et la molette fait glisser le
      fond sous la page. */
   function fond(actif) {
     enveloppe.inert = !actif;
     document.documentElement.style.overflow = actif ? "" : "hidden";
   }
 
-  function ouvrir(cle, feuille) {
+  function ouvrir(cle, dossier) {
     if (body.dataset.ouvert) return;
-    feuilleAppelante = feuille;
+    dossierAppelant = dossier;
     body.dataset.ouvert = cle;
     fond(false);
 
@@ -182,11 +177,11 @@
     delete body.dataset.ouvert;
     phase(null);
     fond(true);
-    if (feuilleAppelante) { feuilleAppelante.focus(); feuilleAppelante = null; }
+    if (dossierAppelant) { dossierAppelant.focus(); dossierAppelant = null; }
   }
 
-  document.querySelectorAll(".feuille").forEach(function (f) {
-    f.addEventListener("click", function () { ouvrir(f.dataset.sheet, f); });
+  document.querySelectorAll(".dossier__ouvrir").forEach(function (b) {
+    b.addEventListener("click", function () { ouvrir(b.dataset.sheet, b); });
   });
 
   document.getElementById("fermer").addEventListener("click", fermer);

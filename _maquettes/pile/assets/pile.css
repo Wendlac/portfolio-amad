@@ -63,12 +63,17 @@
   --serre: -0.05em;       /* au-dessus de 16px, partout */
 
   /* --- le classeur ---
-     Les dossiers sont glissés les uns sous les autres : chacun recouvre le
-     haut du suivant de --chevauche. Le premier est devant, le dernier au
-     fond, comme dans un tiroir qu'on regarde de face.
-     Au survol, le dossier se lève de --lever, c'est-à-dire plus haut que
-     ce dont il est recouvert : il sort donc vraiment de derrière celui qui
-     le cachait, au lieu de simplement glisser. */
+     Le pas d'un onglet au suivant vaut aussi la levée : un dossier se lève
+     de son propre décalage, donc son onglet arrive toujours sur la ligne
+     du haut. Voir le relevé en tête du bloc « Le classeur ». */
+  --pas-onglet: 40px;
+  --h-onglet: 32px;       /* < --pas-onglet, pour laisser voir une tranche */
+  --biais: 48px;          /* la coupe en diagonale de l'onglet */
+  --retrait: 24px;        /* par rang de profondeur */
+  --l-onglet: 224px;
+  --r-dossier: 16px;
+  --h-dossiers: 240px;    /* du haut des onglets au tiroir */
+  --h-tiroir: 320px;
   --chevauche: 32px;      /* de combien un dossier est recouvert */
   --lever: 48px;          /* de combien il sort, par le bas vers le haut */
 
@@ -247,106 +252,160 @@ body[data-grille="true"] .grille { opacity: 1; }
 
 .masthead__lieu p { margin: 0; }
 
-/* ---------- La pile ----------
-   Toute la largeur, maintenant qu'il n'y a plus rien à sa gauche. */
+/* ---------- Le classeur ----------
+   Relevé sur les quatre SVG du classeur (viewBox 687x436) :
 
-.pile {
-  grid-column: 1 / 13;
+     dossier         onglet  largeur  retrait/côté
+     Qui suis je?    y 0     536      48
+     Mes lectures    y 41,5  600      16
+     Mes projets     y 85,5  632      0
+
+   et la levée de chacun quand il devient actif :
+     Mes projets 80, Mes lectures 40, Qui suis je? 0.
+
+   LA RÈGLE QUI SORT DE CES CHIFFRES : la levée d'un dossier est
+   exactement son propre décalage d'onglet. Autrement dit son onglet
+   remonte toujours sur la MÊME ligne, celle du haut de la pile, quel que
+   soit son rang. C'est le geste réel — on tire le dossier jusqu'à ce que
+   son onglet dégage ceux de devant — et ça tient pour un nombre
+   quelconque de dossiers, sans valeur à ajouter.
+
+   Les pas relevés (41,5 puis 44 ; retraits 48, 16, 0) sont dessinés à la
+   main. Je les régularise sur la ligne de base : pas de 40, retrait de 24
+   par rang. Le dossier du fond et celui de devant retombent alors
+   exactement sur la maquette, seul celui du milieu bouge de 8px. */
+
+/* Neuf colonnes sur douze, pas la pleine largeur. La maquette du classeur
+   fait 687 x 436, soit 1,58 ; sur douze colonnes il tomberait à 2,74 et
+   le tiroir se lirait comme une dalle. Sur neuf, avec les hauteurs
+   ci-dessous, on retrouve 1,57. Les trois colonnes libres à droite sont
+   du vide assumé, pas un reste. */
+.classeur {
+  grid-column: 1 / 10;
   grid-row: 2;
   align-self: start;
+  position: relative;
+  height: calc(var(--h-dossiers) + var(--h-tiroir));
+}
+
+.classeur__dossiers {
+  position: absolute;
+  inset: 0;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Le classeur. Chaque dossier est glissé sous le précédent, et c'est le
-   premier qui est devant : l'ordre de profondeur est l'inverse de l'ordre
-   de lecture, exactement comme dans un tiroir. */
-.pile li { position: relative; }
-.pile li + li { margin-top: calc(var(--chevauche) * -1); }
-.pile li:nth-child(1) { z-index: 4; }
-.pile li:nth-child(2) { z-index: 3; }
-.pile li:nth-child(3) { z-index: 2; }
-.pile li:nth-child(4) { z-index: 1; }
+.dossier {
+  position: absolute;
+  top: calc(var(--pas-onglet) * var(--i));
+  left: calc(var(--retrait) * var(--d));
+  right: calc(var(--retrait) * var(--d));
+  bottom: 0;
+  z-index: var(--i);
+  transition: transform 520ms var(--entree);
+}
 
-/* Le dossier qu'on lève passe devant tous les autres, sinon il sortirait
-   derrière celui qui le recouvre. */
-.pile li:hover,
-.pile li:focus-within { z-index: 10; }
+/* On tire le dossier jusqu'à ce que son onglet arrive en haut, et il passe
+   devant les autres — sinon il sortirait derrière eux. */
+.dossier:hover,
+.dossier:focus-within {
+  z-index: 10;
+  transform: translateY(calc(var(--pas-onglet) * var(--i) * -1));
+}
 
-.feuille {
-  position: relative;
+.dossier__ouvrir {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  /* l'écriture en haut, la réserve en bas : voir --reserve */
-  padding: 40px 32px var(--reserve);
+  padding: 0;
   border: 0;
-  background: var(--paper-up);
-  color: inherit;
+  background: none;
   font: inherit;
+  color: inherit;
   text-align: left;
   cursor: pointer;
-  display: grid;
-  grid-template-columns: 1fr auto 32px;
-  align-items: baseline;
-  gap: 24px;
-  /* l'ombre porte vers le bas : c'est ce dossier-ci qui ombre celui qu'il
-     recouvre, et c'est elle qui tient lieu de filet */
-  box-shadow: 0 8px 16px -8px rgba(20, 17, 15, 0.20);
-  transition: transform 460ms var(--entree),
-              background 240ms var(--sortie),
-              box-shadow 460ms var(--entree);
 }
 
-/* On lève le dossier. Il monte de plus que ce dont il est recouvert, donc
-   il sort par le bas vers le haut de derrière le précédent — le geste
-   qu'on fait vraiment pour attraper un dossier dans un tiroir. L'ombre
-   grandit sous lui parce qu'il s'éloigne du fond. */
-.feuille:hover,
-.feuille:focus-visible {
-  transform: translateY(calc(var(--lever) * -1));
-  background: #FBFAF8;
-  box-shadow: 0 28px 48px -20px rgba(20, 17, 15, 0.32),
-              0 2px 4px rgba(20, 17, 15, 0.06);
+.dossier__ouvrir:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+/* L'onglet : un rectangle arrondi en haut à gauche, coupé en biais à
+   droite. C'est ce biais qui fait lire « dossier » plutôt qu'« onglet de
+   navigateur ». */
+.dossier__onglet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--l-onglet);
+  height: var(--h-onglet);
+  background: var(--teinte);
+  border-radius: var(--r-dossier) 0 0 0;
+  clip-path: polygon(0 0, calc(100% - var(--biais)) 0, 100% 100%, 0 100%);
 }
 
-.feuille:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: -2px;
-}
-
-.feuille__titre {
-  font-size: 40px;
-  line-height: 48px;
-  font-weight: 700;
+/* Le nom est posé PAR-DESSUS l'onglet et non dedans : le biais est un
+   clip-path, et il couperait le texte qui s'en approche. */
+.dossier__nom {
+  position: absolute;
+  top: 0;
+  left: 24px;
+  height: var(--h-onglet);
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
   letter-spacing: var(--serre);
+  color: var(--encre);
 }
 
-.feuille__meta { text-align: right; }
-
-.feuille__fleche {
-  width: 32px;
-  height: 8px;
-  position: relative;
-  justify-self: end;
-  align-self: center;
+.dossier__corps {
+  position: absolute;
+  top: calc(var(--h-onglet) - 1px);   /* 1px de recouvrement : pas de couture */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--teinte);
+  border-radius: 0 var(--r-dossier) 0 0;
 }
 
-/* Le chevron ne file plus vers la droite : le seul mouvement est la levée
-   du dossier. Il se contente de se révéler. */
-.feuille__fleche::after {
+/* La joue du tiroir, qui s'évase vers l'avant. */
+.classeur__cale {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--h-dossiers) - 24px);
+  height: 32px;
+  z-index: 20;
+  background: var(--ink);
+  clip-path: polygon(24px 0, calc(100% - 24px) 0, 100% 100%, 0 100%);
+}
+
+/* La face du tiroir. Elle passe devant tout : les dossiers y plongent, et
+   c'est elle qui coupe leur bas — donc leur hauteur réelle n'a aucune
+   importance. */
+.classeur__tiroir {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--h-tiroir);
+  z-index: 21;
+  border-radius: var(--r-dossier) var(--r-dossier) 0 0;
+  background: linear-gradient(180deg, #0B7196 0%, #000000 46%);
+}
+
+/* Le liseré métallique, qui déborde de 8px au-dessus de la face. */
+.classeur__tiroir::before {
   content: "";
   position: absolute;
-  right: 0; top: 0;
-  width: 8px; height: 8px;
-  border-top: 1px solid var(--ink);
-  border-right: 1px solid var(--ink);
-  transform: rotate(45deg);
-  opacity: 0.25;
-  transition: opacity 240ms var(--sortie);
+  left: 0;
+  right: 0;
+  top: -8px;
+  height: 16px;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(94deg, #F5F7F7, #032430);
 }
-
-.feuille:hover .feuille__fleche::after,
-.feuille:focus-visible .feuille__fleche::after { opacity: 1; }
 
 /* ---------- Pied ---------- */
 
@@ -601,20 +660,22 @@ body[data-ouvert] .page { visibility: visible; }
   .masthead__nom { grid-column: 1 / 5; }
   .masthead__role { grid-column: 5 / 9; }
   .masthead__lieu { grid-column: 9 / 13; }
-  .pile { grid-column: 1 / 13; grid-row: auto; }
+  .classeur { grid-column: 1 / 13; grid-row: auto; }
 }
 
 @media (max-width: 720px) {
-  :root { --marge: 24px; --chevauche: 24px; --lever: 32px; }
+  :root {
+    --marge: 24px; --chevauche: 24px; --lever: 32px;
+    --pas-onglet: 36px; --h-onglet: 30px; --biais: 32px;
+    --l-onglet: 200px; --retrait: 14px;
+    --h-dossiers: 144px; --h-tiroir: 180px;
+  }
   /* En une colonne, les trois blocs se suivent : plus d'axe commun à tenir,
      donc on les cale en haut. */
   .masthead { padding-bottom: 64px; align-items: start; }
   .masthead__nom { grid-column: 1 / 13; }
   .masthead__role { grid-column: 1 / 13; margin-top: 24px; }
   .masthead__lieu { grid-column: 1 / 13; margin-top: 24px; text-align: left; }
-  .feuille { grid-template-columns: 1fr 24px; gap: 16px; padding: 28px 20px var(--reserve); }
-  .feuille__titre { font-size: 28px; line-height: 32px; }
-  .feuille__meta { display: none; }   /* l'info reste dans la page ouverte */
   .pied { padding-top: 64px; flex-direction: column; gap: 16px; }
   .page__titre { grid-column: 1 / 13; font-size: 28px; line-height: 32px; }
   .fermer { grid-column: 1 / 13; justify-self: start; margin-top: 16px; }

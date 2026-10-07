@@ -62,36 +62,47 @@
     </div>
   </header>
 
-  <ul class="pile">
-    <li>
-      <button class="feuille" type="button" data-sheet="projets">
-        <span class="feuille__titre">Projets</span>
-        <span class="etiquette feuille__meta">Quatre livrables en ligne</span>
-        <span class="feuille__fleche" aria-hidden="true"></span>
-      </button>
-    </li>
-    <li>
-      <button class="feuille" type="button" data-sheet="lectures">
-        <span class="feuille__titre">Mes lectures</span>
-        <span class="etiquette feuille__meta">Ce que je lis, et pourquoi</span>
-        <span class="feuille__fleche" aria-hidden="true"></span>
-      </button>
-    </li>
-    <li>
-      <button class="feuille" type="button" data-sheet="profil">
-        <span class="feuille__titre">Qui suis je?</span>
-        <span class="etiquette feuille__meta">Parcours et m&eacute;thode</span>
-        <span class="feuille__fleche" aria-hidden="true"></span>
-      </button>
-    </li>
-    <li>
-      <button class="feuille" type="button" data-sheet="contact">
-        <span class="feuille__titre">Contact</span>
-        <span class="etiquette feuille__meta">hello@amadlouis.site</span>
-        <span class="feuille__fleche" aria-hidden="true"></span>
-      </button>
-    </li>
-  </ul>
+  <!--
+    Le classeur. L'ordre du balisage est l'ordre de PROFONDEUR, du fond
+    vers l'avant — c'est aussi celui du tiroir : le dossier du fond a son
+    onglet le plus haut, celui de devant le plus bas.
+
+    --i  rang de profondeur. Il sert à trois choses d'un coup : la hauteur
+         de l'onglet, le plan de superposition, et la levée. Un dossier se
+         lève exactement de son propre décalage, donc son onglet arrive
+         toujours sur la ligne du haut, quel que soit son rang.
+    --d  rang depuis l’avant. Il commande le retrait latéral : plus un
+         dossier est au fond, plus il est étroit.
+  -->
+  <div class="classeur">
+    <ul class="classeur__dossiers">
+      <li class="dossier" style="--i: 0; --d: 2; --teinte: #84D6FF; --encre: #032430">
+        <button class="dossier__ouvrir" type="button" data-sheet="profil">
+          <span class="dossier__onglet"></span>
+          <span class="dossier__nom">Qui suis je?</span>
+          <span class="dossier__corps"></span>
+        </button>
+      </li>
+      <li class="dossier" style="--i: 1; --d: 1; --teinte: #6897AF; --encre: #FFFFFF">
+        <button class="dossier__ouvrir" type="button" data-sheet="lectures">
+          <span class="dossier__onglet"></span>
+          <span class="dossier__nom">Mes lectures</span>
+          <span class="dossier__corps"></span>
+        </button>
+      </li>
+      <li class="dossier" style="--i: 2; --d: 0; --teinte: #1E94D0; --encre: #FFFFFF">
+        <button class="dossier__ouvrir" type="button" data-sheet="projets">
+          <span class="dossier__onglet"></span>
+          <span class="dossier__nom">Mes projets</span>
+          <span class="dossier__corps"></span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- la joue du tiroir, qui s'évase vers l'avant, puis la face -->
+    <div class="classeur__cale" aria-hidden="true"></div>
+    <div class="classeur__tiroir" aria-hidden="true"></div>
+  </div>
 
   <footer class="pied">
     <p class="etiquette" style="margin:0">Exploration&nbsp;— suisse moderne, minimalisme japonais, 2D</p>
