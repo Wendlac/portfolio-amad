@@ -81,7 +81,9 @@ body {
 
 /* ---------- En-tête ---------- */
 
-.avatar { width: 70px; height: 70px; display: block; }
+/* 58 x 70 : la boîte épouse le dessin, dont le viewBox a été recadré au
+   plus près (rapport 0,83). Plus de marge transparente sur les côtés. */
+.avatar { width: 58px; height: 70px; display: block; }
 
 .salut {
   margin: 32px 0 0;
