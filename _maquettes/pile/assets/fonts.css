@@ -1,21 +1,18 @@
 /*
-  Deux familles, pas trois.
+  Une seule famille : Satoshi.
 
-  Satoshi      grotesque neutre — c'est le pendant accessible de la
-               tradition suisse (Akzidenz, Univers, Helvetica) : pas de
-               caractère superflu, la hiérarchie se fait au poids et à la
-               taille, jamais à la fantaisie. Déjà auto-hébergé pour le
-               site, donc rien de nouveau à charger.
-  IBM Plex Mono  pour les micro-libellés : numéros de section, coordonnées,
-               états. Le chasse fixe fait le travail que fait la légende
-               technique sur une affiche suisse — il tient l'information
-               sèche à distance du texte courant.
+  Grotesque neutre — c'est le pendant accessible de la tradition suisse
+  (Akzidenz, Univers, Helvetica) : pas de caractère superflu, la hiérarchie
+  se fait au poids et à la taille, jamais à la fantaisie. Déjà auto-hébergé
+  pour le site, donc rien de nouveau à charger.
 
-  font-display: swap partout, sous-ensembles latin / latin-ext séparés
-  pour ne pas charger les diacritiques dont le français n'a pas besoin.
+  Les micro-libellés ne changent plus de famille : ils se distinguent par
+  les capitales, le corps de 11px et l'interlettrage ouvert. C'est suffisant
+  pour tenir l'information technique à distance du texte courant, et ça
+  évite de faire cohabiter deux dessins pour si peu.
+
+  font-display: swap partout.
 */
-
-/* ---------- Satoshi ---------- */
 
 @font-face {
   font-family: "Satoshi";
@@ -44,39 +41,4 @@
   font-weight: 900;
   font-display: swap;
   src: url("/assets/fonts/satoshi/satoshi-900.woff2") format("woff2");
-}
-
-/* ---------- IBM Plex Mono ---------- */
-
-@font-face {
-  font-family: "Plex Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/assets/fonts/plex-mono/plex-mono-400-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122;
-}
-@font-face {
-  font-family: "Plex Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/assets/fonts/plex-mono/plex-mono-400-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1EFF;
-}
-@font-face {
-  font-family: "Plex Mono";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/assets/fonts/plex-mono/plex-mono-500-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122;
-}
-@font-face {
-  font-family: "Plex Mono";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/assets/fonts/plex-mono/plex-mono-500-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1EFF;
 }

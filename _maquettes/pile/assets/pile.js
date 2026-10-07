@@ -78,19 +78,19 @@
         '<a class="projet__lien" href="' + esc(p.url) + '"' +
            (externe ? ' target="_blank" rel="noopener"' : "") +
            ' data-apercu="' + esc(p.image) + '">' +
-          '<span class="mono projet__num">' + String(i + 1).padStart(2, "0") + "</span>" +
+          '<span class="etiquette projet__num">' + String(i + 1).padStart(2, "0") + "</span>" +
           '<span class="projet__corps"><h3 class="projet__titre">' + esc(p.titre) + "</h3>" +
             '<p class="projet__quoi">' + esc(p.quoi) + "</p></span>" +
-          '<span class="mono projet__rendu">' + esc(p.rendu) + "</span>" +
-          '<span class="mono mono--ink projet__sortie">' + esc(p.sortie) + " &rarr;</span>" +
+          '<span class="etiquette projet__rendu">' + esc(p.rendu) + "</span>" +
+          '<span class="etiquette etiquette--ink projet__sortie">' + esc(p.sortie) + " &rarr;</span>" +
         "</a></li>";
     }).join("") + "</ul>";
   }
 
   function coquille(quoi) {
     return '<div class="coquille">' +
-      '<p class="mono mono--ink">Section non encore dessinée</p>' +
-      '<p class="mono">' + esc(quoi) + "</p></div>";
+      '<p class="etiquette etiquette--ink">Section non encore dessinée</p>' +
+      '<p class="etiquette">' + esc(quoi) + "</p></div>";
   }
 
   var PAGES = {
@@ -219,25 +219,6 @@
     apercu.style.left = e.clientX + "px";
     apercu.style.top = e.clientY + "px";
   });
-
-  /* ---------- La marque 2D ----------
-     Les plans se décalent très légèrement avec le pointeur. Le but n'est
-     pas l'effet : c'est de donner de l'épaisseur à des aplats, comme un
-     décor peint sur plusieurs couches. */
-
-  var plans = document.querySelectorAll(".marque__plan");
-
-  if (finPointeur.matches && !reduit.matches && plans.length) {
-    window.addEventListener("pointermove", function (e) {
-      var x = (e.clientX / window.innerWidth - 0.5) * 2;   // -1 → 1
-      var y = (e.clientY / window.innerHeight - 0.5) * 2;
-      plans.forEach(function (plan, i) {
-        var f = (i + 1) * 3;   // le plan du fond bouge le moins
-        plan.style.transform = "translate(" + (x * f).toFixed(2) + "px," +
-                                              (y * f).toFixed(2) + "px)";
-      });
-    }, { passive: true });
-  }
 
   /* ---------- La grille, à la demande ----------
      Montrer la grille fait partie du propos : c'est la méthode suisse

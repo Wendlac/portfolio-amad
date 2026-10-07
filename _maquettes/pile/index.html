@@ -14,6 +14,11 @@
   Les trois autres s'ouvrent avec le même rituel mais sur une coquille :
   tant qu'on n'a pas dessiné leur contenu, je ne l'invente pas.
 
+  Sur l'accueil, aucun trait n'est tracé. Les feuilles ne sont pas
+  séparées par des filets : elles se détachent par leur propre valeur et
+  par l'ombre que porte celle du dessus. C'est une liasse de papier, pas
+  un tableau.
+
   Le parti pris et la grille sont documentés en tête de assets/pile.css,
   la chorégraphie d'ouverture en tête de assets/pile.js.
 -->
@@ -46,11 +51,11 @@
 
   <header class="masthead">
     <h1 class="masthead__nom">Amad<br>Louis</h1>
-    <p class="masthead__role mono mono--ink">
+    <p class="masthead__role etiquette etiquette--ink">
       Design partner&nbsp;— designer d&rsquo;interfaces, ind&eacute;pendant.
       Applications m&eacute;tier, produits mobiles et web.
     </p>
-    <div class="masthead__lieu mono">
+    <div class="masthead__lieu etiquette">
       <p>Ouagadougou, Burkina&nbsp;Faso</p>
       <p>12.3714&deg; N, 1.5197&deg; W</p>
       <p>GMT+0</p>
@@ -58,81 +63,49 @@
     </div>
   </header>
 
-  <!--
-    La marque 2D. Quatre plans de couleur plats, cernés d'un trait
-    d'encre, qui se recouvrent : c'est la pile elle-même, dite en
-    peinture. Les couleurs sont celles des traits du loader, et c'est
-    le seul autre endroit du site où elles apparaissent.
-  -->
-  <div class="marque" aria-hidden="true">
-    <svg viewBox="0 0 320 240" fill="none">
-      <g class="marque__plan">
-        <path d="M24 196 L232 196 L268 160 L60 160 Z" fill="#3D348B"/>
-        <path d="M24 196 L232 196 L268 160 L60 160 Z" stroke="#14110F" stroke-width="2"/>
-      </g>
-      <g class="marque__plan">
-        <path d="M24 156 L232 156 L268 120 L60 120 Z" fill="#1E6F6B"/>
-        <path d="M24 156 L232 156 L268 120 L60 120 Z" stroke="#14110F" stroke-width="2"/>
-      </g>
-      <g class="marque__plan">
-        <path d="M24 116 L232 116 L268 80 L60 80 Z" fill="#E9A23B"/>
-        <path d="M24 116 L232 116 L268 80 L60 80 Z" stroke="#14110F" stroke-width="2"/>
-      </g>
-      <g class="marque__plan">
-        <path d="M24 76 L232 76 L268 40 L60 40 Z" fill="#D1495B"/>
-        <path d="M24 76 L232 76 L268 40 L60 40 Z" stroke="#14110F" stroke-width="2"/>
-      </g>
-    </svg>
-  </div>
-
-  <div class="pile-titre">
-    <p class="mono mono--ink">La pile</p>
-    <p class="mono">Quatre feuilles&nbsp;— tirez-en une</p>
-  </div>
-
   <ul class="pile">
     <li>
       <button class="feuille" type="button" data-sheet="projets">
-        <span class="mono feuille__num">01</span>
+        <span class="etiquette feuille__num">01</span>
         <span class="feuille__titre">Projets</span>
-        <span class="mono feuille__meta">Quatre livrables en ligne</span>
+        <span class="etiquette feuille__meta">Quatre livrables en ligne</span>
         <span class="feuille__fleche" aria-hidden="true"></span>
       </button>
     </li>
     <li>
       <button class="feuille" type="button" data-sheet="lectures">
-        <span class="mono feuille__num">02</span>
+        <span class="etiquette feuille__num">02</span>
         <span class="feuille__titre">Mes lectures</span>
-        <span class="mono feuille__meta">Ce que je lis, et pourquoi</span>
+        <span class="etiquette feuille__meta">Ce que je lis, et pourquoi</span>
         <span class="feuille__fleche" aria-hidden="true"></span>
       </button>
     </li>
     <li>
       <button class="feuille" type="button" data-sheet="profil">
-        <span class="mono feuille__num">03</span>
+        <span class="etiquette feuille__num">03</span>
         <span class="feuille__titre">Qui suis je?</span>
-        <span class="mono feuille__meta">Parcours et m&eacute;thode</span>
+        <span class="etiquette feuille__meta">Parcours et m&eacute;thode</span>
         <span class="feuille__fleche" aria-hidden="true"></span>
       </button>
     </li>
     <li>
       <button class="feuille" type="button" data-sheet="contact">
-        <span class="mono feuille__num">04</span>
+        <span class="etiquette feuille__num">04</span>
         <span class="feuille__titre">Contact</span>
-        <span class="mono feuille__meta">hello@amadlouis.site</span>
+        <span class="etiquette feuille__meta">hello@amadlouis.site</span>
         <span class="feuille__fleche" aria-hidden="true"></span>
       </button>
     </li>
   </ul>
 
   <footer class="pied">
-    <p class="mono" style="margin:0">Exploration&nbsp;— suisse moderne, minimalisme japonais, 2D</p>
-    <button class="mono" type="button" id="bascule-grille" aria-pressed="false">Afficher la grille</button>
+    <p class="etiquette" style="margin:0">Exploration&nbsp;— suisse moderne, minimalisme japonais, 2D</p>
+    <button class="etiquette" type="button" id="bascule-grille" aria-pressed="false">Afficher la grille</button>
   </footer>
 
 </div>
 
-<!-- Le loader. Cinq traits, cinq couleurs, la seule couleur du site. -->
+<!-- Le loader. Cinq traits, cinq couleurs : la seule couleur du site. -->
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader__traits">
     <span class="loader__trait"></span>
@@ -142,8 +115,8 @@
     <span class="loader__trait"></span>
   </div>
   <div class="loader__legende">
-    <span class="mono mono--ink" id="loader-section"></span>
-    <span class="mono">Ouverture</span>
+    <span class="etiquette etiquette--ink" id="loader-section"></span>
+    <span class="etiquette">Ouverture</span>
   </div>
 </div>
 
@@ -151,9 +124,9 @@
 <div class="page" id="page" role="dialog" aria-modal="true" aria-labelledby="page-titre">
   <div class="page__inner">
     <div class="page__tete">
-      <span class="mono page__num" id="page-num"></span>
+      <span class="etiquette page__num" id="page-num"></span>
       <h2 class="page__titre" id="page-titre"></h2>
-      <button class="fermer mono mono--ink" type="button" id="fermer">Fermer &times;</button>
+      <button class="fermer etiquette etiquette--ink" type="button" id="fermer">Fermer &times;</button>
     </div>
     <div class="page__corps" id="page-corps"></div>
   </div>
