@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amad Louis — design partner</title>
+<meta name="robots" content="noindex">
+
+<!--
+  WALL — une seule page, une seule colonne.
+
+  Le contenu (projets, livres, liens) est dans assets/wall.js et nulle
+  part ailleurs. Les valeurs relevées sur la maquette sont en tête de
+  assets/wall.css. L'avatar et la signature sont tes SVG, repris tels
+  quels. Les icônes sont celles de Phosphor, tracés d'origine.
+-->
+
+<link rel="stylesheet" href="/_maquettes/carte/assets/fonts.css">
+<link rel="stylesheet" href="assets/wall.css">
+</head>
+<body>
+
+<!-- le stepper suit le défilement, voir la fin de wall.js -->
+<div class="stepper" id="stepper" aria-hidden="true">
+  <span></span><span></span><span></span>
+</div>
+
+<main class="page">
+
+  <img class="avatar" src="/assets/img/wall/avatar.svg" alt="" width="48" height="48">
+
+  <h1 class="salut">Hello, c&rsquo;est Amad Louis</h1>
+
+  <p class="chapeau">
+    Le design partner de vos projets d&rsquo;application m&eacute;tier, sp&eacute;cialis&eacute; en
+    design d&rsquo;interaction, et fascin&eacute; par les interfaces vivantes. J&rsquo;accompagne
+    les &eacute;quipes de d&eacute;veloppement dans la conception des applications
+    exigeantes et compexes.
+  </p>
+
+  <section class="section" aria-labelledby="t-projets">
+    <h2 id="t-projets">Mes projets</h2>
+    <ul class="projets" id="projets"></ul>
+  </section>
+
+  <section class="section" aria-labelledby="t-profil">
+    <h2 id="t-profil">Qui suis je?</h2>
+    <div class="prose">
+      <p>J&rsquo;ai travaill&eacute; sur divers projets, tels que des serious games, des sites
+        web, des applications mobiles ainsi que des plateformes web et natives m&eacute;tier.</p>
+      <p>Je suis passionn&eacute; par les exp&eacute;riences m&eacute;morables et les produits attachants
+        et je lance souvent des produits pour repondre &agrave; des probl&eacute;matiques que j&rsquo;ai
+        rencontr&eacute;, et j&rsquo;accompagne les entreprises et les entrepreneurs qui veulent
+        lancer leur produit.</p>
+      <p>J&rsquo;ai travaill&eacute; et mont&eacute; des startups, et accompagn&eacute; des projets de grands
+        groupes sur des projets concernant la banque, les assurances, les serious
+        games et la finance.</p>
+      <p>Etant curieux de tout j&rsquo;ai aussi d&rsquo;autres passions, tels que la
+        <a class="a-cyan" href="#livres">lecture</a>, le
+        <a class="a-cyan" href="#">cinema</a>, la
+        <a class="a-cyan" href="#">musique</a> et les
+        <a class="a-rouge" href="#">arts martiaux</a>.</p>
+    </div>
+  </section>
+
+  <section class="section" id="livres-section" aria-labelledby="t-livres">
+    <h2 id="t-livres">Mes livres pr&eacute;f&eacute;r&eacute;s</h2>
+    <ul class="livres" id="livres"></ul>
+  </section>
+
+  <section class="section" aria-labelledby="t-liens">
+    <h2 id="t-liens">Vous me retrouvrez</h2>
+    <ul class="liens" id="liens"></ul>
+  </section>
+
+  <div class="fin">
+    <img class="signature" src="/assets/img/wall/signature.svg" alt="Wall" width="94" height="52">
+    <p class="copyright">&copy; Copyrights 2026. Tous droits reserv&eacute;s.</p>
+  </div>
+
+</main>
+
+<script src="assets/wall.js"></script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+/*
+  WALL — page unique, colonne centrée.
+
+  RELEVÉ SUR LA MAQUETTE. L'export fait 918 de large ; l'échelle se déduit
+  d'une chaîne déjà mesurée ailleurs dans le même caractère : « Hello,
+  c'est Amad Louis » fait 223px d'encre ici et 348 à 40px dans la maquette
+  précédente. 223/348 = 0,641, et 918/1440 = 0,6375. La maquette est donc
+  en 1440 et ce titre est à 40px. Tout le reste est converti avec ce
+  facteur.
+
+    colonne        x 373..1057 → 684 de large, centrée
+    avatar         ~48
+    « Hello… »     40px
+    chapeau        20px / 24px d'interligne
+    titre section  ~36px
+    ligne projet   fond #EEEEEE, 12,5 d'écart entre deux, padding 16
+                   titre 16px, description 14px / 18px
+                   année et lien à droite, x 830 et jusqu'à 1040
+    paragraphes    20px / 25px
+    stepper        7 de large, 70 de haut, collé à droite
+
+  L'interlettrage de -5% au-dessus de 16px est conservé : c'est lui qui
+  avait permis d'identifier Teachers, et la maquette le porte.
+*/
+
+:root {
+  --blanc:   #FFFFFF;
+  --encre:   #021C21;   /* titres */
+  --texte:   #5E6B6E;   /* paragraphes */
+  --ligne:   #EEEEEE;   /* fond des lignes de projet */
+
+  /* CONTRASTE. Le cyan vient de ta signature, seule source sûre : #00C0E8.
+     Sur blanc il ne donne que 2,16:1, et il sert de texte de lien — il en
+     faut 4,5. Même teinte, luminosité baissée jusqu'au minimum qui passe
+     sur le PIRE des deux fonds, le gris des lignes : #00758E donne 4,60
+     sur le gris et 5,34 sur le blanc.
+     Même raisonnement pour le rouge : #FF7877 donne 2,56, #BA5857 donne
+     4,54 sur blanc, et il ne sert que sur blanc.
+     Les teintes d'origine restent disponibles pour tout ce qui n'est pas
+     du texte. */
+  --cyan:        #00C0E8;
+  --cyan-texte:  #00758E;
+  --rouge:       #FF7877;
+  --rouge-texte: #BA5857;
+
+  --stepper-vide: #A3B8BC;
+  --stepper-plein:#083038;
+
+  --colonne: 684px;
+  --serre: -0.05em;
+  --entree: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--blanc);
+  color: var(--encre);
+  font-family: "Teachers", system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 25px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.page {
+  width: var(--colonne);
+  max-width: calc(100% - 48px);
+  margin-inline: auto;
+  padding: 248px 0 120px;
+}
+
+/* ---------- En-tête ---------- */
+
+.avatar { width: 48px; height: 48px; display: block; }
+
+.salut {
+  margin: 32px 0 0;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+.chapeau {
+  margin: 28px 0 0;
+  color: var(--texte);
+  letter-spacing: var(--serre);
+}
+
+/* ---------- Titres de section ---------- */
+
+.section { margin-top: 104px; }
+
+.section > h2 {
+  margin: 0 0 24px;
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+/* ---------- Projets ---------- */
+
+.projets { margin: 0; padding: 0; list-style: none; }
+.projets li + li { margin-top: 12px; }
+
+.projet {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--ligne);
+  color: inherit;
+  text-decoration: none;
+  transition: background 200ms var(--entree);
+}
+
+.projet:hover { background: #E6E6E6; }
+.projet:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
+
+.projet__nom {
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+.projet__quoi {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+.projet__annee,
+.projet__lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.projet__annee { color: var(--encre); }
+.projet__lien { color: var(--cyan-texte); }
+.projet svg { width: 14px; height: 14px; flex: none; }
+
+/* ---------- Qui suis je ---------- */
+
+.prose p {
+  margin: 0 0 24px;
+  color: var(--texte);
+  letter-spacing: var(--serre);
+}
+
+.prose p:last-child { margin-bottom: 0; }
+
+.prose a { text-decoration: none; }
+.prose a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.prose a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.a-cyan  { color: var(--cyan-texte); }
+.a-rouge { color: var(--rouge-texte); }
+
+/* ---------- Livres ---------- */
+
+.livres { margin: 0; padding: 0; list-style: none; }
+.livres li + li { margin-top: 28px; }
+
+.livre__titre {
+  display: block;
+  font-size: 18px;
+  line-height: 24px;
+  font-style: italic;
+  letter-spacing: var(--serre);
+}
+
+.livre__auteur {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+/* ---------- Vous me retrouvrez ---------- */
+
+.liens { margin: 0; padding: 0; list-style: none; }
+.liens li + li { margin-top: 20px; }
+
+.lien-ligne {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 8px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.lien-ligne:hover .lien-ligne__aller { text-decoration: underline; text-underline-offset: 3px; }
+.lien-ligne:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
+
+.lien-ligne__ou {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: var(--serre);
+}
+
+.lien-ligne__ou svg { width: 18px; height: 18px; flex: none; }
+
+.lien-ligne__quoi {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+.lien-ligne__aller {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--cyan-texte);
+  white-space: nowrap;
+}
+
+.lien-ligne__aller svg { width: 14px; height: 14px; flex: none; }
+
+/* ---------- Signature et pied ---------- */
+
+.fin { margin-top: 160px; text-align: center; }
+.signature { width: 94px; height: auto; display: inline-block; }
+
+.copyright {
+  margin: 40px 0 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+/* ---------- Le stepper latéral ----------
+   Repris des quatre SVG : trois barres de 7 de large, 12,25 / 35 / 12,25
+   de haut, 5,25 d'écart, soit 70 en tout. Plutôt que quatre fichiers, une
+   seule barre dont le remplissage suit le défilement : les états dessinés
+   en sont les étapes. */
+
+.stepper {
+  position: fixed;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 7px;
+  height: 70px;
+  display: grid;
+  grid-template-rows: 12.25px 35px 12.25px;
+  gap: 5.25px;
+  pointer-events: none;
+}
+
+.stepper span {
+  border-radius: 3.5px;
+  background: var(--stepper-vide);
+  position: relative;
+  overflow: hidden;
+}
+
+.stepper span::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0;
+  border-radius: 3.5px;
+  background: var(--stepper-plein);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* le haut se remplit dès qu'on est en haut, le milieu suit le défilement,
+   le bas ne se remplit qu'à la fin */
+.stepper span:nth-child(1)::after { height: 100%; }
+.stepper span:nth-child(2)::after { height: calc(var(--avance, 0) * 100%); }
+.stepper span:nth-child(3)::after { height: calc(var(--fin, 0) * 100%); }
+
+/* ---------- Adaptation ---------- */
+
+@media (max-width: 760px) {
+  body { font-size: 17px; line-height: 23px; }
+  .page { padding: 96px 0 80px; max-width: calc(100% - 40px); }
+  .salut { font-size: 30px; line-height: 36px; }
+  .section { margin-top: 72px; }
+  .section > h2 { font-size: 26px; line-height: 32px; }
+  .projet { grid-template-columns: 1fr; gap: 10px; }
+  .projet__annee, .projet__lien { justify-self: start; }
+  .lien-ligne { grid-template-columns: 1fr; gap: 6px; }
+  .stepper { display: none; }   /* pas de place, et rien à y gagner */
+  .fin { margin-top: 96px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
