@@ -35,11 +35,19 @@ var PROJETS = [
     url: null }
 ];
 
+/*
+  Les deux doublons de la maquette sont remplacés par deux titres de la
+  page « Mes lectures » du site en ligne. Fanon suit Césaire parce que
+  les deux se répondent, c'est déjà l'ordre retenu là-bas.
+  Les autres, si tu veux échanger : L'Alchimiste (Paulo Coelho), Steve
+  Jobs (Walter Isaacson), Jony Ive (Leander Kahney), So Good They Can't
+  Ignore You (Cal Newport), The ONE Thing (Gary Keller).
+*/
 var LIVRES = [
-  { titre: "Cahier d'un retour au pays natal", auteur: "Aimé Cesaire" },
+  { titre: "Cahier d'un retour au pays natal", auteur: "Aimé Césaire" },
+  { titre: "Peau noire, masques blancs",       auteur: "Frantz Fanon" },
   { titre: "L'almanack de Naval Ravikant",     auteur: "Eric Jorgenson" },
-  { titre: "Cahier d'un retour au pays natal", auteur: "Aimé Cesaire" },
-  { titre: "Cahier d'un retour au pays natal", auteur: "Aimé Cesaire" }
+  { titre: "Steal Like an Artist",             auteur: "Austin Kleon" }
 ];
 
 var LIENS = [
