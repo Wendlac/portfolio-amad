@@ -77,12 +77,17 @@
       return '<li class="projet">' +
         '<a class="projet__lien" href="' + esc(p.url) + '"' +
            (externe ? ' target="_blank" rel="noopener"' : "") +
-           ' data-apercu="' + esc(p.image) + '">' +
-          '<span class="etiquette projet__num">' + String(i + 1).padStart(2, "0") + "</span>" +
+           ">" +
           '<span class="projet__corps"><h3 class="projet__titre">' + esc(p.titre) + "</h3>" +
             '<p class="projet__quoi">' + esc(p.quoi) + "</p></span>" +
           '<span class="etiquette projet__rendu">' + esc(p.rendu) + "</span>" +
           '<span class="etiquette etiquette--ink projet__sortie">' + esc(p.sortie) + " &rarr;</span>" +
+          /* l'aperçu vit dans la réserve du dossier : il n'apparaît donc
+             qu'une fois celui-ci levé, dans la place que la levée dégage,
+             et il ne recouvre jamais ce qu'on est en train de lire */
+          '<span class="projet__apercu" aria-hidden="true">' +
+            '<img src="' + esc(p.image) + '" alt="" loading="lazy">' +
+          "</span>" +
         "</a></li>";
     }).join("") + "</ul>";
   }
@@ -127,10 +132,9 @@
 
   function remplir(cle) {
     var p = PAGES[cle];
-    document.getElementById("page-num").textContent = p.num;
     document.getElementById("page-titre").textContent = p.titre;
     document.getElementById("page-corps").innerHTML = p.corps();
-    document.getElementById("loader-section").textContent = p.num + " / " + p.titre;
+    document.getElementById("loader-section").textContent = p.titre;
   }
 
   var enveloppe = document.querySelector(".enveloppe");
@@ -178,7 +182,6 @@
     delete body.dataset.ouvert;
     phase(null);
     fond(true);
-    apercu.dataset.visible = "false";
     if (feuilleAppelante) { feuilleAppelante.focus(); feuilleAppelante = null; }
   }
 
@@ -190,34 +193,6 @@
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && body.dataset.ouvert) fermer();
-  });
-
-  /* ---------- L'aperçu qui suit le pointeur ----------
-     Délégué sur la page, parce que la liste est remontée à chaque
-     ouverture. Il ne se montre que sur un pointeur fin : au doigt, il n'y
-     a pas de survol, et une vignette qui colle au pouce ne sert à rien. */
-
-  var apercu = document.getElementById("apercu");
-  var apercuImg = apercu.querySelector("img");
-  var finPointeur = window.matchMedia("(hover: hover) and (pointer: fine)");
-
-  page.addEventListener("pointerover", function (e) {
-    if (!finPointeur.matches) return;
-    var lien = e.target.closest("[data-apercu]");
-    if (!lien) return;
-    apercuImg.src = lien.dataset.apercu;
-    apercu.dataset.visible = "true";
-  });
-
-  page.addEventListener("pointerout", function (e) {
-    var lien = e.target.closest("[data-apercu]");
-    if (lien && !lien.contains(e.relatedTarget)) apercu.dataset.visible = "false";
-  });
-
-  page.addEventListener("pointermove", function (e) {
-    if (apercu.dataset.visible !== "true") return;
-    apercu.style.left = e.clientX + "px";
-    apercu.style.top = e.clientY + "px";
   });
 
   /* ---------- La grille, à la demande ----------

@@ -62,9 +62,26 @@
   /* --- typographie --- */
   --serre: -0.05em;       /* au-dessus de 16px, partout */
 
-  /* --- la pile --- */
-  --feuille-h: 128px;     /* 16 lignes de base */
-  --feuille-tirer: 32px;  /* de combien une feuille sort au survol */
+  /* --- le classeur ---
+     Les dossiers sont glissés les uns sous les autres : chacun recouvre le
+     haut du suivant de --chevauche. Le premier est devant, le dernier au
+     fond, comme dans un tiroir qu'on regarde de face.
+     Au survol, le dossier se lève de --lever, c'est-à-dire plus haut que
+     ce dont il est recouvert : il sort donc vraiment de derrière celui qui
+     le cachait, au lieu de simplement glisser. */
+  --chevauche: 32px;      /* de combien un dossier est recouvert */
+  --lever: 48px;          /* de combien il sort, par le bas vers le haut */
+
+  /* LA RÈGLE QUI TIENT TOUT LE CLASSEUR.
+     Un dossier levé monte de --lever et passe devant celui du dessus : il
+     le recouvre donc sur --chevauche + --lever. Pour qu'il n'avale jamais
+     du texte, chaque dossier réserve exactement cette hauteur en bas, vide.
+     C'est aussi ce qu'est un vrai dossier : l'écriture en haut, le corps
+     nu en dessous. Le geste et la lisibilité tombent sur la même valeur,
+     ce n'est pas un compromis.
+     Plus une ligne de base, sinon le bord du dossier levé affleure
+     exactement le bas du texte : juste, mais sans air. */
+  --reserve: calc(var(--chevauche) + var(--lever) + var(--bl));
 
   /* --- mouvement --- */
   --sortie: cubic-bezier(0.65, 0, 0.35, 1);
@@ -214,11 +231,26 @@ body[data-grille="true"] .grille { opacity: 1; }
   list-style: none;
 }
 
+/* Le classeur. Chaque dossier est glissé sous le précédent, et c'est le
+   premier qui est devant : l'ordre de profondeur est l'inverse de l'ordre
+   de lecture, exactement comme dans un tiroir. */
+.pile li { position: relative; }
+.pile li + li { margin-top: calc(var(--chevauche) * -1); }
+.pile li:nth-child(1) { z-index: 4; }
+.pile li:nth-child(2) { z-index: 3; }
+.pile li:nth-child(3) { z-index: 2; }
+.pile li:nth-child(4) { z-index: 1; }
+
+/* Le dossier qu'on lève passe devant tous les autres, sinon il sortirait
+   derrière celui qui le recouvre. */
+.pile li:hover,
+.pile li:focus-within { z-index: 10; }
+
 .feuille {
   position: relative;
   width: 100%;
-  height: var(--feuille-h);
-  padding: 0 32px;
+  /* l'écriture en haut, la réserve en bas : voir --reserve */
+  padding: 40px 32px var(--reserve);
   border: 0;
   background: var(--paper-up);
   color: inherit;
@@ -226,34 +258,33 @@ body[data-grille="true"] .grille { opacity: 1; }
   text-align: left;
   cursor: pointer;
   display: grid;
-  grid-template-columns: 48px 1fr auto 32px;
-  align-items: center;
+  grid-template-columns: 1fr auto 32px;
+  align-items: baseline;
   gap: 24px;
-  /* l'ombre remplace le filet : c'est la feuille du dessus qui marque la
-     limite, comme dans une vraie liasse */
-  box-shadow: 0 -1px 2px rgba(20, 17, 15, 0.05),
-              0 -12px 24px -14px rgba(20, 17, 15, 0.22);
-  transition: transform 420ms var(--entree),
+  /* l'ombre porte vers le bas : c'est ce dossier-ci qui ombre celui qu'il
+     recouvre, et c'est elle qui tient lieu de filet */
+  box-shadow: 0 8px 16px -8px rgba(20, 17, 15, 0.20);
+  transition: transform 460ms var(--entree),
               background 240ms var(--sortie),
-              box-shadow 420ms var(--entree);
+              box-shadow 460ms var(--entree);
 }
 
-/* On tire la feuille hors de la liasse. C'est le geste, pas une décoration :
-   la pile ne se lit comme une pile que quand une feuille en sort. */
+/* On lève le dossier. Il monte de plus que ce dont il est recouvert, donc
+   il sort par le bas vers le haut de derrière le précédent — le geste
+   qu'on fait vraiment pour attraper un dossier dans un tiroir. L'ombre
+   grandit sous lui parce qu'il s'éloigne du fond. */
 .feuille:hover,
 .feuille:focus-visible {
-  transform: translateX(var(--feuille-tirer));
+  transform: translateY(calc(var(--lever) * -1));
   background: #FBFAF8;
-  box-shadow: 0 -1px 2px rgba(20, 17, 15, 0.05),
-              0 12px 32px -12px rgba(20, 17, 15, 0.26);
+  box-shadow: 0 28px 48px -20px rgba(20, 17, 15, 0.32),
+              0 2px 4px rgba(20, 17, 15, 0.06);
 }
 
 .feuille:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: -2px;
 }
-
-.feuille__num { color: var(--ink-40); }
 
 .feuille__titre {
   font-size: 40px;
@@ -269,19 +300,11 @@ body[data-grille="true"] .grille { opacity: 1; }
   height: 8px;
   position: relative;
   justify-self: end;
+  align-self: center;
 }
 
-.feuille__fleche::before {
-  content: "";
-  position: absolute;
-  inset: 3px 0 auto 0;
-  height: 1px;
-  background: var(--ink);
-  transform: scaleX(0.4);
-  transform-origin: left;
-  transition: transform 420ms var(--entree);
-}
-
+/* Le chevron ne file plus vers la droite : le seul mouvement est la levée
+   du dossier. Il se contente de se révéler. */
 .feuille__fleche::after {
   content: "";
   position: absolute;
@@ -290,10 +313,12 @@ body[data-grille="true"] .grille { opacity: 1; }
   border-top: 1px solid var(--ink);
   border-right: 1px solid var(--ink);
   transform: rotate(45deg);
+  opacity: 0.25;
+  transition: opacity 240ms var(--sortie);
 }
 
-.feuille:hover .feuille__fleche::before,
-.feuille:focus-visible .feuille__fleche::before { transform: scaleX(1); }
+.feuille:hover .feuille__fleche::after,
+.feuille:focus-visible .feuille__fleche::after { opacity: 1; }
 
 /* ---------- Pied ---------- */
 
@@ -421,10 +446,8 @@ body[data-ouvert] .page { visibility: visible; }
   align-items: baseline;
 }
 
-.page__num { grid-column: 1 / 2; }
-
 .page__titre {
-  grid-column: 2 / 9;
+  grid-column: 1 / 9;
   margin: 0;
   font-size: 40px;
   line-height: 48px;
@@ -455,31 +478,51 @@ body[data-ouvert] .page { visibility: visible; }
 .page__corps { grid-column: 1 / 13; padding-block: 96px; }
 
 /* ---------- Liste de projets ----------
-   Ici les filets restent : ils ne séparent pas des sections, ils règlent
-   une liste. C'est le seul endroit du site qui en porte. */
+   Même classeur que l'accueil : plus un seul filet, les dossiers se
+   recouvrent et celui qu'on survole se lève. La page est une pile de
+   dossiers, et ce qu'elle contient aussi. */
 
 .projets {
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--ink);
 }
 
-.projet { border-bottom: 1px solid var(--ink-16); }
+.projet { position: relative; }
+.projet + .projet { margin-top: calc(var(--chevauche) * -1); }
+.projet:nth-child(1) { z-index: 4; }
+.projet:nth-child(2) { z-index: 3; }
+.projet:nth-child(3) { z-index: 2; }
+.projet:nth-child(4) { z-index: 1; }
+.projet:hover,
+.projet:focus-within { z-index: 10; }
 
 .projet__lien {
+  position: relative;
   display: grid;
-  grid-template-columns: 48px 1fr 1fr 96px;
+  grid-template-columns: 1fr 1fr auto;
   gap: var(--gout);
   align-items: baseline;
-  padding: 24px 0;
+  /* le bas est plus épais que le haut : voir --reserve */
+  padding: 32px 32px var(--reserve);
+  background: var(--paper-up);
   color: inherit;
   text-decoration: none;
-  transition: padding-left 420ms var(--entree);
+  box-shadow: 0 8px 16px -8px rgba(20, 17, 15, 0.20);
+  transition: transform 460ms var(--entree),
+              background 240ms var(--sortie),
+              box-shadow 460ms var(--entree);
 }
 
-.projet__lien:hover { padding-left: 16px; }
-.projet__lien:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.projet__lien:hover,
+.projet__lien:focus-visible {
+  transform: translateY(calc(var(--lever) * -1));
+  background: #FBFAF8;
+  box-shadow: 0 28px 48px -20px rgba(20, 17, 15, 0.32),
+              0 2px 4px rgba(20, 17, 15, 0.06);
+}
+
+.projet__lien:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
 
 .projet__titre {
   margin: 0;
@@ -492,23 +535,27 @@ body[data-ouvert] .page { visibility: visible; }
 .projet__quoi { margin: 0; color: var(--ink-70); }
 .projet__sortie { justify-self: end; }
 
-/* l'aperçu suit le pointeur, hors du flux : c'est la seule chose du site
-   qui bouge librement, et elle disparaît dès qu'on ne la demande plus */
-.apercu {
-  position: fixed;
-  z-index: 750;
-  width: 280px;
-  aspect-ratio: 4 / 3;
-  pointer-events: none;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.96);
-  transition: opacity 240ms var(--sortie), transform 420ms var(--entree);
-  box-shadow: 0 16px 40px rgba(20, 17, 15, 0.18);
+/* L'aperçu est logé dans la réserve du dossier, pas accroché au pointeur.
+   Il n'apparaît donc que quand le dossier se lève, exactement dans la
+   place que la levée dégage — et il ne recouvre jamais la ligne qu'on est
+   en train de lire, ce que faisait l'aperçu flottant. */
+.projet__apercu {
+  position: absolute;
+  left: 32px;
+  bottom: 16px;
+  width: 96px;
+  height: 64px;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 240ms var(--sortie), transform 460ms var(--entree);
+  box-shadow: 0 4px 12px -4px rgba(20, 17, 15, 0.30);
 }
 
-.apercu[data-visible="true"] { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-.apercu img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.projet__lien:hover .projet__apercu,
+.projet__lien:focus-visible .projet__apercu { opacity: 1; transform: translateY(0); }
+
+.projet__apercu img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
 
 /* ---------- Coquilles ---------- */
 
@@ -528,28 +575,43 @@ body[data-ouvert] .page { visibility: visible; }
 }
 
 @media (max-width: 720px) {
-  :root { --marge: 24px; --feuille-h: 104px; --feuille-tirer: 16px; }
+  :root { --marge: 24px; --chevauche: 24px; --lever: 32px; }
   .masthead { padding-bottom: 64px; }
   .masthead__nom { font-size: 48px; line-height: 48px; }
   .masthead__role { grid-column: 1 / 13; margin-top: 16px; }
-  .feuille { grid-template-columns: 32px 1fr 24px; gap: 16px; padding: 0 20px; }
+  .feuille { grid-template-columns: 1fr 24px; gap: 16px; padding: 28px 20px var(--reserve); }
   .feuille__titre { font-size: 28px; line-height: 32px; }
   .feuille__meta { display: none; }   /* l'info reste dans la page ouverte */
   .pied { padding-top: 64px; flex-direction: column; gap: 16px; }
-  .page__titre { grid-column: 2 / 13; font-size: 28px; line-height: 32px; }
+  .page__titre { grid-column: 1 / 13; font-size: 28px; line-height: 32px; }
   .fermer { grid-column: 1 / 13; justify-self: start; margin-top: 16px; }
   .page__corps { padding-block: 48px 96px; }
 
   /* Les quatre colonnes se replient en une seule, et chaque enfant de la
      grille reçoit sa rangée. Placer .projet__quoi ne servirait à rien :
      ce n'est pas un enfant de la grille, il vit dans .projet__corps. */
-  .projet__lien { grid-template-columns: 32px 1fr; gap: 8px 16px; padding: 24px 0; }
-  .projet__num    { grid-column: 1; grid-row: 1; }
-  .projet__corps  { grid-column: 2; grid-row: 1; }
-  .projet__rendu  { grid-column: 2; grid-row: 2; }
-  .projet__sortie { grid-column: 2; grid-row: 3; justify-self: start; margin-top: 8px; }
+  .projet__lien { grid-template-columns: 1fr; gap: 8px; padding: 24px 24px var(--reserve); }
+  .projet__corps  { grid-row: 1; }
+  .projet__rendu  { grid-row: 2; }
+  .projet__sortie { grid-row: 3; justify-self: start; margin-top: 8px; }
 
-  .apercu { display: none; }          /* pas de pointeur, pas d'aperçu */
+  /* En une colonne, l'aperçu posé en absolu retomberait sur l'étiquette de
+     sortie. Il reprend donc sa place dans le flux, au-dessus de la réserve
+     comme le reste du contenu. */
+  .projet__apercu {
+    position: static;
+    grid-row: 4;
+    width: 128px;
+    height: 88px;
+    margin-top: 16px;
+  }
+
+}
+
+/* Sans survol — au doigt — l'aperçu ne se montrerait jamais, et la réserve
+   du dossier resterait vide pour rien. On le montre d'emblée. */
+@media (hover: none) {
+  .projet__apercu { opacity: 1; transform: none; }
 }
 
 /* ---------- Mouvement réduit ----------
