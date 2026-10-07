@@ -1,0 +1,422 @@
+/*
+  LA CARTE — version simple, page par page.
+
+  TOUT CE QUI SUIT EST RELEVÉ SUR LES DEUX MAQUETTES (1440 de large),
+  pas estimé.
+
+  LA POLICE, tranchée par la mesure et non à l'œil.
+  Trois chaînes du héro, avec leur encre relevée :
+     « Hello, c'est Amad Louis »   348 x 34
+     « Le design partner de vos »  598 x 64
+     « projets d'applications »    524 x 64
+  Pour chaque police on cherche le corps qui donne la largeur, puis on
+  compare la hauteur obtenue. Sans interlettrage, TOUTES sortent de 3 à
+  14px trop courtes. Avec -5% — l'interlettrage demandé pour tout ce qui
+  dépasse 16px — Teachers 400/500 tombe à 0 / -1 / -1. Satoshi reste à
+  -1 / -4 / -3, Teachers 700 à -2 / -6 / -6.
+  Donc : Teachers, graisse normale, interlettrage -5%.
+
+  LE HÉRO              centré, pas en colonne à gauche
+     kicker   40px, encre y 285..318
+     titre    68px / 77px d'interligne, 3 lignes
+     pilule   Menu : 44 de haut, #A7E7FE, centrée sur 719
+
+  LA CARTE REPLIÉE (17.png)
+     carte    x 410..1030 → 620 de large, y 672..921 → 250 de haut
+     dos      x 422..1018 → retrait 12 par côté, et il dépasse de 50 EN HAUT
+     titre    encre 28 de haut → 36px
+     résumé   2 lignes, interligne 29 → 24px
+     pilules  36 de haut, fond #E4F8FF, texte #008CBF
+
+  LA CARTE DÉPLIÉE (18.png)
+     carte    735 de haut en tout
+     image    364 de haut, en damier sur la maquette → c'est une réserve
+     contenu  y 1044..1347, titre à 1077, sous-titre à 1136,
+              résumé 1163..1197 (interligne 19), année 1215, rôle 1249
+     barre    55 de haut, #032430, texte blanc
+     fermer   cercle de 50, #FF8E97, à 24 du bord
+
+  Les icônes sont celles de Phosphor, tracés d'origine, viewBox 256.
+*/
+
+:root {
+  --blanc:      #FFFFFF;
+  --encre:      #032430;
+  --carte:      #C7F0FF;   /* la carte de devant */
+  --carte-dos:  #84D5FF;   /* celle qui dépasse derrière */
+  --pilule:     #A7E7FE;   /* le bouton Menu */
+  --pilule-nav: #E4F8FF;   /* précédent / suivant, dans la carte */
+  /* Le libellé des pilules. Relevé à #008CBF, il ne donne que 3,48:1 sur
+     #E4F8FF, et à 15px il faut 4,5. C'est la même teinte assombrie de 14%,
+     le minimum pour passer : 4,54:1. Seule couleur de la maquette que j'ai
+     touchée, et seulement parce qu'elle ne passait pas. */
+  --bleu-texte: #0078A4;
+  --resume:     #7E7E7E;   /* le résumé de la carte repliée */
+  --texte:      #414141;   /* le texte du dépliant */
+  --meta:       #515C60;   /* année et rôle */
+  --fermer:     #FF8E97;
+
+  --l-carte: 620px;
+  --r-carte: 24px;
+  --pad-carte: 56px;
+  --h-image: 364px;
+  --h-barre: 56px;
+
+  --serre: -0.05em;        /* au-dessus de 16px, partout */
+  --sortie: cubic-bezier(0.65, 0, 0.35, 1);
+  --entree: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--blanc);
+  color: var(--encre);
+  font-family: "Teachers", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Pilule Menu ---------- */
+
+/* En tête de page, dans le flux : fixe, elle passait par-dessus la carte
+   dès qu'on défilait. La maquette la montre en haut du document. */
+.pilule {
+  display: block;
+  margin: 0 auto;
+  height: 44px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 22px;
+  background: var(--pilule);
+  color: var(--encre);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 320ms var(--sortie);
+}
+
+.pilule:focus-visible { outline: 2px solid var(--encre); outline-offset: 4px; }
+
+/* ---------- Héro ---------- */
+
+.page {
+  min-height: 100vh;
+  padding: 91px 24px 120px;
+  display: grid;
+  /* sans minmax(0,1fr) la colonne se dimensionne sur la carte (620) et le
+     max-width:100% des enfants ne borne plus rien */
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 0;
+}
+
+/* pilule à 91..135, encre du kicker à 285 : 140 entre les deux */
+.kicker { margin-top: 140px; }
+
+.kicker {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 400;
+  letter-spacing: var(--serre);
+  text-align: center;
+}
+
+.titre {
+  margin: 24px 0 0;
+  /* la maquette coupe après « vos » : sa 1re ligne fait 598px, il faut
+     donc une mesure qui la laisse tenir d’un bloc */
+  max-width: 680px;
+  font-size: 68px;
+  line-height: 77px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+  text-align: center;
+}
+
+/* ---------- La carte ---------- */
+
+.zone-carte {
+  margin-top: 112px;
+  width: min(var(--l-carte), 100%);
+  position: relative;
+}
+
+/* Le dos ne se voit que carte repliée : une fois dépliée, la carte le
+   recouvre, exactement comme sur les deux maquettes. */
+.dos {
+  position: absolute;
+  top: -50px;
+  left: 12px;
+  right: 12px;
+  height: 120px;
+  border-radius: var(--r-carte);
+  background: var(--carte-dos);
+  transition: opacity 280ms var(--sortie), transform 420ms var(--entree);
+}
+
+.carte[data-ouverte="true"] + .dos,
+.carte[data-ouverte="true"] ~ .dos { opacity: 0; transform: translateY(16px); }
+
+.carte {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-radius: var(--r-carte);
+  background: var(--carte);
+  overflow: hidden;
+  text-align: left;
+}
+
+/* Toute la carte repliée est la commande. Dépliée, elle redevient une
+   simple boîte et c'est la croix qui referme. */
+.carte__declencheur {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--r-carte);
+}
+
+.carte[data-ouverte="true"] .carte__declencheur { display: none; }
+.carte__declencheur:focus-visible { outline: 2px solid var(--encre); outline-offset: -2px; }
+
+/* --- la réserve d'image : fermée elle a une hauteur nulle --- */
+
+.carte__image {
+  height: 0;
+  overflow: hidden;
+  background: #F2F2F2;
+  transition: height 520ms var(--entree);
+}
+
+.carte[data-ouverte="true"] .carte__image { height: var(--h-image); }
+
+.carte__image img {
+  width: 100%;
+  height: var(--h-image);
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.carte__fermer {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 4;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--fermer);
+  color: var(--encre);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+  transition: opacity 240ms var(--sortie), transform 420ms var(--entree);
+}
+
+.carte[data-ouverte="true"] .carte__fermer { opacity: 1; pointer-events: auto; transform: scale(1); }
+.carte__fermer:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
+.carte__fermer svg { width: 20px; height: 20px; }
+
+/* --- le texte --- */
+
+.carte__texte { padding: 40px var(--pad-carte); }
+.carte[data-ouverte="true"] .carte__texte { padding: 32px var(--pad-carte) 64px; }
+
+.carte__titre {
+  margin: 0;
+  font-size: 36px;
+  line-height: 40px;
+  font-weight: 700;
+  letter-spacing: var(--serre);
+}
+
+/* Le résumé de la carte repliée. Il disparaît une fois dépliée : le
+   dépliant a son propre texte, plus long. */
+.carte__resume {
+  margin: 20px 0 0;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: var(--serre);
+  color: var(--resume);
+}
+
+/* --- précédent / suivant --- */
+
+/* Le bloc « repliée » : résumé + pilules. Même procédé que le dépliant,
+   1fr -> 0fr, donc il se replie à la même cadence sans qu'on mesure rien. */
+.carte__teaser {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 520ms var(--entree);
+}
+
+.carte[data-ouverte="true"] .carte__teaser { grid-template-rows: 0fr; }
+.carte__teaser > div { overflow: hidden; }
+
+.carte__nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.nav-pilule {
+  position: relative;
+  z-index: 4;             /* au-dessus du déclencheur qui couvre la carte */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 20px;
+  background: var(--pilule-nav);
+  color: var(--bleu-texte);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 200ms var(--sortie);
+}
+
+.nav-pilule:hover { background: var(--blanc); }
+.nav-pilule:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
+.nav-pilule svg { width: 16px; height: 16px; flex: none; }
+
+/* --- le dépliant --- */
+
+/* 0fr -> 1fr : la hauteur s'anime sans qu'on ait à la mesurer. */
+.carte__detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 520ms var(--entree);
+}
+
+.carte[data-ouverte="true"] .carte__detail { grid-template-rows: 1fr; }
+
+.carte__detail > div { overflow: hidden; }
+
+.detail__sous-titre {
+  margin: 0;
+  padding-top: 32px;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 700;
+  color: #000;
+}
+
+.detail__texte {
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--texte);
+}
+
+.meta {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--meta);
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.meta li { display: flex; gap: 12px; align-items: flex-start; }
+.meta li + li { margin-top: 14px; }
+.meta svg { width: 20px; height: 20px; flex: none; }
+
+/* --- la barre d'action --- */
+
+.carte__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 0;
+  overflow: hidden;
+  background: var(--encre);
+  color: var(--blanc);
+  font-weight: 500;
+  text-decoration: none;
+  transition: height 520ms var(--entree);
+}
+
+.carte[data-ouverte="true"] .carte__cta { height: var(--h-barre); }
+.carte__cta:hover { text-decoration: underline; text-underline-offset: 4px; }
+.carte__cta:focus-visible { outline: 2px solid var(--encre); outline-offset: -4px; }
+.carte__cta svg { width: 16px; height: 16px; }
+
+/* ---------- Menu plein écran ---------- */
+
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-content: center;
+  gap: 48px;
+  background: var(--pilule);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 260ms var(--sortie), visibility 0s linear 260ms;
+}
+
+body.menu-ouvert .menu { opacity: 1; visibility: visible; transition: opacity 260ms var(--sortie); }
+body.menu-ouvert .pilule { background: var(--fermer); }
+
+.menu a {
+  color: var(--encre);
+  text-decoration: none;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: var(--serre);
+  text-align: center;
+  padding: 4px 8px;
+}
+
+.menu a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.menu a:focus-visible { outline: 2px solid var(--encre); outline-offset: 4px; }
+
+/* ---------- Adaptation ---------- */
+
+@media (max-width: 760px) {
+  :root { --pad-carte: 24px; --h-image: 240px; }
+  .page { padding: 64px 20px 80px; }
+  .kicker { margin-top: 88px; }
+  .kicker { font-size: 24px; line-height: 32px; }
+  .titre { font-size: 40px; line-height: 46px; }
+  .zone-carte { margin-top: 80px; }
+  .carte__titre { font-size: 28px; line-height: 32px; }
+  .carte__resume { font-size: 18px; line-height: 26px; }
+  .carte__nav { flex-wrap: wrap; }
+  .carte__fermer { top: 16px; right: 16px; width: 44px; height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
