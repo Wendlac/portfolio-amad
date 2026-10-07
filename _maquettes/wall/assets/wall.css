@@ -116,12 +116,30 @@ body {
 .projets { margin: 0; padding: 0; list-style: none; }
 .projets li + li { margin-top: 12px; }
 
+/*
+  Relevé sur les sept lignes de la maquette, en coordonnées relatives au
+  cadre (684 de large, padding 16, donc 16..668 utiles) :
+
+      année    456..507   sur TOUTES les lignes
+      lien     finit à 667 sur toutes, et commence à 549 pour le plus
+               long (« Regarder le projet »), 574 pour les autres
+
+  Donc l'année est à une abscisse FIXE et le lien est calé à droite. Une
+  grille « 1fr auto auto » ne peut pas faire ça : la largeur du lien y
+  repousse l'année, et elle se déplaçait d'une ligne à l'autre. D'où trois
+  colonnes dont les deux dernières ne dépendent plus du texte :
+      1fr | 96 (année) | 120 (lien, calé à droite)
+  ce qui pose l'année à 452 et le lien de 548 à 668.
+
+  Le minmax laisse la dernière colonne grandir si un libellé dépassait
+  120 : l'année se décalerait alors, mais rien ne casserait.
+*/
 .projet {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr 80px minmax(132px, max-content);
   align-items: center;
-  gap: 24px;
-  padding: 10px 20px;
+  gap: 0;
+  padding: 10px 16px;
   border-radius: 8px;
   background: var(--ligne);
   color: inherit;
@@ -157,8 +175,8 @@ body {
   white-space: nowrap;
 }
 
-.projet__annee { color: var(--encre); }
-.projet__lien { color: var(--cyan-texte); }
+.projet__annee { color: var(--encre); justify-self: start; }
+.projet__lien { color: var(--cyan-texte); justify-self: end; }
 .projet svg { width: 14px; height: 14px; flex: none; }
 
 /* ---------- Qui suis je ---------- */
