@@ -27,7 +27,13 @@
   --blanc:   #FFFFFF;
   --encre:   #021C21;   /* titres */
   --texte:   #5E6B6E;   /* paragraphes */
-  --ligne:   #EEEEEE;   /* fond des lignes de projet */
+  /* La ligne de projet, d'après card projet.svg : 685 x 79, rayon 8,
+     fond en dégradé horizontal et filet d'1px lui aussi en dégradé.
+     C'était un aplat #EEEEEE chez moi, donc plat au sens propre. */
+  --ligne-g:   #F4F4F4;   /* fond, à gauche */
+  --ligne-d:   #E6E6E6;   /* fond, à droite */
+  --filet-g:   #E9E9E9;   /* filet, à gauche */
+  --filet-d:   #DADADA;   /* filet, à droite */
 
   /* CONTRASTE. Le cyan vient de ta signature, seule source sûre : #00C0E8.
      Sur blanc il ne donne que 2,16:1, et il sert de texte de lien — il en
@@ -139,15 +145,22 @@ body {
   grid-template-columns: 1fr 80px minmax(132px, max-content);
   align-items: center;
   gap: 0;
-  padding: 10px 16px;
+  padding: 9px 15px;
+  border: 1px solid transparent;
   border-radius: 8px;
-  background: var(--ligne);
+  /* deux couches : le fond s'arrête à la bordure, le filet occupe la
+     bordure. C'est la seule façon d'obtenir un filet en dégradé. */
+  background:
+    linear-gradient(90deg, var(--ligne-g), var(--ligne-d)) padding-box,
+    linear-gradient(90deg, var(--filet-g), var(--filet-d)) border-box;
   color: inherit;
   text-decoration: none;
-  transition: background 200ms var(--entree);
+  transition: filter 200ms var(--entree);
 }
 
-.projet:hover { background: #E6E6E6; }
+/* Le survol n'est pas dans le SVG : j'assombris le tout d'un cran plutôt
+   que d'inventer une seconde paire de teintes. */
+.projet:hover { filter: brightness(0.97); }
 .projet:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
 
 .projet__nom {
