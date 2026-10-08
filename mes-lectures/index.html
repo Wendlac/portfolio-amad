@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page d&eacute;plac&eacute;e</title>
+
+<!--
+  Cette page n'existe plus, mais son adresse a circulé : elle était dans le
+  sitemap et probablement indexée. Plutôt que de renvoyer un 404 à qui
+  possède le lien, on l'emmène à l'accueil.
+
+  GitHub Pages ne sait pas faire de redirection 301 : pas de .htaccess, pas
+  de _redirects. Le rafraîchissement à 0 seconde est ce que Google traite
+  comme une redirection permanente, et le canonical dit vers quoi les
+  signaux doivent être report&eacute;s. Le location.replace sert au navigateur,
+  et il remplace l'entr&eacute;e d'historique au lieu de l'empiler, pour que le
+  bouton Retour ne ram&egrave;ne pas ici en boucle.
+
+  Le lien visible est l&agrave; pour le cas o&ugrave; ni l'un ni l'autre ne fonctionne.
+-->
+<link rel="canonical" href="https://amadlouis.site/">
+<meta http-equiv="refresh" content="0; url=/">
+<script>location.replace("/");</script>
+</head>
+<body>
+<p>Cette page n&rsquo;existe plus. <a href="/">Aller &agrave; l&rsquo;accueil</a></p>
+</body>
+</html>
