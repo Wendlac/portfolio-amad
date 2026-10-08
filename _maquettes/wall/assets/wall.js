@@ -7,11 +7,18 @@ var PROJETS = [
   { nom: "Kalaan",
     quoi: "Une application mobile qui permet de lire des documents et livres en format epub et pdf",
     annee: "2026", lien: "Etude de cas",
-    // TODO : lien Play Store, que je n'ai pas.
+    /* Le Play Store est sur la page de l'étude de cas :
+       play.google.com/store/apps/details?id=com.pelerain.kalaan
+       La ligne mène donc à l'étude, comme sur la maquette, et le
+       téléchargement est à un clic de plus. */
     url: "/projets/kalaan/" },
   { nom: "Design system Petrogest",
     quoi: "Conception du design system d'une application de gestion de stations d'essence",
     annee: "2026", lien: "Regarder le projet",
+    /* Seule adresse encore manquante. Cherchée dans tout le dépôt et son
+       historique, dans les dépôts publics de Wendlac et sur le site en
+       ligne : Petrogest n'apparaît nulle part. Tant qu'elle est nulle la
+       ligne reste un <div>, donc pas de lien mort. */
     url: null },
   { nom: "Site web Quotidien économique",
     quoi: "Site web du média d'information économique Quotidien économique",
@@ -24,7 +31,7 @@ var PROJETS = [
   { nom: "Site web Bil Aka Kora",
     quoi: "Projet fictif, site web de l'artiste musicien burkinabé Bil Aka Kora",
     annee: "2026", lien: "Visiter le site",
-    url: null },
+    url: "https://wendlac.github.io/bil-aka-kora/" },
   { nom: "Application web Dispoz",
     quoi: "Une application web qui permet de trouver la palette de couleurs d'un visuel",
     annee: "2026", lien: "Visiter le site",
@@ -32,7 +39,7 @@ var PROJETS = [
   { nom: "Site web Rakiire",
     quoi: "Site web pour le marque de vetement streetwear africain",
     annee: "2026", lien: "Visiter le site",
-    url: null }
+    url: "https://wendlac.github.io/rakiire/" }
 ];
 
 /*

@@ -50,7 +50,7 @@
   --rouge-texte: #BA5857;
 
   /* Le survol, un seul geste pour tout ce qui est cliquable. */
-  --survol:       #A8E7FE;
+  --survol:       #DFF7FF;
   --survol-encre: #032430;
 
   --stepper-vide: #A3B8BC;
@@ -303,8 +303,18 @@ body {
 
 /* ---------- Le survol ----------
 
-   Un seul geste pour tout ce qui est cliquable : fond #A8E7FE, contenu
-   #032430, 4px en vertical et 8px en horizontal.
+   Un seul geste pour tout ce qui est cliquable : fond #DFF7FF, contenu
+   #032430, 4px en vertical et 8px en horizontal, pleine pastille.
+
+   ATTENTION, mesuré : #DFF7FF ne se détache presque pas de ses fonds.
+   Contre le blanc des liens de contact et du texte courant il donne
+   1,008:1 ; contre le gris des lignes de projet, 1,24:1. L'ancien
+   #A8E7FE n'était pas meilleur en luminance (1,08:1 contre le gris)
+   mais il s'en détachait par la teinte, ce que le calcul de contraste
+   ne mesure pas. Le texte, lui, reste très lisible : #032430 sur
+   #DFF7FF donne 16,0:1.
+   Comme cette règle sert aussi au focus clavier, c'est elle qui désigne
+   la cible quand on tabule. Voir la note de la conversation.
 
    Le padding est posé EN PERMANENCE et annulé par une marge négative de
    même valeur. Sans ça, l'arrivée du fond au survol repousserait le texte
@@ -320,7 +330,7 @@ body {
 .prose a {
   padding: 4px 8px;
   margin: -4px -8px;
-  border-radius: 4px;
+  border-radius: 999px;   /* pleine pastille */
   transition: background-color 160ms var(--entree), color 160ms var(--entree);
 }
 
