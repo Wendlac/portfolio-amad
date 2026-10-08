@@ -26,7 +26,7 @@
 :root {
   --blanc:   #FFFFFF;
   --encre:   #021C21;   /* titres */
-  --texte:   #5E6B6E;   /* paragraphes */
+  --texte:   #5D696C;   /* paragraphes — voir le relevé de contraste plus bas */
   /* La ligne de projet, d'après card projet.svg : 685 x 79, rayon 8,
      fond en dégradé horizontal et filet d'1px lui aussi en dégradé.
      C'était un aplat #EEEEEE chez moi, donc plat au sens propre. */
@@ -37,15 +37,31 @@
 
   /* CONTRASTE. Le cyan vient de ta signature, seule source sûre : #00C0E8.
      Sur blanc il ne donne que 2,16:1, et il sert de texte de lien — il en
-     faut 4,5. Même teinte, luminosité baissée jusqu'au minimum qui passe
-     sur le PIRE des deux fonds, le gris des lignes : #00758E donne 4,60
-     sur le gris et 5,34 sur le blanc.
-     Même raisonnement pour le rouge : #FF7877 donne 2,56, #BA5857 donne
-     4,54 sur blanc, et il ne sert que sur blanc.
+     faut 4,5. Même teinte et même saturation, clarté baissée au premier
+     pas qui passe.
+
+     Le fond de référence a changé en cours de route. Tant que la ligne de
+     projet était un aplat #EEEEEE, #00758E donnait 4,60 et suffisait. Le
+     dégradé pris sur card projet.svg finit à #E6E6E6 à DROITE, c'est-à-
+     dire exactement sous le lien, et là #00758E tombait à 4,28 : en
+     dessous du seuil. #007189 donne 4,52 sur ce gris et 5,64 sur blanc.
+
+     Même histoire pour le gris de texte. Sous les descriptions le fond
+     mesuré est #EBEBEB et #5E6B6E y passait (4,63), mais au format étroit
+     la ligne se met sur une colonne et la description va jusqu'au bord
+     sombre, où elle tombait à 4,42. #5D696C donne 4,54 sur #E6E6E6 et
+     5,67 sur blanc.
+
+     Les deux marges sont minces, 0,02 et 0,04. C'est voulu : la correction
+     est la plus petite qui passe, pour ne pas déplacer tes teintes. Si tu
+     touches au dégradé du fond, il faut refaire ce calcul.
+
+     Pour le rouge : #FF7877 donne 2,56, #BA5857 donne 4,54 sur blanc, et
+     il ne sert que sur blanc.
      Les teintes d'origine restent disponibles pour tout ce qui n'est pas
      du texte. */
   --cyan:        #00C0E8;
-  --cyan-texte:  #00758E;
+  --cyan-texte:  #007189;
   --rouge:       #FF7877;
   --rouge-texte: #BA5857;
 
@@ -342,6 +358,28 @@ body {
 .prose a:focus-visible {
   background-color: var(--survol);
   color: var(--survol-encre);
+}
+
+/* AU CLAVIER, un anneau en plus.
+
+   Le fond #DFF7FF ne se détache de ses fonds que par la teinte : 1,11:1
+   contre le blanc, 1,12:1 contre le gris des lignes. À la souris ça
+   suffit — on sait déjà où on pointe, et l'encre qui passe de #007189 à
+   #032430 est un vrai écart de luminosité, visible même sans couleur.
+   Au clavier non : rien ne dit où on est, et une pastille à 1,1:1 ne
+   peut pas être le seul repère.
+
+   D'où cet anneau, et seulement au clavier. 2px à 2px d'écart, dans le
+   cyan du texte : 4,52:1 contre le gris de la ligne et 5,64:1 contre le
+   blanc, là où il en faut 3 pour un repère non textuel. Il suit le rayon
+   de la pastille et ne prend pas de place dans la mise en page, donc
+   rien ne bouge quand il apparaît. */
+
+.projet:focus-visible .projet__lien,
+.lien-ligne:focus-visible .lien-ligne__aller,
+.prose a:focus-visible {
+  outline: 2px solid var(--cyan-texte);
+  outline-offset: 2px;
 }
 
 /* ---------- La flèche ----------

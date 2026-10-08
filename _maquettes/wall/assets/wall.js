@@ -54,15 +54,21 @@ var LIVRES = [
 ];
 
 var LIENS = [
+  /* L'adresse Google Maps est écrite dans la forme documentée par Google
+     (api=1), celle qui est garantie stable : elle ouvre la fiche sur le
+     web et l'application sur téléphone. Un lien copié depuis la barre
+     d'adresse de Maps porte des coordonnées et un identifiant de session,
+     et il casse avec le temps. */
   { icone: "lieu",     ou: "Ouagadougou",
     quoi: "C'est là que je réside (enfin, pour le moment)",
-    aller: "Visiter Ouaga", url: null },
+    aller: "Visiter Ouaga",
+    url: "https://www.google.com/maps/search/?api=1&query=Ouagadougou%2C+Burkina+Faso" },
   { icone: "tiktok",   ou: "Sur Tiktok",
     quoi: "Vous trouverez du contenu sur le design, et mes chroniques sur la tech",
-    aller: "Visiter", url: null },
+    aller: "Visiter", url: "https://www.tiktok.com/@amadloure" },
   { icone: "youtube",  ou: "Sur Youtube",
     quoi: "Vous y trouverez aussi du contenu sur le design, et mes chroniques sur la tech",
-    aller: "Visiter", url: null },
+    aller: "Visiter", url: "https://www.youtube.com/@louisamad9118" },
   { icone: "linkedin", ou: "Sur linkedIn",
     quoi: "Mon espace pro où je donne mon avis sur l'industrie de la tech",
     aller: "Visiter", url: "https://www.linkedin.com/in/amad-louis-loure" },
