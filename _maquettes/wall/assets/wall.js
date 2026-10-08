@@ -241,25 +241,54 @@ var LIENS = [
     if (location.hash.length > 1) devoile(location.hash.slice(1));
   }
 
-  /* ---------- Le stepper ----------
-     Il suit le défilement. --avance remplit la barre du milieu, --fin
-     allume le point du bas quand on touche la fin. */
+  /* ---------- La jauge ----------
+
+     Une jauge de défilement, et pas un sommaire : --avance remplit la
+     barre du milieu, --fin allume le point du bas à l'arrivée.
+
+     L'aiguille POURSUIT la valeur au lieu de s'y coller. Ce n'est pas un
+     effet : sur pavé tactile les événements de défilement arrivent par
+     paquets irréguliers, et la barre sautillait. En poursuite elle reste
+     à environ 4 % derrière pendant un défilement courant, soit 1,4 px sur
+     les 35 de la barre — invisible — et elle rattrape en ~400 ms après un
+     saut d'ancre, ce qui se lit comme du poids.
+
+     Sans .anime (pas de JS d'animation, ou le système demande moins de
+     mouvement), la valeur est posée directement : pas de poursuite.
+
+     La hauteur défilable est mesurée une fois et au redimensionnement,
+     pas à chaque événement : la lire force un calcul de mise en page. Les
+     révélations ne la changent pas, elles ne jouent que sur l'opacité et
+     une translation. */
 
   var stepper = document.getElementById("stepper");
-  var tic = false;
+  var poursuite = document.documentElement.classList.contains("anime");
+  var hauteur = 0, cible = 0, affiche = 0, tourne = false;
 
-  function majStepper() {
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
-    stepper.style.setProperty("--avance", p.toFixed(3));
-    stepper.style.setProperty("--fin", p > 0.98 ? "1" : "0");
-    tic = false;
+  function pose(v) {
+    stepper.style.setProperty("--avance", v.toFixed(4));
+    stepper.style.setProperty("--fin", v > 0.98 ? "1" : "0");
   }
 
-  window.addEventListener("scroll", function () {
-    if (!tic) { tic = true; requestAnimationFrame(majStepper); }
-  }, { passive: true });
+  function suit() {
+    affiche += (cible - affiche) * 0.25;
+    if (Math.abs(cible - affiche) < 0.0008) { affiche = cible; tourne = false; }
+    else requestAnimationFrame(suit);
+    pose(affiche);
+  }
 
-  window.addEventListener("resize", majStepper, { passive: true });
-  majStepper();
+  function mesure() {
+    cible = hauteur > 0 ? Math.min(1, Math.max(0, window.scrollY / hauteur)) : 0;
+    if (!poursuite) { affiche = cible; pose(cible); return; }
+    if (!tourne) { tourne = true; requestAnimationFrame(suit); }
+  }
+
+  function remesureHauteur() {
+    hauteur = document.documentElement.scrollHeight - window.innerHeight;
+    mesure();
+  }
+
+  window.addEventListener("scroll", mesure, { passive: true });
+  window.addEventListener("resize", remesureHauteur, { passive: true });
+  remesureHauteur();
 })();

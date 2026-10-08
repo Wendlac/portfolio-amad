@@ -338,6 +338,37 @@ body {
 /* 140x80 relevés sur la maquette ; le SVG fait 187x104, même rapport. */
 .signature { width: 140px; height: auto; display: inline-block; }
 
+/* LA SIGNATURE S'ÉCRIT.
+
+   Cinq tracés, 477 unités de longueur en tout, réparties 56 / 16 / 10 /
+   9 / 9 %. Chacun porte sa longueur en --l et son temps en --duree et
+   --retard, posés dans le HTML.
+
+   Ce qui fait qu'on y lit une main et non cinq traits qui apparaissent,
+   c'est que la PLUME GARDE UNE VITESSE CONSTANTE : la durée d'un trait
+   est sa longueur divisée par 300 unités/seconde, pas une durée commune.
+   Le long trait met 886 ms, le plus court 138. Entre deux, 80 ms de levé
+   de plume. Départ à 250 ms, le temps que le pied de page finisse de se
+   poser, et l'ensemble s'achève à 2,16 s.
+
+   D'où aussi le linear : une accélération suivie d'un ralentissement,
+   cinq fois de suite, ce n'est pas une main, c'est une machine.
+
+   Le tracé est COMPLET par défaut. Il n'est effacé que sous .anime,
+   c'est-à-dire quand le navigateur sait observer et que le système ne
+   demande pas moins d'animations. Sans JS, la signature est simplement
+   là, entière. */
+
+.anime .signature path {
+  stroke-dasharray: var(--l);
+  stroke-dashoffset: var(--l);
+}
+
+.anime .fin.vu .signature path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--duree) linear var(--retard);
+}
+
 .copyright {
   margin: 40px 0 0;
   font-size: 13px;
