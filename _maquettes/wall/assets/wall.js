@@ -13,29 +13,61 @@ var PROJETS = [
        téléchargement est à un clic de plus. */
     url: "/projets/kalaan/" },
   { nom: "Design system Petrogest",
-    quoi: "Conception du design system d'une application de gestion de stations d'essence",
+    quoi: "Conception du design system d’une application de gestion de stations d’essence",
     annee: "2026", lien: "Regarder le projet",
     url: "https://wendlac.github.io/petrogest-design-system/design-system.html" },
   { nom: "Site web Quotidien économique",
-    quoi: "Site web du média d'information économique Quotidien économique",
+    quoi: "Site web du média d’information économique Quotidien économique",
     annee: "2026", lien: "Visiter le site",
     url: "https://quotidieneconomique.net/" },
   { nom: "Site web Faissel",
-    quoi: "Site web d'une entreprise de vente et installation de materiel de réseaux informatiques",
+    quoi: "Site web d’une entreprise de vente et installation de materiel de réseaux informatiques",
     annee: "2026", lien: "Visiter le site",
     url: "https://www.faissel.com/" },
   { nom: "Site web Bil Aka Kora",
-    quoi: "Projet fictif, site web de l'artiste musicien burkinabé Bil Aka Kora",
+    quoi: "Projet fictif, site web de l’artiste musicien burkinabé Bil Aka Kora",
     annee: "2026", lien: "Visiter le site",
     url: "https://wendlac.github.io/bil-aka-kora/" },
   { nom: "Application web Dispoz",
-    quoi: "Une application web qui permet de trouver la palette de couleurs d'un visuel",
+    quoi: "Une application web qui permet de trouver la palette de couleurs d’un visuel",
     annee: "2026", lien: "Visiter le site",
     url: "https://wendlac.github.io/dispoz/" },
   { nom: "Site web Rakiire",
     quoi: "Site web pour le marque de vetement streetwear africain",
     annee: "2026", lien: "Visiter le site",
     url: "https://wendlac.github.io/rakiire/" }
+];
+
+/*
+  Expérience professionnelle, reprise mot pour mot de la frise « Mon
+  parcours » de ta page « Qui suis je? » en ligne : intitulé, employeur,
+  année de début et de fin, rien d'autre. C'est volontaire là-bas, ça le
+  reste ici.
+
+  L'ordre est le tien : du plus ancien au plus récent, pour que ça se lise
+  comme une progression. Ta page le justifiait aussi par le remplissage du
+  rail, qui n'existe pas ici — si tu préfères le plus récent en premier,
+  c'est reverse() et rien d'autre.
+
+  Les trois postes de 2020 se chevauchent (conseil et formation menés en
+  parallèle), classés par mois de début comme sur le CV. Glomira garde donc
+  sa place de départ et porte « aujourd'hui », parce que la mission court
+  toujours : c'est la correction que ta page porte déjà contre le PDF, qui
+  la date à tort de décembre 2024.
+*/
+var PARCOURS = [
+  { quand: "2018 – 2019",         poste: "Product Manager",
+    ou: "Zeta Technologies" },
+  { quand: "2019 – 2020",         poste: "Principal Product Manager",
+    ou: "BAFA Tech" },
+  { quand: "2020 – aujourd’hui",  poste: "Consultant Product Designer",
+    ou: "Glomira" },
+  { quand: "2020 – 2021",         poste: "Chief Operating Officer",
+    ou: "Kumakan Studio" },
+  { quand: "2020 – 2023",         poste: "Formateur Product / UI-UX Design",
+    ou: "Incubateur Université Joseph Ki-Zerbo · Simplon.co · Orange Digital Center" },
+  { quand: "2025",                poste: "UI / Product Designer",
+    ou: "EXCELIS S.A. (ex-M2i, groupe Coris)" }
 ];
 
 /*
@@ -47,9 +79,9 @@ var PROJETS = [
   Ignore You (Cal Newport), The ONE Thing (Gary Keller).
 */
 var LIVRES = [
-  { titre: "Cahier d'un retour au pays natal", auteur: "Aimé Césaire" },
+  { titre: "Cahier d’un retour au pays natal", auteur: "Aimé Césaire" },
   { titre: "Peau noire, masques blancs",       auteur: "Frantz Fanon" },
-  { titre: "L'almanack de Naval Ravikant",     auteur: "Eric Jorgenson" },
+  { titre: "L’almanack de Naval Ravikant",     auteur: "Eric Jorgenson" },
   { titre: "Steal Like an Artist",             auteur: "Austin Kleon" }
 ];
 
@@ -60,7 +92,7 @@ var LIENS = [
      d'adresse de Maps porte des coordonnées et un identifiant de session,
      et il casse avec le temps. */
   { icone: "lieu",     ou: "Ouagadougou",
-    quoi: "C'est là que je réside (enfin, pour le moment)",
+    quoi: "C’est là que je réside (enfin, pour le moment)",
     aller: "Visiter Ouaga",
     url: "https://www.google.com/maps/search/?api=1&query=Ouagadougou%2C+Burkina+Faso" },
   { icone: "tiktok",   ou: "Sur Tiktok",
@@ -70,7 +102,7 @@ var LIENS = [
     quoi: "Vous y trouverez aussi du contenu sur le design, et mes chroniques sur la tech",
     aller: "Visiter", url: "https://www.youtube.com/@louisamad9118" },
   { icone: "linkedin", ou: "Sur linkedIn",
-    quoi: "Mon espace pro où je donne mon avis sur l'industrie de la tech",
+    quoi: "Mon espace pro où je donne mon avis sur l’industrie de la tech",
     aller: "Visiter", url: "https://www.linkedin.com/in/amad-louis-loure" },
   { icone: "email",    ou: "Par email",
     quoi: "Si vous avez un projet ou prendre contact",
@@ -126,6 +158,16 @@ var LIENS = [
       '<span class="projet__annee">' + I.annee + esc(p.annee) + "</span>" +
       '<span class="projet__lien">' + esc(p.lien) + FLECHE + "</span>",
       p.nom + ", " + p.lien) + "</li>";
+  }).join("");
+
+  document.getElementById("parcours").innerHTML = PARCOURS.map(function (p) {
+    return "<li>" +
+      "<span>" +
+        '<span class="parcours__poste">' + esc(p.poste) + "</span>" +
+        '<span class="parcours__ou">' + esc(p.ou) + "</span>" +
+      "</span>" +
+      '<span class="parcours__quand">' + esc(p.quand) + "</span>" +
+    "</li>";
   }).join("");
 
   document.getElementById("livres").innerHTML = LIVRES.map(function (l) {

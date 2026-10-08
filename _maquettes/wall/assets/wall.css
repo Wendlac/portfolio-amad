@@ -224,6 +224,47 @@ body {
 .a-cyan  { color: var(--cyan-texte); }
 .a-rouge { color: var(--rouge-texte); }
 
+/* ---------- Mon parcours ----------
+
+   Même tenue que les livres : pas de cadre, pas de filet, rien que le
+   rythme vertical. Les années sont calées à droite sur une colonne large
+   comme la plus longue d'entre elles (« 2020 – aujourd'hui »), donc leurs
+   bords droits s'alignent tous sans qu'aucune largeur soit écrite en dur. */
+
+.parcours { margin: 0; padding: 0; list-style: none; }
+.parcours li + li { margin-top: 24px; }
+
+.parcours li {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  gap: 24px;
+  align-items: baseline;
+}
+
+.parcours__poste {
+  display: block;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+.parcours__ou {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+.parcours__quand {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+  white-space: nowrap;
+  justify-self: end;
+}
+
 /* ---------- Livres ---------- */
 
 .livres { margin: 0; padding: 0; list-style: none; }
@@ -502,6 +543,8 @@ body {
   .section > h2 { font-size: 26px; line-height: 32px; }
   .projet { grid-template-columns: 1fr; gap: 10px; }
   .projet__annee, .projet__lien { justify-self: start; }
+  .parcours li { grid-template-columns: 1fr; gap: 4px; }
+  .parcours__quand { justify-self: start; order: -1; }
   .lien-ligne { grid-template-columns: 1fr; gap: 6px; }
   .stepper { display: none; }   /* pas de place, et rien à y gagner */
   .fin { margin-top: 96px; }
