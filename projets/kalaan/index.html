@@ -65,26 +65,16 @@
       <img src="/assets/img/logo-amad.png" alt="Amad Louis" width="193" height="80">
     </a>
 
-    <nav class="site-nav" aria-label="Navigation principale">
-      <ul class="site-nav__list">
-        <li><a href="/" aria-current="page">Mon travail<span class="site-nav__count" aria-hidden="true">(4)</span></a></li>
-        <li><a href="/mes-lectures/">Mes lectures<span class="site-nav__count" aria-hidden="true">(5)</span></a></li>
-        <li><a href="/qui-suis-je/">Qui suis je?</a></li>
-        <span class="site-nav__indicator" aria-hidden="true"></span>
-      </ul>
-    </nav>
+    <!--
+      Le menu a disparu avec les pages qu'il listait : le site tient
+      maintenant en une page d'accueil et cette étude de cas. Un menu à une
+      entrée, et un bouton hamburger qui ouvre une liste d'un seul élément,
+      c'est pire que pas de menu. Le logo ci-dessus et le lien de retour en
+      bas de page suffisent, et ils mènent tous deux à l'accueil.
 
-    <button class="nav-toggle" type="button" data-nav-toggle aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" width="22" height="22"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-    </button>
-  </div>
-
-  <div class="mobile-nav" id="mobile-nav" data-mobile-nav data-open="false">
-    <ul class="mobile-nav__list container">
-      <li><a href="/" aria-current="page">Mon travail</a></li>
-      <li><a href="/mes-lectures/">Mes lectures</a></li>
-      <li><a href="/qui-suis-je/">Qui suis je?</a></li>
-    </ul>
+      nav.js sort de lui-même quand [data-nav-toggle] est absent, donc rien
+      à changer côté script.
+    -->
   </div>
 </header>
 

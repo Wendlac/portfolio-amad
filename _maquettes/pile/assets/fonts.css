@@ -1,0 +1,44 @@
+/*
+  Une seule famille : Satoshi.
+
+  Grotesque neutre — c'est le pendant accessible de la tradition suisse
+  (Akzidenz, Univers, Helvetica) : pas de caractère superflu, la hiérarchie
+  se fait au poids et à la taille, jamais à la fantaisie. Déjà auto-hébergé
+  pour le site, donc rien de nouveau à charger.
+
+  Les micro-libellés ne changent plus de famille : ils se distinguent par
+  les capitales, le corps de 11px et l'interlettrage ouvert. C'est suffisant
+  pour tenir l'information technique à distance du texte courant, et ça
+  évite de faire cohabiter deux dessins pour si peu.
+
+  font-display: swap partout.
+*/
+
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/satoshi/satoshi-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/satoshi/satoshi-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/satoshi/satoshi-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/assets/fonts/satoshi/satoshi-900.woff2") format("woff2");
+}

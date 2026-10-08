@@ -1,0 +1,645 @@
+/*
+  WALL — page unique, colonne centrée.
+
+  RELEVÉ SUR LA MAQUETTE. L'export fait 918 de large ; l'échelle se déduit
+  d'une chaîne déjà mesurée ailleurs dans le même caractère : « Hello,
+  c'est Amad Louis » fait 223px d'encre ici et 348 à 40px dans la maquette
+  précédente. 223/348 = 0,641, et 918/1440 = 0,6375. La maquette est donc
+  en 1440 et ce titre est à 40px. Tout le reste est converti avec ce
+  facteur.
+
+    colonne        x 373..1057 → 684 de large, centrée
+    avatar         ~48
+    « Hello… »     40px
+    chapeau        20px / 24px d'interligne
+    titre section  ~36px
+    ligne projet   fond #EEEEEE, 12,5 d'écart entre deux, padding 16
+                   titre 16px, description 14px / 18px
+                   année et lien à droite, x 830 et jusqu'à 1040
+    paragraphes    20px / 25px
+    stepper        7 de large, 70 de haut, collé à droite
+
+  L'interlettrage de -5% au-dessus de 16px est conservé : c'est lui qui
+  avait permis d'identifier Teachers, et la maquette le porte.
+*/
+
+:root {
+  --blanc:   #FFFFFF;
+  --encre:   #021C21;   /* titres */
+  --texte:   #5D696C;   /* paragraphes — voir le relevé de contraste plus bas */
+  /* La ligne de projet, d'après card projet.svg : 685 x 79, rayon 8,
+     fond en dégradé horizontal et filet d'1px lui aussi en dégradé.
+     C'était un aplat #EEEEEE chez moi, donc plat au sens propre. */
+  --ligne-g:   #F4F4F4;   /* fond, à gauche */
+  --ligne-d:   #E6E6E6;   /* fond, à droite */
+  --filet-g:   #E9E9E9;   /* filet, à gauche */
+  --filet-d:   #DADADA;   /* filet, à droite */
+
+  /* CONTRASTE. Le cyan vient de ta signature, seule source sûre : #00C0E8.
+     Sur blanc il ne donne que 2,16:1, et il sert de texte de lien — il en
+     faut 4,5. Même teinte et même saturation, clarté baissée au premier
+     pas qui passe.
+
+     Le fond de référence a changé en cours de route. Tant que la ligne de
+     projet était un aplat #EEEEEE, #00758E donnait 4,60 et suffisait. Le
+     dégradé pris sur card projet.svg finit à #E6E6E6 à DROITE, c'est-à-
+     dire exactement sous le lien, et là #00758E tombait à 4,28 : en
+     dessous du seuil. #007189 donne 4,52 sur ce gris et 5,64 sur blanc.
+
+     Même histoire pour le gris de texte. Sous les descriptions le fond
+     mesuré est #EBEBEB et #5E6B6E y passait (4,63), mais au format étroit
+     la ligne se met sur une colonne et la description va jusqu'au bord
+     sombre, où elle tombait à 4,42. #5D696C donne 4,54 sur #E6E6E6 et
+     5,67 sur blanc.
+
+     Les deux marges sont minces, 0,02 et 0,04. C'est voulu : la correction
+     est la plus petite qui passe, pour ne pas déplacer tes teintes. Si tu
+     touches au dégradé du fond, il faut refaire ce calcul.
+
+     Pour le rouge : #FF7877 donne 2,56, #BA5857 donne 4,54 sur blanc, et
+     il ne sert que sur blanc.
+     Les teintes d'origine restent disponibles pour tout ce qui n'est pas
+     du texte. */
+  --cyan:        #00C0E8;
+  --cyan-texte:  #007189;
+  --rouge:       #FF7877;
+  --rouge-texte: #BA5857;
+
+  /* Le survol, un seul geste pour tout ce qui est cliquable, et un cran
+     plus franc sous le doigt ou sous le clic. */
+  --survol:       #DFF7FF;
+  --survol-appui: #A8E7FE;
+  --survol-encre: #032430;
+
+  --stepper-vide: #A3B8BC;
+  --stepper-plein:#083038;
+
+  --colonne: 684px;
+  --serre: -0.05em;
+  --entree: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--blanc);
+  color: var(--encre);
+  font-family: "Teachers", system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 25px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.page {
+  width: var(--colonne);
+  max-width: calc(100% - 48px);
+  margin-inline: auto;
+  padding: 248px 0 120px;
+}
+
+/* ---------- En-tête ---------- */
+
+/* 58 x 70 : la boîte épouse le dessin, dont le viewBox a été recadré au
+   plus près (rapport 0,83). Plus de marge transparente sur les côtés. */
+.avatar { width: 58px; height: 70px; display: block; }
+
+.salut {
+  margin: 32px 0 0;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+.chapeau {
+  margin: 28px 0 0;
+  color: var(--texte);
+  letter-spacing: var(--serre);
+}
+
+/* ---------- Titres de section ---------- */
+
+.section { margin-top: 104px; }
+
+.section > h2 {
+  margin: 0 0 24px;
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+/* ---------- Projets ---------- */
+
+.projets { margin: 0; padding: 0; list-style: none; }
+.projets li + li { margin-top: 12px; }
+
+/*
+  Relevé sur les sept lignes de la maquette, en coordonnées relatives au
+  cadre (684 de large, padding 16, donc 16..668 utiles) :
+
+      année    456..507   sur TOUTES les lignes
+      lien     finit à 667 sur toutes, et commence à 549 pour le plus
+               long (« Regarder le projet »), 574 pour les autres
+
+  Donc l'année est à une abscisse FIXE et le lien est calé à droite. Une
+  grille « 1fr auto auto » ne peut pas faire ça : la largeur du lien y
+  repousse l'année, et elle se déplaçait d'une ligne à l'autre. D'où trois
+  colonnes dont les deux dernières ne dépendent plus du texte :
+      1fr | 96 (année) | 120 (lien, calé à droite)
+  ce qui pose l'année à 452 et le lien de 548 à 668.
+
+  Le minmax laisse la dernière colonne grandir si un libellé dépassait
+  120 : l'année se décalerait alors, mais rien ne casserait.
+*/
+.projet {
+  display: grid;
+  grid-template-columns: 1fr 80px minmax(132px, max-content);
+  align-items: center;
+  gap: 0;
+  padding: 9px 15px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  /* deux couches : le fond s'arrête à la bordure, le filet occupe la
+     bordure. C'est la seule façon d'obtenir un filet en dégradé. */
+  background:
+    linear-gradient(90deg, var(--ligne-g), var(--ligne-d)) padding-box,
+    linear-gradient(90deg, var(--filet-g), var(--filet-d)) border-box;
+  color: inherit;
+  text-decoration: none;
+}
+
+.projet:focus-visible { outline: none; }
+
+.projet__nom {
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+.projet__quoi {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+.projet__annee,
+.projet__lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.projet__annee { color: var(--encre); justify-self: start; }
+.projet__lien { color: var(--cyan-texte); justify-self: end; }
+
+.projet svg { width: 14px; height: 14px; flex: none; }
+
+/* ---------- Qui suis je ---------- */
+
+.prose p {
+  margin: 0 0 24px;
+  color: var(--texte);
+  letter-spacing: var(--serre);
+}
+
+.prose p:last-child { margin-bottom: 0; }
+
+.prose a { text-decoration: none; }
+
+.a-cyan  { color: var(--cyan-texte); }
+.a-rouge { color: var(--rouge-texte); }
+
+/* ---------- L'arrivée du parcours ----------
+
+   La section arrive comme les autres, en fondu. Les entrées, elles,
+   glissent horizontalement — un geste DIFFÉRENT, sinon ce serait la même
+   phrase dite deux fois, à deux échelles.
+
+   Et elles ne se suivent pas à intervalle fixe : leur retard est
+   proportionnel aux années qui les séparent, calculé dans wall.js. Les
+   trois postes de 2020 arrivent donc en grappe et un silence précède
+   2025. C'est la seule liste de la page où l'ordre porte un sens, donc la
+   seule qui gagne quelque chose à arriver en séquence : ailleurs ce
+   serait de la décoration.
+
+   Pas d'opacité propre aux entrées : c'est la section qui s'en charge.
+   Deux fondus superposés ne feraient qu'un fondu plus mou. */
+
+.anime .parcours li { transform: translateX(-14px); }
+
+.anime .section.vu .parcours li {
+  transform: none;
+  transition: transform 520ms var(--entree) var(--retard, 0ms);
+}
+
+/* ---------- Mon parcours ----------
+
+   Même tenue que les livres : pas de cadre, pas de filet, rien que le
+   rythme vertical. Les années sont calées à droite sur une colonne large
+   comme la plus longue d'entre elles (« 2020 – aujourd'hui »), donc leurs
+   bords droits s'alignent tous sans qu'aucune largeur soit écrite en dur. */
+
+.parcours { margin: 0; padding: 0; list-style: none; }
+.parcours li + li { margin-top: 24px; }
+
+.parcours li {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  gap: 24px;
+  align-items: baseline;
+}
+
+.parcours__poste {
+  display: block;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+.parcours__ou {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+.parcours__quand {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+  white-space: nowrap;
+  justify-self: end;
+}
+
+/* ---------- Livres ---------- */
+
+.livres { margin: 0; padding: 0; list-style: none; }
+.livres li + li { margin-top: 28px; }
+
+.livre__titre {
+  display: block;
+  font-size: 18px;
+  line-height: 24px;
+  font-style: italic;
+  letter-spacing: var(--serre);
+}
+
+.livre__auteur {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+/* ---------- Vous me retrouvrez ---------- */
+
+.liens { margin: 0; padding: 0; list-style: none; }
+.liens li + li { margin-top: 20px; }
+
+.lien-ligne {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 8px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.lien-ligne:focus-visible { outline: none; }
+
+.lien-ligne__ou {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: var(--serre);
+}
+
+.lien-ligne__ou svg { width: 18px; height: 18px; flex: none; }
+
+.lien-ligne__quoi {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+.lien-ligne__aller {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--cyan-texte);
+  white-space: nowrap;
+}
+
+.lien-ligne__aller svg { width: 14px; height: 14px; flex: none; }
+
+/* ---------- Signature et pied ---------- */
+
+.fin { margin-top: 160px; text-align: center; }
+/* 140x80 relevés sur la maquette ; le SVG fait 187x104, même rapport. */
+.signature { width: 140px; height: auto; display: inline-block; }
+
+/* LA SIGNATURE S'ÉCRIT.
+
+   Cinq tracés, 477 unités de longueur en tout, réparties 56 / 16 / 10 /
+   9 / 9 %. Chacun porte sa longueur en --l et son temps en --duree et
+   --retard, posés dans le HTML.
+
+   Ce qui fait qu'on y lit une main et non cinq traits qui apparaissent,
+   c'est que la PLUME GARDE UNE VITESSE CONSTANTE : la durée d'un trait
+   est sa longueur divisée par 300 unités/seconde, pas une durée commune.
+   Le long trait met 886 ms, le plus court 138. Entre deux, 80 ms de levé
+   de plume. Départ à 250 ms, le temps que le pied de page finisse de se
+   poser, et l'ensemble s'achève à 2,16 s.
+
+   D'où aussi le linear : une accélération suivie d'un ralentissement,
+   cinq fois de suite, ce n'est pas une main, c'est une machine.
+
+   Le tracé est COMPLET par défaut. Il n'est effacé que sous .anime,
+   c'est-à-dire quand le navigateur sait observer et que le système ne
+   demande pas moins d'animations. Sans JS, la signature est simplement
+   là, entière. */
+
+.anime .signature path {
+  stroke-dasharray: var(--l);
+  stroke-dashoffset: var(--l);
+}
+
+.anime .fin.vu .signature path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--duree) linear var(--retard);
+}
+
+.copyright {
+  margin: 40px 0 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+/* ---------- Le saut vers une section ----------
+
+   Le lien « lecture » du texte emmène aux livres. Sans ces deux règles
+   l'écran se téléporte et on ne sait pas où on a atterri : le glissement
+   montre le chemin, et la marge garde de l'air au-dessus du titre au lieu
+   de le coller au bord haut. */
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+.section > h2[id] { scroll-margin-top: 80px; }
+
+/* ---------- Le survol ----------
+
+   Un seul geste pour tout ce qui est cliquable : fond #DFF7FF, contenu
+   #032430, 4px en vertical et 8px en horizontal, pleine pastille.
+
+   ATTENTION, mesuré : #DFF7FF ne se détache presque pas de ses fonds.
+   Contre le blanc des liens de contact et du texte courant il donne
+   1,008:1 ; contre le gris des lignes de projet, 1,24:1. L'ancien
+   #A8E7FE n'était pas meilleur en luminance (1,08:1 contre le gris)
+   mais il s'en détachait par la teinte, ce que le calcul de contraste
+   ne mesure pas. Le texte, lui, reste très lisible : #032430 sur
+   #DFF7FF donne 16,0:1.
+   Comme cette règle sert aussi au focus clavier, c'est elle qui désigne
+   la cible quand on tabule. Voir la note de la conversation.
+
+   Le padding est posé EN PERMANENCE et annulé par une marge négative de
+   même valeur. Sans ça, l'arrivée du fond au survol repousserait le texte
+   de 8px et tout bougerait sous le pointeur. Là, rien ne se déplace :
+   seules la couleur et le fond apparaissent.
+
+   La même règle sert au focus clavier, d'où la suppression des contours
+   pointillés : la cible est désignée de la même façon à la souris et au
+   clavier. */
+
+.projet__lien,
+.lien-ligne__aller,
+.prose a {
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: 999px;   /* pleine pastille */
+  transition: background-color 160ms var(--entree), color 160ms var(--entree);
+}
+
+.projet:hover .projet__lien,
+.projet:focus-visible .projet__lien,
+.lien-ligne:hover .lien-ligne__aller,
+.lien-ligne:focus-visible .lien-ligne__aller,
+.prose a:hover,
+.prose a:focus-visible {
+  background-color: var(--survol);
+  color: var(--survol-encre);
+}
+
+/* AU CLAVIER, un anneau en plus.
+
+   Le fond #DFF7FF ne se détache de ses fonds que par la teinte : 1,11:1
+   contre le blanc, 1,12:1 contre le gris des lignes. À la souris ça
+   suffit — on sait déjà où on pointe, et l'encre qui passe de #007189 à
+   #032430 est un vrai écart de luminosité, visible même sans couleur.
+   Au clavier non : rien ne dit où on est, et une pastille à 1,1:1 ne
+   peut pas être le seul repère.
+
+   D'où cet anneau, et seulement au clavier. 2px à 2px d'écart, dans le
+   cyan du texte : 4,52:1 contre le gris de la ligne et 5,64:1 contre le
+   blanc, là où il en faut 3 pour un repère non textuel. Il suit le rayon
+   de la pastille et ne prend pas de place dans la mise en page, donc
+   rien ne bouge quand il apparaît. */
+
+.projet:focus-visible .projet__lien,
+.lien-ligne:focus-visible .lien-ligne__aller,
+.prose a:focus-visible {
+  outline: 2px solid var(--cyan-texte);
+  outline-offset: 2px;
+}
+
+/* ---------- SOUS LE DOIGT ----------
+
+   Sur un écran tactile il n'y a pas de survol. Le seul état qui annonçait
+   « ceci se touche » ne pouvait donc jamais s'afficher : sept grandes
+   cartes tapables et rien pour le dire. La pastille est donc remplie DÈS
+   LE REPOS là où le survol n'existe pas. Rien ne change sur ordinateur.
+
+   hover:none décrit l'incapacité du pointeur principal à survoler, pas la
+   présence d'un écran tactile : un portable à écran tactile avec un pavé
+   garde hover:hover et garde donc le comportement de bureau. */
+
+@media (hover: none) {
+  .projet__lien,
+  .lien-ligne__aller {
+    background-color: var(--survol);
+    color: var(--survol-encre);
+  }
+}
+
+/* L'APPUI, lui, existe partout, et il part de la ligne entière : toucher
+   le titre d'un projet allume sa pastille. C'est ce qui apprend que la
+   carte est le bouton, sans que la carte elle-même ne bouge — ta règle
+   portait sur le survol, l'appui est autre chose ; dis-moi si tu veux que
+   je le retire aussi. */
+
+.projet:active .projet__lien,
+.lien-ligne:active .lien-ligne__aller,
+.prose a:active {
+  background-color: var(--survol-appui);
+  color: var(--survol-encre);
+}
+
+/* ---------- La flèche ----------
+
+   Au survol elle part le long de son propre axe — vers le haut-droit,
+   là où elle pointe — et une seconde arrive du bas-gauche. D'où deux
+   copies dans le balisage : une seule ne peut pas à la fois partir et
+   revenir.
+
+   La boîte fait 14 et rogne. À translate(100%, -100%) la première est
+   entièrement dehors, et la seconde attend à translate(-100%, 100%),
+   dehors elle aussi. Les deux glissent ensemble, donc le regard lit un
+   seul mouvement continu et non deux. */
+
+.fleche {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex: none;
+  overflow: hidden;
+}
+
+.fleche svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 340ms var(--entree);
+}
+
+.fleche svg:last-child { transform: translate(-100%, 100%); }
+
+.projet:hover .fleche svg:first-child,
+.projet:focus-visible .fleche svg:first-child,
+.lien-ligne:hover .fleche svg:first-child,
+.lien-ligne:focus-visible .fleche svg:first-child {
+  transform: translate(100%, -100%);
+}
+
+.projet:hover .fleche svg:last-child,
+.projet:focus-visible .fleche svg:last-child,
+.lien-ligne:hover .fleche svg:last-child,
+.lien-ligne:focus-visible .fleche svg:last-child {
+  transform: translate(0, 0);
+}
+
+/* ---------- L'arrivée de la page ----------
+
+   L'état caché n'existe que sous .anime, classe posée par le <head> et
+   seulement si le navigateur sait observer et que le système ne demande
+   pas moins d'animations. Sans JS la page est entière et immobile : rien
+   ici ne peut la faire disparaître.
+
+   14px vers le bas, et rien d'autre. Pas d'échelle ni de flou : le texte
+   doit être net dès la première image, et un texte qui grandit en
+   arrivant se relit mal. */
+
+.anime .ouvre {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.anime .ouvre.vu {
+  opacity: 1;
+  transform: none;
+  transition: opacity 620ms var(--entree), transform 620ms var(--entree);
+}
+
+/* ---------- Le stepper latéral ----------
+   Repris des quatre SVG : trois barres de 7 de large, 12,25 / 35 / 12,25
+   de haut, 5,25 d'écart, soit 70 en tout. Plutôt que quatre fichiers, une
+   seule barre dont le remplissage suit le défilement : les états dessinés
+   en sont les étapes. */
+
+.stepper {
+  position: fixed;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 7px;
+  height: 70px;
+  display: grid;
+  grid-template-rows: 12.25px 35px 12.25px;
+  gap: 5.25px;
+  pointer-events: none;
+}
+
+.stepper span {
+  border-radius: 3.5px;
+  background: var(--stepper-vide);
+  position: relative;
+  overflow: hidden;
+}
+
+.stepper span::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0;
+  border-radius: 3.5px;
+  background: var(--stepper-plein);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* le haut se remplit dès qu'on est en haut, le milieu suit le défilement,
+   le bas ne se remplit qu'à la fin */
+.stepper span:nth-child(1)::after { height: 100%; }
+.stepper span:nth-child(2)::after { height: calc(var(--avance, 0) * 100%); }
+.stepper span:nth-child(3)::after { height: calc(var(--fin, 0) * 100%); }
+
+/* ---------- Adaptation ---------- */
+
+@media (max-width: 760px) {
+  body { font-size: 17px; line-height: 23px; }
+  .page { padding: 96px 0 80px; max-width: calc(100% - 40px); }
+  .salut { font-size: 30px; line-height: 36px; }
+  .section { margin-top: 72px; }
+  .section > h2 { font-size: 26px; line-height: 32px; }
+  .projet { grid-template-columns: 1fr; gap: 10px; }
+  .projet__annee, .projet__lien { justify-self: start; }
+  .parcours li { grid-template-columns: 1fr; gap: 4px; }
+  /* 8 au lieu de 14 : les marges tombent à 20 de chaque côté. */
+  .anime .parcours li { transform: translateX(-8px); }
+  .parcours__quand { justify-self: start; order: -1; }
+  .lien-ligne { grid-template-columns: 1fr; gap: 6px; }
+  .stepper { display: none; }   /* pas de place, et rien à y gagner */
+  .fin { margin-top: 96px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}

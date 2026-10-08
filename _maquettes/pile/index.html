@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La pile — exploration</title>
+<meta name="robots" content="noindex">
+
+<!--
+  LA PILE — tranche verticale.
+
+  Ce qui est construit : la couverture, la pile de feuilles, le loader à
+  traits multicolores, et l'ouverture complète d'UNE section (Projets).
+  Les trois autres s'ouvrent avec le même rituel mais sur une coquille :
+  tant qu'on n'a pas dessiné leur contenu, je ne l'invente pas.
+
+  Sur l'accueil, aucun trait n'est tracé. Les feuilles ne sont pas
+  séparées par des filets : elles se détachent par leur propre valeur et
+  par l'ombre que porte celle du dessus. C'est une liasse de papier, pas
+  un tableau.
+
+  Le parti pris et la grille sont documentés en tête de assets/pile.css,
+  la chorégraphie d'ouverture en tête de assets/pile.js.
+-->
+
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/pile.css">
+</head>
+<body data-grille="false">
+
+<!-- Le grain. Une seule turbulence, posée sur toute la page. -->
+<div class="grain" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <filter id="grain-f">
+      <feTurbulence type="fractalNoise" baseFrequency="0.86" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#grain-f)"/>
+  </svg>
+</div>
+
+<!-- La grille suisse, qu'on peut afficher. -->
+<div class="grille" aria-hidden="true">
+  <div class="grille__inner">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+<div class="enveloppe">
+
+  <header class="masthead">
+    <h1 class="masthead__nom">Amad<br>Louis</h1>
+    <p class="masthead__role etiquette etiquette--ink">
+      Designer d&rsquo;interfaces pour les applications m&eacute;tier
+    </p>
+    <div class="masthead__lieu etiquette">
+      <p>Ouagadougou, Burkina&nbsp;Faso</p>
+      <p>12.3714&deg; N, 1.5197&deg; W</p>
+      <p>GMT+0</p>
+      <p>Disponible, projets 2026</p>
+    </div>
+  </header>
+
+  <!--
+    Le classeur. L'ordre du balisage est l'ordre de PROFONDEUR, du fond
+    vers l'avant — c'est aussi celui du tiroir : le dossier du fond a son
+    onglet le plus haut, celui de devant le plus bas.
+
+    --i  rang de profondeur. Il sert à trois choses d'un coup : la hauteur
+         de l'onglet, le plan de superposition, et la levée. Un dossier se
+         lève exactement de son propre décalage, donc son onglet arrive
+         toujours sur la ligne du haut, quel que soit son rang.
+    --d  rang depuis l’avant. Il commande le retrait latéral : plus un
+         dossier est au fond, plus il est étroit.
+  -->
+  <div class="classeur">
+    <ul class="classeur__dossiers">
+      <li class="dossier" style="--i: 0; --d: 2; --teinte: #84D6FF; --encre: #032430">
+        <button class="dossier__ouvrir" type="button" data-sheet="profil">
+          <span class="dossier__onglet"></span>
+          <span class="dossier__nom">Qui suis je?</span>
+          <span class="dossier__corps"></span>
+        </button>
+      </li>
+      <li class="dossier" style="--i: 1; --d: 1; --teinte: #6897AF; --encre: #FFFFFF">
+        <button class="dossier__ouvrir" type="button" data-sheet="lectures">
+          <span class="dossier__onglet"></span>
+          <span class="dossier__nom">Mes lectures</span>
+          <span class="dossier__corps"></span>
+        </button>
+      </li>
+      <li class="dossier" style="--i: 2; --d: 0; --teinte: #1E94D0; --encre: #FFFFFF">
+        <button class="dossier__ouvrir" type="button" data-sheet="projets">
+          <span class="dossier__onglet"></span>
+          <span class="dossier__nom">Mes projets</span>
+          <span class="dossier__corps"></span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- la joue du tiroir, qui s'évase vers l'avant, puis la face -->
+    <div class="classeur__cale" aria-hidden="true"></div>
+    <div class="classeur__tiroir" aria-hidden="true"></div>
+  </div>
+
+  <footer class="pied">
+    <p class="etiquette" style="margin:0">Exploration&nbsp;— suisse moderne, minimalisme japonais, 2D</p>
+    <button class="etiquette" type="button" id="bascule-grille" aria-pressed="false">Afficher la grille</button>
+  </footer>
+
+</div>
+
+<!-- Le loader. Cinq traits, cinq couleurs : la seule couleur du site. -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__traits">
+    <span class="loader__trait"></span>
+    <span class="loader__trait"></span>
+    <span class="loader__trait"></span>
+    <span class="loader__trait"></span>
+    <span class="loader__trait"></span>
+  </div>
+  <div class="loader__legende">
+    <span class="etiquette etiquette--ink" id="loader-section"></span>
+    <span class="etiquette">Ouverture</span>
+  </div>
+</div>
+
+<!-- La page qui s'ouvre. -->
+<div class="page" id="page" role="dialog" aria-modal="true" aria-labelledby="page-titre">
+  <div class="page__inner">
+    <div class="page__tete">
+      <h2 class="page__titre" id="page-titre"></h2>
+      <button class="fermer etiquette etiquette--ink" type="button" id="fermer">Fermer &times;</button>
+    </div>
+    <div class="page__corps" id="page-corps"></div>
+  </div>
+</div>
+
+
+<script src="assets/pile.js"></script>
+</body>
+</html>

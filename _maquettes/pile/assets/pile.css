@@ -1,0 +1,722 @@
+/*
+  LA PILE — exploration : suisse moderne + minimalisme japonais + 2D.
+
+  LE PARTI PRIS, EN UNE PHRASE
+  Le site est monochrome. La couleur n'apparaît QUE pendant la transition,
+  dans les traits du loader. C'est ce qui réconcilie les trois références :
+  le minimalisme japonais demande la retenue, le suisse demande un système,
+  et la 2D d'Arcane frappe d'autant plus fort qu'elle est rationnée. Si la
+  couleur était partout, elle ne vaudrait plus rien nulle part.
+
+  AUCUN TRAIT SUR L'ACCUEIL
+  Pas un filet n'est tracé. Les feuilles ne sont pas séparées par des
+  règles : elles se détachent du fond par leur propre valeur, et par
+  l'ombre que porte celle du dessus. On lit une liasse de papier, pas un
+  tableau — et c'est plus juste pour une pile.
+
+  LA GRILLE
+  12 colonnes, gouttière 24px, marges 64px, maximum 1440.
+  Ligne de base de 8px : toutes les hauteurs et tous les espacements sont
+  des multiples de 8, interlignes compris, sans exception.
+
+  L'ÉCHELLE TYPOGRAPHIQUE
+  Suisse : des paliers, pas du fluide. Des interlignes en px entiers pour
+  ne pas casser la ligne de base. Au-dessus de 16px, l'interlettrage est
+  serré à -5% : à ces corps-là, l'approche par défaut d'un grotesque est
+  trop lâche, et c'est ce resserrement qui donne le bloc compact du
+  typographique suisse.
+     96 / 96   titre de couverture (900, -5%)
+     40 / 48   titre de feuille et de page ouverte (700, -5%)
+     24 / 32   titre de projet (500, -5%)
+     16 / 24   texte courant (400, approche normale)
+     11 / 16   étiquette, capitales, interlettrage +10% (sous 16px)
+
+  LA 2D
+  Deux moyens, aucun ne demande d'image : le grain en feTurbulence sur
+  toute la page — la texture peinte, le grain de papier — et les traits du
+  loader, qui sont de la peinture pure.
+*/
+
+:root {
+  /* --- encre et papier --- */
+  --paper:    #F2F0EA;
+  --paper-up: #F7F5F1;   /* la feuille, plus claire que le fond */
+  --ink:      #14110F;
+  --ink-70:   #575451;   /* texte secondaire — 6,6:1 sur le papier */
+  --ink-40:   #8F8C88;
+  --ink-16:   rgba(20, 17, 15, 0.16);
+
+  /* --- les cinq traits. La seule couleur du site. --- */
+  --t1: #1E6F6B;   /* vert-bleu profond */
+  --t2: #D1495B;   /* rouge */
+  --t3: #E9A23B;   /* or */
+  --t4: #3D348B;   /* violet */
+  --t5: #4FB0C6;   /* cyan */
+
+  /* --- grille --- */
+  --marge: 64px;
+  --gout: 24px;
+  --max: 1440px;
+  --bl: 8px;              /* ligne de base */
+
+  /* --- typographie --- */
+  --serre: -0.05em;       /* au-dessus de 16px, partout */
+
+  /* --- le classeur ---
+     Le pas d'un onglet au suivant vaut aussi la levée : un dossier se lève
+     de son propre décalage, donc son onglet arrive toujours sur la ligne
+     du haut. Voir le relevé en tête du bloc « Le classeur ». */
+  --pas-onglet: 40px;
+  --h-onglet: 32px;       /* < --pas-onglet, pour laisser voir une tranche */
+  --biais: 48px;          /* la coupe en diagonale de l'onglet */
+  --retrait: 24px;        /* par rang de profondeur */
+  --l-onglet: 224px;
+  --r-dossier: 16px;
+  --h-dossiers: 240px;    /* du haut des onglets au tiroir */
+  --h-tiroir: 320px;
+  --chevauche: 32px;      /* de combien un dossier est recouvert */
+  --lever: 48px;          /* de combien il sort, par le bas vers le haut */
+
+  /* LA RÈGLE QUI TIENT TOUT LE CLASSEUR.
+     Un dossier levé monte de --lever et passe devant celui du dessus : il
+     le recouvre donc sur --chevauche + --lever. Pour qu'il n'avale jamais
+     du texte, chaque dossier réserve exactement cette hauteur en bas, vide.
+     C'est aussi ce qu'est un vrai dossier : l'écriture en haut, le corps
+     nu en dessous. Le geste et la lisibilité tombent sur la même valeur,
+     ce n'est pas un compromis.
+     Plus une ligne de base, sinon le bord du dossier levé affleure
+     exactement le bas du texte : juste, mais sans air. */
+  --reserve: calc(var(--chevauche) + var(--lever) + var(--bl));
+
+  /* --- mouvement --- */
+  --sortie: cubic-bezier(0.65, 0, 0.35, 1);
+  --entree: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Satoshi", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Le grain ----------
+   Posé une fois sur toute la page, en multiply très faible. C'est ce qui
+   empêche l'aplat de papier de ressembler à du #F2F0EA et le rapproche
+   d'une surface peinte. */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: multiply;
+}
+
+.grain svg { width: 100%; height: 100%; }
+
+/* ---------- Grille de repérage ----------
+   La grille suisse, visible. On la montre, c'est la méthode qui parle. */
+
+.grille {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 240ms var(--sortie);
+}
+
+body[data-grille="true"] .grille { opacity: 1; }
+
+.grille__inner {
+  max-width: var(--max);
+  height: 100%;
+  margin-inline: auto;
+  padding-inline: var(--marge);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gout);
+}
+
+.grille__inner span { background: rgba(209, 73, 91, 0.06); }
+
+/* ---------- Trame générale ----------
+   Trois rangées posées explicitement : la couverture, la pile, le pied.
+   Le pied est collé en bas par la rangée souple, sans filet au-dessus. */
+
+.enveloppe {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding: var(--marge);
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto auto 1fr;
+  gap: var(--gout);
+}
+
+/* ---------- Étiquette ----------
+   Plus de chasse fixe : même famille que tout le reste. Ce sont les
+   capitales, le petit corps et l'approche ouverte qui font le registre
+   technique. Sous 16px, donc l'interlettrage reste positif. */
+
+.etiquette {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink-70);
+}
+
+.etiquette--ink { color: var(--ink); }
+
+/* ---------- Couverture ---------- */
+
+/*
+  Relevé sur la maquette du bandeau (image 1312 de large, fond transparent
+  — elle ne dit donc rien de la couleur du papier, qui ne bouge pas) :
+
+    nom      encre x 63..161, lignes à y 118 et 172
+             → hauteur d'encre 31px, interligne 54px
+    rôle     deux lignes, encre #14110F, départ x 501
+    lieu     quatre lignes, encre #575451, aligné à droite
+    lignes   16px d'une ligne à l'autre pour les deux étiquettes
+             → c'est l'étiquette du site, 11/16, inchangée
+
+  Le corps du nom est résolu par DEUX contraintes au lieu d'une, ce qui
+  tranche aussi la graisse : à 40px, le 700 donne 30,8px d'encre pour 31
+  relevés et 101px de largeur pour 99, soit 1px d'écart sur chacune. Le 900
+  tombe juste en hauteur mais rate la largeur de 5%. C'est donc du 700.
+
+  Le nom descend ainsi de 96px à 40px — la taille des titres de dossier.
+  Même corps pour le nom et pour les sections : la hiérarchie se fait à la
+  place et non à l'échelle, et le nom cesse de crier.
+
+  Les trois blocs sont centrés sur un même axe : sur la maquette, l'encre
+  du nom (118..202), celle du rôle (148..172) et celle du lieu (132..188)
+  ont toutes 160 pour milieu.
+
+  Horizontalement, le rôle démarre à 501 sur 1312, soit entre deux
+  colonnes. Je le pose sur la colonne 5 — 35px à gauche de la maquette,
+  mais sur la grille, et la maquette est une capture recadrée dont je ne
+  peux pas déduire les marges au pixel.
+*/
+.masthead {
+  grid-column: 1 / 13;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+  padding-bottom: 128px;
+}
+
+.masthead__nom {
+  grid-column: 1 / 5;
+  margin: 0;
+  font-size: 40px;
+  line-height: 56px;
+  font-weight: 700;
+  letter-spacing: var(--serre);
+}
+
+.masthead__role {
+  grid-column: 5 / 8;
+  margin: 0;
+}
+
+.masthead__lieu {
+  grid-column: 10 / 13;
+  text-align: right;
+}
+
+.masthead__lieu p { margin: 0; }
+
+/* ---------- Le classeur ----------
+   Relevé sur les quatre SVG du classeur (viewBox 687x436) :
+
+     dossier         onglet  largeur  retrait/côté
+     Qui suis je?    y 0     536      48
+     Mes lectures    y 41,5  600      16
+     Mes projets     y 85,5  632      0
+
+   et la levée de chacun quand il devient actif :
+     Mes projets 80, Mes lectures 40, Qui suis je? 0.
+
+   LA RÈGLE QUI SORT DE CES CHIFFRES : la levée d'un dossier est
+   exactement son propre décalage d'onglet. Autrement dit son onglet
+   remonte toujours sur la MÊME ligne, celle du haut de la pile, quel que
+   soit son rang. C'est le geste réel — on tire le dossier jusqu'à ce que
+   son onglet dégage ceux de devant — et ça tient pour un nombre
+   quelconque de dossiers, sans valeur à ajouter.
+
+   Les pas relevés (41,5 puis 44 ; retraits 48, 16, 0) sont dessinés à la
+   main. Je les régularise sur la ligne de base : pas de 40, retrait de 24
+   par rang. Le dossier du fond et celui de devant retombent alors
+   exactement sur la maquette, seul celui du milieu bouge de 8px. */
+
+/* Neuf colonnes sur douze, pas la pleine largeur. La maquette du classeur
+   fait 687 x 436, soit 1,58 ; sur douze colonnes il tomberait à 2,74 et
+   le tiroir se lirait comme une dalle. Sur neuf, avec les hauteurs
+   ci-dessous, on retrouve 1,57. Les trois colonnes libres à droite sont
+   du vide assumé, pas un reste. */
+.classeur {
+  grid-column: 1 / 10;
+  grid-row: 2;
+  align-self: start;
+  position: relative;
+  height: calc(var(--h-dossiers) + var(--h-tiroir));
+}
+
+.classeur__dossiers {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dossier {
+  position: absolute;
+  top: calc(var(--pas-onglet) * var(--i));
+  left: calc(var(--retrait) * var(--d));
+  right: calc(var(--retrait) * var(--d));
+  bottom: 0;
+  z-index: var(--i);
+  transition: transform 520ms var(--entree);
+}
+
+/* On tire le dossier jusqu'à ce que son onglet arrive en haut, et il passe
+   devant les autres — sinon il sortirait derrière eux. */
+.dossier:hover,
+.dossier:focus-within {
+  z-index: 10;
+  transform: translateY(calc(var(--pas-onglet) * var(--i) * -1));
+}
+
+.dossier__ouvrir {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dossier__ouvrir:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+/* L'onglet : un rectangle arrondi en haut à gauche, coupé en biais à
+   droite. C'est ce biais qui fait lire « dossier » plutôt qu'« onglet de
+   navigateur ». */
+.dossier__onglet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--l-onglet);
+  height: var(--h-onglet);
+  background: var(--teinte);
+  border-radius: var(--r-dossier) 0 0 0;
+  clip-path: polygon(0 0, calc(100% - var(--biais)) 0, 100% 100%, 0 100%);
+}
+
+/* Le nom est posé PAR-DESSUS l'onglet et non dedans : le biais est un
+   clip-path, et il couperait le texte qui s'en approche. */
+.dossier__nom {
+  position: absolute;
+  top: 0;
+  left: 24px;
+  height: var(--h-onglet);
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+  color: var(--encre);
+}
+
+.dossier__corps {
+  position: absolute;
+  top: calc(var(--h-onglet) - 1px);   /* 1px de recouvrement : pas de couture */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--teinte);
+  border-radius: 0 var(--r-dossier) 0 0;
+}
+
+/* La joue du tiroir, qui s'évase vers l'avant. */
+.classeur__cale {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--h-dossiers) - 24px);
+  height: 32px;
+  z-index: 20;
+  background: var(--ink);
+  clip-path: polygon(24px 0, calc(100% - 24px) 0, 100% 100%, 0 100%);
+}
+
+/* La face du tiroir. Elle passe devant tout : les dossiers y plongent, et
+   c'est elle qui coupe leur bas — donc leur hauteur réelle n'a aucune
+   importance. */
+.classeur__tiroir {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--h-tiroir);
+  z-index: 21;
+  border-radius: var(--r-dossier) var(--r-dossier) 0 0;
+  background: linear-gradient(180deg, #0B7196 0%, #000000 46%);
+}
+
+/* Le liseré métallique, qui déborde de 8px au-dessus de la face. */
+.classeur__tiroir::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -8px;
+  height: 16px;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(94deg, #F5F7F7, #032430);
+}
+
+/* ---------- Pied ---------- */
+
+.pied {
+  grid-column: 1 / 13;
+  grid-row: 3;
+  align-self: end;
+  padding-top: 96px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.pied button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Le loader ----------
+   Cinq traits, cinq couleurs, qui se tirent de gauche à droite en décalé.
+   C'est la seule couleur du site, et elle ne dure que le temps d'ouvrir
+   une page. Le panneau monte, les traits se tirent, le panneau sort par le
+   haut en découvrant la page déjà en place dessous. */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  background: var(--paper);
+  transform: translateY(100%);
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  gap: 24px;
+  pointer-events: none;
+}
+
+body[data-phase="monte"] .loader,
+body[data-phase="traits"] .loader {
+  transform: translateY(0);
+  transition: transform 360ms var(--sortie);
+}
+
+body[data-phase="sort"] .loader {
+  transform: translateY(-100%);
+  transition: transform 420ms var(--entree);
+}
+
+.loader__traits {
+  display: grid;
+  gap: var(--bl);
+  width: min(480px, 60vw);
+}
+
+.loader__trait {
+  height: var(--bl);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.loader__trait:nth-child(1) { background: var(--t1); }
+.loader__trait:nth-child(2) { background: var(--t2); }
+.loader__trait:nth-child(3) { background: var(--t3); }
+.loader__trait:nth-child(4) { background: var(--t4); }
+.loader__trait:nth-child(5) { background: var(--t5); }
+
+body[data-phase="traits"] .loader__trait,
+body[data-phase="sort"] .loader__trait {
+  transform: scaleX(1);
+  transition: transform 320ms var(--sortie);
+}
+
+/* le décalage : chaque trait part 56ms après le précédent */
+body[data-phase="traits"] .loader__trait:nth-child(1),
+body[data-phase="sort"] .loader__trait:nth-child(1) { transition-delay: 0ms; }
+body[data-phase="traits"] .loader__trait:nth-child(2),
+body[data-phase="sort"] .loader__trait:nth-child(2) { transition-delay: 56ms; }
+body[data-phase="traits"] .loader__trait:nth-child(3),
+body[data-phase="sort"] .loader__trait:nth-child(3) { transition-delay: 112ms; }
+body[data-phase="traits"] .loader__trait:nth-child(4),
+body[data-phase="sort"] .loader__trait:nth-child(4) { transition-delay: 168ms; }
+body[data-phase="traits"] .loader__trait:nth-child(5),
+body[data-phase="sort"] .loader__trait:nth-child(5) { transition-delay: 224ms; }
+
+.loader__legende {
+  display: flex;
+  justify-content: space-between;
+  width: min(480px, 60vw);
+}
+
+/* ---------- La page ouverte ---------- */
+
+.page {
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--paper);
+  visibility: hidden;
+}
+
+body[data-ouvert] .page { visibility: visible; }
+
+.page__inner {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding: var(--marge);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gout);
+  align-content: start;
+}
+
+.page__tete {
+  grid-column: 1 / 13;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+}
+
+.page__titre {
+  grid-column: 1 / 9;
+  margin: 0;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  letter-spacing: var(--serre);
+}
+
+.fermer {
+  grid-column: 11 / 13;
+  justify-self: end;
+  padding: 8px 16px;
+  margin: -8px -16px -8px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.fermer:hover { text-decoration: underline; text-underline-offset: 4px; }
+.fermer:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.page__corps { grid-column: 1 / 13; padding-block: 96px; }
+
+/* ---------- Liste de projets ----------
+   Même classeur que l'accueil : plus un seul filet, les dossiers se
+   recouvrent et celui qu'on survole se lève. La page est une pile de
+   dossiers, et ce qu'elle contient aussi. */
+
+.projets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.projet { position: relative; }
+.projet + .projet { margin-top: calc(var(--chevauche) * -1); }
+.projet:nth-child(1) { z-index: 4; }
+.projet:nth-child(2) { z-index: 3; }
+.projet:nth-child(3) { z-index: 2; }
+.projet:nth-child(4) { z-index: 1; }
+.projet:hover,
+.projet:focus-within { z-index: 10; }
+
+.projet__lien {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: var(--gout);
+  align-items: baseline;
+  /* le bas est plus épais que le haut : voir --reserve */
+  padding: 32px 32px var(--reserve);
+  background: var(--paper-up);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 8px 16px -8px rgba(20, 17, 15, 0.20);
+  transition: transform 460ms var(--entree),
+              background 240ms var(--sortie),
+              box-shadow 460ms var(--entree);
+}
+
+.projet__lien:hover,
+.projet__lien:focus-visible {
+  transform: translateY(calc(var(--lever) * -1));
+  background: #FBFAF8;
+  box-shadow: 0 28px 48px -20px rgba(20, 17, 15, 0.32),
+              0 2px 4px rgba(20, 17, 15, 0.06);
+}
+
+.projet__lien:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+
+.projet__titre {
+  margin: 0;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+.projet__quoi { margin: 0; color: var(--ink-70); }
+.projet__sortie { justify-self: end; }
+
+/* L'aperçu est logé dans la réserve du dossier, pas accroché au pointeur.
+   Il n'apparaît donc que quand le dossier se lève, exactement dans la
+   place que la levée dégage — et il ne recouvre jamais la ligne qu'on est
+   en train de lire, ce que faisait l'aperçu flottant. */
+.projet__apercu {
+  position: absolute;
+  left: 32px;
+  bottom: 16px;
+  width: 96px;
+  height: 64px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 240ms var(--sortie), transform 460ms var(--entree);
+  box-shadow: 0 4px 12px -4px rgba(20, 17, 15, 0.30);
+}
+
+.projet__lien:hover .projet__apercu,
+.projet__lien:focus-visible .projet__apercu { opacity: 1; transform: translateY(0); }
+
+.projet__apercu img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+
+/* ---------- Coquilles ---------- */
+
+.coquille { display: grid; gap: 8px; padding: 48px 0; }
+
+/* ---------- Adaptation ---------- */
+
+@media (max-width: 1080px) {
+  :root { --marge: 40px; }
+  .enveloppe { grid-template-rows: none; }
+  .pied { grid-row: auto; }
+  /* Le corps du nom ne bouge plus : à 40px il tient à toutes les largeurs,
+     ce sont les colonnes qui se resserrent. */
+  .masthead { padding-bottom: 96px; }
+  .masthead__nom { grid-column: 1 / 5; }
+  .masthead__role { grid-column: 5 / 9; }
+  .masthead__lieu { grid-column: 9 / 13; }
+  .classeur { grid-column: 1 / 13; grid-row: auto; }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --marge: 24px; --chevauche: 24px; --lever: 32px;
+    --pas-onglet: 36px; --h-onglet: 30px; --biais: 32px;
+    --l-onglet: 200px; --retrait: 14px;
+    --h-dossiers: 144px; --h-tiroir: 180px;
+  }
+  /* En une colonne, les trois blocs se suivent : plus d'axe commun à tenir,
+     donc on les cale en haut. */
+  .masthead { padding-bottom: 64px; align-items: start; }
+  .masthead__nom { grid-column: 1 / 13; }
+  .masthead__role { grid-column: 1 / 13; margin-top: 24px; }
+  .masthead__lieu { grid-column: 1 / 13; margin-top: 24px; text-align: left; }
+  .pied { padding-top: 64px; flex-direction: column; gap: 16px; }
+  .page__titre { grid-column: 1 / 13; font-size: 28px; line-height: 32px; }
+  .fermer { grid-column: 1 / 13; justify-self: start; margin-top: 16px; }
+  .page__corps { padding-block: 48px 96px; }
+
+  /* Les quatre colonnes se replient en une seule, et chaque enfant de la
+     grille reçoit sa rangée. Placer .projet__quoi ne servirait à rien :
+     ce n'est pas un enfant de la grille, il vit dans .projet__corps. */
+  .projet__lien { grid-template-columns: 1fr; gap: 8px; padding: 24px 24px var(--reserve); }
+  .projet__corps  { grid-row: 1; }
+  .projet__rendu  { grid-row: 2; }
+  .projet__sortie { grid-row: 3; justify-self: start; margin-top: 8px; }
+
+  /* En une colonne, l'aperçu posé en absolu retomberait sur l'étiquette de
+     sortie. Il reprend donc sa place dans le flux, au-dessus de la réserve
+     comme le reste du contenu. */
+  .projet__apercu {
+    position: static;
+    grid-row: 4;
+    width: 128px;
+    height: 88px;
+    margin-top: 16px;
+  }
+
+}
+
+/* Sans survol — au doigt — l'aperçu ne se montrerait jamais, et la réserve
+   du dossier resterait vide pour rien. On le montre d'emblée. */
+@media (hover: none) {
+  .projet__apercu { opacity: 1; transform: none; }
+}
+
+/* ---------- Mouvement réduit ----------
+   Le loader garde ses couleurs mais ne se tire plus : les traits sont
+   là d'emblée, et tout le reste se coupe net. */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .loader__trait { transform: scaleX(1); }
+}
