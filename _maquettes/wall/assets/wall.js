@@ -15,11 +15,7 @@ var PROJETS = [
   { nom: "Design system Petrogest",
     quoi: "Conception du design system d'une application de gestion de stations d'essence",
     annee: "2026", lien: "Regarder le projet",
-    /* Seule adresse encore manquante. Cherchée dans tout le dépôt et son
-       historique, dans les dépôts publics de Wendlac et sur le site en
-       ligne : Petrogest n'apparaît nulle part. Tant qu'elle est nulle la
-       ligne reste un <div>, donc pas de lien mort. */
-    url: null },
+    url: "https://wendlac.github.io/petrogest-design-system/design-system.html" },
   { nom: "Site web Quotidien économique",
     quoi: "Site web du média d'information économique Quotidien économique",
     annee: "2026", lien: "Visiter le site",
