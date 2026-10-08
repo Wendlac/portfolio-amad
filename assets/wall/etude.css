@@ -1,0 +1,235 @@
+/*
+  ÉTUDE DE CAS — ce que l'accueil n'a pas.
+
+  Cette feuille vient APRÈS wall.css et n'en redéfinit rien : la colonne de
+  684, la typo, les couleurs, la pastille au survol et son anneau au
+  clavier viennent toutes de là. Il n'y a ici que ce qu'une lecture longue
+  réclame en plus — un chapitrage, des images, une fiche, un bouton.
+
+  C'est aussi pour ça que la page ne charge plus rien de l'ancien système :
+  six feuilles, sept scripts, GSAP et trois familles de polices servaient à
+  cette page et à elle seule.
+*/
+
+/* ---------- La page ---------- */
+
+/* 248 en haut, c'est l'ouverture de l'accueil, où le vide fait partie du
+   propos. Ici le lien de retour arrive en premier et n'en demande pas
+   autant. */
+.page--etude { padding-top: 56px; }
+
+.retour {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--cyan-texte);
+  text-decoration: none;
+  /* la pastille du reste du site, posée à la main puisqu'on n'est ni dans
+     .prose ni dans une ligne de projet */
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: 999px;
+  transition: background-color 160ms var(--entree), color 160ms var(--entree);
+}
+
+.retour svg { width: 14px; height: 14px; flex: none; }
+
+.retour:hover,
+.retour:focus-visible {
+  background-color: var(--survol);
+  color: var(--survol-encre);
+}
+
+.retour:focus-visible {
+  outline: 2px solid var(--cyan-texte);
+  outline-offset: 2px;
+}
+
+/* ---------- Le haut de la page ---------- */
+
+.etude__sur {
+  margin: 48px 0 0;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+}
+
+.etude__sur span + span::before {
+  content: "·";
+  margin: 0 8px;
+  color: var(--filet-d);
+}
+
+.etude__titre {
+  margin: 16px 0 0;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+.etude__intro { margin-top: 32px; }
+
+/* ---------- Les chapitres ----------
+
+   Les numéros sont ceux de la page d'origine, et ils restent : dans une
+   lecture de cette longueur ils disent où l'on en est. Ils sont en gris et
+   en chiffres tabulaires, donc alignés d'un chapitre à l'autre, et ils ne
+   prennent pas le pas sur le titre. */
+
+.chapitre { margin-top: 96px; }
+
+.chapitre__tete {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0 0 24px;
+}
+
+.chapitre__no {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--texte);
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+
+.chapitre__titre {
+  margin: 0;
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+/* ---------- Le texte long ---------- */
+
+/* .prose vient de wall.css. Deux ajouts seulement : les liens y sont cyan
+   sans avoir à porter une classe, et le gras passe à l'encre des titres
+   plutôt que de rester dans le gris du paragraphe. */
+.prose a { color: var(--cyan-texte); }
+.prose strong { color: var(--encre); font-weight: 500; }
+
+/* ---------- Les images ----------
+
+   La bannière occupe la colonne. Les captures de téléphone font 540 x 960 :
+   à pleine colonne une seule ferait 1216 de haut, ce qui n'a aucun sens.
+   Elles vivent donc par paire, ou seules mais bridées à 330. */
+
+.figure { margin: 32px 0 0; }
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.figure--paire {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.figure--ecran img {
+  max-width: 330px;
+  margin-inline: auto;
+}
+
+/* Les captures ont leur propre fond, souvent clair : sans ce filet elles
+   flottent sur le blanc de la page. La bannière, elle, porte déjà le sien. */
+.figure--paire img,
+.figure--ecran img {
+  border: 1px solid var(--filet-d);
+}
+
+/* ---------- La fiche ----------
+
+   Même respiration que « Mon parcours » sur l'accueil : un intitulé, une
+   valeur en dessous, pas de filet, pas de cadre. */
+
+.fiche {
+  margin: 32px 0 0;
+  padding: 0;
+}
+
+.fiche > div + div { margin-top: 24px; }
+
+.fiche dt {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+.fiche dd {
+  margin: 2px 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--texte);
+}
+
+/* ---------- Le bouton ----------
+
+   Le seul élément de tout le site qui porte un aplat sombre. Une étude de
+   cas se termine sur une action, et lui donner le même poids qu'un lien de
+   paragraphe l'aurait noyée. Au survol il bascule sur la couleur que porte
+   tout le reste du site, pour que le geste reste le même. */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background-color: var(--encre);
+  color: var(--blanc);
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: var(--serre);
+  text-decoration: none;
+  transition: background-color 160ms var(--entree), color 160ms var(--entree);
+}
+
+.bouton:hover,
+.bouton:focus-visible {
+  background-color: var(--survol);
+  color: var(--survol-encre);
+}
+
+.bouton:focus-visible {
+  outline: 2px solid var(--cyan-texte);
+  outline-offset: 3px;
+}
+
+/* ---------- La fin ---------- */
+
+.parlons {
+  margin-top: 96px;
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: var(--serre);
+}
+
+/* ---------- Petits écrans ---------- */
+
+@media (max-width: 760px) {
+  .page--etude { padding-top: 40px; }
+  .etude__titre { font-size: 30px; line-height: 36px; }
+  .chapitre { margin-top: 72px; }
+  .chapitre__titre { font-size: 22px; line-height: 28px; }
+  .parlons { font-size: 22px; line-height: 28px; }
+
+  /* Deux captures côte à côte sur 375, c'est 165 chacune : on ne voit plus
+     ce qu'elles montrent. Empilées, elles reprennent 300. */
+  .figure--paire { grid-template-columns: 1fr; gap: 20px; }
+  .figure--paire img { max-width: 300px; margin-inline: auto; }
+
+  /* la pastille disparaît ici comme partout ailleurs */
+  .retour { padding: 0; margin: 0; border-radius: 0; }
+  .retour:active { background-color: transparent; color: var(--survol-encre); }
+}

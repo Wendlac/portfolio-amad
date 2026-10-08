@@ -1,6 +1,14 @@
 /*
   WALL — page unique, colonne centrée.
 
+  VERSION DES ADRESSES. Les pages appellent cette feuille avec ?v=<date>.
+  GitHub Pages sert les assets en max-age=600, donc sans ce numéro une
+  modification met dix minutes à atteindre un visiteur qui revient, et
+  davantage si son navigateur la garde plus longtemps. L'adresse change à
+  chaque version, le fichier en cache ne correspond plus, il est redemandé.
+  À BUMPER dans index.html et 404.html à chaque modification d'ici ou de
+  wall.js.
+
   RELEVÉ SUR LA MAQUETTE. L'export fait 918 de large ; l'échelle se déduit
   d'une chaîne déjà mesurée ailleurs dans le même caractère : « Hello,
   c'est Amad Louis » fait 223px d'encre ici et 348 à 40px dans la maquette
