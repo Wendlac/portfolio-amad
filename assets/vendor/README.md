@@ -7,37 +7,39 @@ la disponibilité d'un tiers, et la version ne change pas sous nos pieds.
 
 | Fichier | Version | Source | Poids |
 |---|---|---|---|
-| `three.module.min.js` | 0.185.1 | npm `three` | 357 Ko |
-| `three.core.min.js` | 0.185.1 | npm `three` (importé par le précédent) | 376 Ko |
 | `gsap.min.js` | 3.15.0 | npm `gsap` | 71 Ko |
 | `ScrollTrigger.min.js` | 3.15.0 | npm `gsap` | 44 Ko |
 
-Récupérés avec `npm pack three gsap`, fichiers extraits de `build/` et `dist/`.
+Récupérés avec `npm pack gsap`, fichiers extraits de `dist/`.
 
-## Three.js n'est jamais chargé au démarrage
+Les deux ne sont chargés que par l'étude de cas `/projets/kalaan/`. La page
+d'accueil n'a aucune dépendance tierce : sa seule ressource exécutable est
+`/assets/wall/wall.js`, qui ne dépend de rien.
 
-Les deux fichiers `three.*` pèsent 733 Ko bruts (~180 Ko une fois compressés),
-c'est beaucoup pour un portfolio. Ils sont donc chargés en `import()` dynamique,
-et seulement quand la vitrine projets approche de l'écran ET que WebGL répond
-présent (voir `assets/js/webgl-media.js`). Une première visite qui ne descend
-jamais jusqu'aux projets ne les télécharge pas.
+## Three.js a été retiré
 
-Si l'effet WebGL venait à être retiré, supprimer les deux fichiers `three.*` :
-rien d'autre ne les référence.
+`three.module.min.js`, `three.core.min.js` et `three.LICENSE.txt` ne servaient
+qu'à l'effet WebGL de l'ancienne page d'accueil, via `assets/js/webgl-media.js`.
+Cette page n'existe plus depuis que le site tient en une seule page, et ce
+README prévoyait le cas : « si l'effet WebGL venait à être retiré, supprimer les
+deux fichiers `three.*` : rien d'autre ne les référence ». Vérifié par un scan
+d'atteignabilité avant suppression, puis fait. 733 Ko.
 
-## Licences
+Pour les retrouver : ils sont dans l'historique, avant le commit qui a fait le
+ménage.
 
-- **Three.js**, MIT, voir `three.LICENSE.txt`.
-- **GSAP**, licence « standard no charge » de GreenSock, bandeau conservé en
-  tête de `gsap.min.js` et de `ScrollTrigger.min.js`. Conditions :
-  <https://gsap.com/standard-license>. Elle couvre l'usage sur un site que l'on
-  ne fait pas payer à ses visiteurs, ce qui est le cas ici. Un produit vendu
-  aux utilisateurs finaux demanderait une licence commerciale.
+## Licence
+
+**GSAP**, licence « standard no charge » de GreenSock, bandeau conservé en tête
+de `gsap.min.js` et de `ScrollTrigger.min.js`. Conditions :
+<https://gsap.com/standard-license>. Elle couvre l'usage sur un site que l'on ne
+fait pas payer à ses visiteurs, ce qui est le cas ici. Un produit vendu aux
+utilisateurs finaux demanderait une licence commerciale.
 
 ## Mise à jour
 
 ```
-npm pack three gsap
+npm pack gsap
 ```
-puis extraire et recopier les quatre fichiers ci-dessus, en mettant ce tableau à
+puis extraire et recopier les deux fichiers ci-dessus, en mettant ce tableau à
 jour.
