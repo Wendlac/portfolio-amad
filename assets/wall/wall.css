@@ -647,7 +647,23 @@ body {
     lisent comme une année sans qu'on ait à le dessiner. Elle reste sur
     grand écran, où elle est dans la maquette et où la colonne est isolée.
   */
-  .projet { grid-template-columns: 1fr auto; gap: 4px 16px; }
+  /*
+    PLUS DE CADRE. Sur 684 il tenait une grille de trois colonnes : c'est
+    lui qui empêchait l'année et le lien de flotter à droite. Sur une seule
+    colonne il ne retient plus rien, il trace une limite que le blanc
+    traçait déjà, et il coûtait 32px sur 375, soit 9% de l'écran. Le texte
+    reprend toute la largeur, et c'est l'écart entre deux projets qui les
+    sépare désormais.
+  */
+  .projet {
+    grid-template-columns: 1fr auto;
+    gap: 4px 16px;
+    background: none;
+    border-color: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+  .projets li + li { margin-top: 28px; }
   .projet__nom   { grid-column: 1;      grid-row: 1; }
   .projet__annee { grid-column: 2;      grid-row: 1; justify-self: end; }
   .projet__quoi  { grid-column: 1 / -1; grid-row: 2; }
@@ -662,6 +678,34 @@ body {
   .lien-ligne { grid-template-columns: 1fr; gap: 6px; }
   .stepper { display: none; }   /* pas de place, et rien à y gagner */
   .fin { margin-top: 96px; }
+
+  /*
+    PLUS DE PASTILLE. Sans survol elle ne pouvait que rester allumée en
+    permanence ou n'apparaître qu'à l'appui, et aucune des deux ne valait
+    son bruit. Le padding et la marge négative qui la portaient tombent
+    avec elle.
+
+    L'appui répond quand même, par l'encre : le lien passe de #007189 à
+    #032430, un écart de luminosité franc, visible même sans couleur. On
+    perd la capsule, pas la réponse.
+
+    Appliqué à tous les liens et pas seulement aux projets : deux gestes
+    différents sur le même écran seraient pire que celui qu'on retire.
+  */
+  .projet__lien,
+  .lien-ligne__aller,
+  .prose a {
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .projet:active .projet__lien,
+  .lien-ligne:active .lien-ligne__aller,
+  .prose a:active {
+    background-color: transparent;
+    color: var(--survol-encre);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
