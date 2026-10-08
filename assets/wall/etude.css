@@ -36,7 +36,10 @@
 
 .retour svg { width: 14px; height: 14px; flex: none; }
 
-.retour:hover,
+@media (hover: hover) {
+  .retour:hover { background-color: var(--survol); color: var(--survol-encre); }
+}
+
 .retour:focus-visible {
   background-color: var(--survol);
   color: var(--survol-encre);
@@ -194,7 +197,10 @@
   transition: background-color 160ms var(--entree), color 160ms var(--entree);
 }
 
-.bouton:hover,
+@media (hover: hover) {
+  .bouton:hover { background-color: var(--survol); color: var(--survol-encre); }
+}
+
 .bouton:focus-visible {
   background-color: var(--survol);
   color: var(--survol-encre);
@@ -203,6 +209,42 @@
 .bouton:focus-visible {
   outline: 2px solid var(--cyan-texte);
   outline-offset: 3px;
+}
+
+/* La flèche du bouton suit le même geste que partout : wall.css le déclare
+   pour les lignes de projet et de contact, il faut le répéter ici pour le
+   bouton, qui n'existe pas là-bas. */
+.bouton .fleche svg { transition: transform 340ms var(--entree); }
+@media (hover: hover) {
+  .bouton:hover .fleche svg:first-child { transform: translate(100%, -100%); }
+  .bouton:hover .fleche svg:last-child { transform: translate(0, 0); }
+}
+.bouton:focus-visible .fleche svg:first-child { transform: translate(100%, -100%); }
+.bouton:focus-visible .fleche svg:last-child { transform: translate(0, 0); }
+
+/* Le lien de la fiche n'est pas dans .prose : il lui faut sa couleur et sa
+   pastille à lui. */
+.fiche dd a {
+  color: var(--cyan-texte);
+  text-decoration: none;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: 999px;
+  transition: background-color 160ms var(--entree), color 160ms var(--entree);
+}
+
+@media (hover: hover) {
+  .fiche dd a:hover { background-color: var(--survol); color: var(--survol-encre); }
+}
+
+.fiche dd a:focus-visible {
+  background-color: var(--survol);
+  color: var(--survol-encre);
+}
+
+.fiche dd a:focus-visible {
+  outline: 2px solid var(--cyan-texte);
+  outline-offset: 2px;
 }
 
 /* ---------- La fin ---------- */
@@ -230,6 +272,11 @@
   .figure--paire img { max-width: 300px; margin-inline: auto; }
 
   /* la pastille disparaît ici comme partout ailleurs */
-  .retour { padding: 0; margin: 0; border-radius: 0; }
-  .retour:active { background-color: transparent; color: var(--survol-encre); }
+  .retour,
+  .fiche dd a { padding: 0; margin: 0; border-radius: 0; }
+  .retour:active,
+  .fiche dd a:active { background-color: transparent; color: var(--survol-encre); }
+
+  /* le bouton garde sa pastille : c'est sa forme, pas un état de survol */
+  .bouton { width: 100%; justify-content: center; }
 }

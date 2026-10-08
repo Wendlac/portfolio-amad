@@ -464,11 +464,31 @@ body {
   transition: background-color 160ms var(--entree), color 160ms var(--entree);
 }
 
-.projet:hover .projet__lien,
+/* LE SURVOL N'EXISTE QUE LÀ OÙ L'ON PEUT SURVOLER.
+
+   Sur un écran tactile, :hover COLLE : le navigateur l'applique à l'appui
+   et le garde jusqu'au prochain appui ailleurs. Le fond restait donc
+   allumé derrière le doigt, longtemps après le geste, et comme la pastille
+   n'a plus de rayon sous 760 c'était un rectangle bleu.
+
+   hover:hover décrit un pointeur capable de survoler. Sous cette requête,
+   la règle n'existe tout simplement pas sur un téléphone : rien à défaire,
+   rien à nettoyer, rien qui colle. Et c'est indépendant de la largeur —
+   une tablette de 1024 en profite aussi. */
+
+@media (hover: hover) {
+  .projet:hover .projet__lien,
+  .lien-ligne:hover .lien-ligne__aller,
+  .prose a:hover {
+    background-color: var(--survol);
+    color: var(--survol-encre);
+  }
+}
+
+/* Le focus clavier, lui, vaut partout : un clavier peut être branché sur
+   n'importe quoi, et lui ne colle pas. */
 .projet:focus-visible .projet__lien,
-.lien-ligne:hover .lien-ligne__aller,
 .lien-ligne:focus-visible .lien-ligne__aller,
-.prose a:hover,
 .prose a:focus-visible {
   background-color: var(--survol);
   color: var(--survol-encre);
@@ -711,6 +731,15 @@ body {
   .projet:active .projet__lien,
   .lien-ligne:active .lien-ligne__aller,
   .prose a:active {
+    background-color: transparent;
+    color: var(--survol-encre);
+  }
+
+  /* Le focus clavier n'a plus de pastille à remplir ici non plus : il reste
+     l'anneau, qui se voit très bien. */
+  .projet:focus-visible .projet__lien,
+  .lien-ligne:focus-visible .lien-ligne__aller,
+  .prose a:focus-visible {
     background-color: transparent;
     color: var(--survol-encre);
   }
