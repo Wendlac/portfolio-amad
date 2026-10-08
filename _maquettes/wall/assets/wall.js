@@ -85,6 +85,14 @@ var LIENS = [
     email: ic("M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z")
   };
 
+  /*
+    La flèche bouge au survol : celle en place sort par le haut-droit, le
+    long de son propre axe, et une seconde arrive du bas-gauche. D'où deux
+    copies — une seule ne pourrait pas à la fois partir et revenir — dans
+    une boîte qui rogne ce qui dépasse. Voir .fleche dans wall.css.
+  */
+  var FLECHE = '<span class="fleche" aria-hidden="true">' + I.fleche + I.fleche + "</span>";
+
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
                     .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -107,7 +115,7 @@ var LIENS = [
         '<p class="projet__quoi">' + esc(p.quoi) + "</p>" +
       "</span>" +
       '<span class="projet__annee">' + I.annee + esc(p.annee) + "</span>" +
-      '<span class="projet__lien">' + esc(p.lien) + I.fleche + "</span>",
+      '<span class="projet__lien">' + esc(p.lien) + FLECHE + "</span>",
       p.nom + ", " + p.lien) + "</li>";
   }).join("");
 
@@ -122,9 +130,65 @@ var LIENS = [
     return "<li>" + enveloppe(l.url, "lien-ligne",
       '<span class="lien-ligne__ou">' + I[l.icone] + esc(l.ou) + "</span>" +
       '<span class="lien-ligne__quoi">' + esc(l.quoi) + "</span>" +
-      '<span class="lien-ligne__aller">' + esc(l.aller) + I.fleche + "</span>",
+      '<span class="lien-ligne__aller">' + esc(l.aller) + FLECHE + "</span>",
       l.ou + ", " + l.aller) + "</li>";
   }).join("");
+
+  /* ---------- L'arrivée de la page ----------
+
+     L'en-tête arrive en cascade au chargement ; les sections arrivent
+     quand on les atteint. Le drapeau « anime » est posé dans le <head>,
+     et il n'y est pas si le système demande moins d'animations : dans ce
+     cas rien de tout ceci ne tourne et la page est simplement là.
+
+     Chaque élément n'est observé qu'une fois. Revenir en haut ne rejoue
+     pas l'animation — un contenu déjà lu qui réapparaît, c'est un défaut,
+     pas un effet. */
+
+  if (document.documentElement.classList.contains("anime")) {
+    var cascade = 80;   /* ms entre deux éléments de l'en-tête */
+
+    [".avatar", ".salut", ".chapeau"].forEach(function (sel, i) {
+      var el = document.querySelector(sel);
+      if (el) setTimeout(function () { el.classList.add("vu"); }, i * cascade);
+    });
+
+    var guetteur = new IntersectionObserver(function (vues) {
+      vues.forEach(function (v) {
+        if (!v.isIntersecting) return;
+        v.target.classList.add("vu");
+        guetteur.unobserve(v.target);
+      });
+    }, { rootMargin: "0px 0px -10% 0px" });
+
+    var tardifs = document.querySelectorAll(".section.ouvre, .fin.ouvre");
+    for (var i = 0; i < tardifs.length; i++) guetteur.observe(tardifs[i]);
+
+    /* Un lien interne emmène peut-être vers une section pas encore
+       révélée. Il faut la montrer AVANT que le navigateur ne calcule où
+       atterrir, et la montrer d'un coup.
+
+       On enlève « ouvre » au lieu d'ajouter « vu » : « vu » laisse courir
+       la transition, donc le bloc est encore 14px trop bas au moment du
+       calcul, et le titre se posait à 66 du haut au lieu de 80 — l'écart
+       exact de la translation. Sans « ouvre » il n'y a plus de
+       translation du tout, et la mesure tombe juste. */
+    function devoile(id) {
+      var cible = document.getElementById(id);
+      var bloc = cible && cible.closest(".ouvre");
+      if (!bloc) return;
+      bloc.classList.remove("ouvre");
+      guetteur.unobserve(bloc);
+    }
+
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (a) devoile(a.getAttribute("href").slice(1));
+    });
+
+    /* Même chose pour une adresse partagée qui porte déjà l'ancre. */
+    if (location.hash.length > 1) devoile(location.hash.slice(1));
+  }
 
   /* ---------- Le stepper ----------
      Il suit le défilement. --avance remplit la barre du milieu, --fin

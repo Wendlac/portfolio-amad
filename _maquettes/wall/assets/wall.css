@@ -159,7 +159,6 @@ body {
     linear-gradient(90deg, var(--filet-g), var(--filet-d)) border-box;
   color: inherit;
   text-decoration: none;
-  transition: filter 200ms var(--entree);
 }
 
 .projet:focus-visible { outline: none; }
@@ -289,6 +288,19 @@ body {
   color: var(--texte);
 }
 
+/* ---------- Le saut vers une section ----------
+
+   Le lien « lecture » du texte emmène aux livres. Sans ces deux règles
+   l'écran se téléporte et on ne sait pas où on a atterri : le glissement
+   montre le chemin, et la marge garde de l'air au-dessus du titre au lieu
+   de le coller au bord haut. */
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+.section > h2[id] { scroll-margin-top: 80px; }
+
 /* ---------- Le survol ----------
 
    Un seul geste pour tout ce qui est cliquable : fond #A8E7FE, contenu
@@ -320,6 +332,73 @@ body {
 .prose a:focus-visible {
   background-color: var(--survol);
   color: var(--survol-encre);
+}
+
+/* ---------- La flèche ----------
+
+   Au survol elle part le long de son propre axe — vers le haut-droit,
+   là où elle pointe — et une seconde arrive du bas-gauche. D'où deux
+   copies dans le balisage : une seule ne peut pas à la fois partir et
+   revenir.
+
+   La boîte fait 14 et rogne. À translate(100%, -100%) la première est
+   entièrement dehors, et la seconde attend à translate(-100%, 100%),
+   dehors elle aussi. Les deux glissent ensemble, donc le regard lit un
+   seul mouvement continu et non deux. */
+
+.fleche {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex: none;
+  overflow: hidden;
+}
+
+.fleche svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 340ms var(--entree);
+}
+
+.fleche svg:last-child { transform: translate(-100%, 100%); }
+
+.projet:hover .fleche svg:first-child,
+.projet:focus-visible .fleche svg:first-child,
+.lien-ligne:hover .fleche svg:first-child,
+.lien-ligne:focus-visible .fleche svg:first-child {
+  transform: translate(100%, -100%);
+}
+
+.projet:hover .fleche svg:last-child,
+.projet:focus-visible .fleche svg:last-child,
+.lien-ligne:hover .fleche svg:last-child,
+.lien-ligne:focus-visible .fleche svg:last-child {
+  transform: translate(0, 0);
+}
+
+/* ---------- L'arrivée de la page ----------
+
+   L'état caché n'existe que sous .anime, classe posée par le <head> et
+   seulement si le navigateur sait observer et que le système ne demande
+   pas moins d'animations. Sans JS la page est entière et immobile : rien
+   ici ne peut la faire disparaître.
+
+   14px vers le bas, et rien d'autre. Pas d'échelle ni de flou : le texte
+   doit être net dès la première image, et un texte qui grandit en
+   arrivant se relit mal. */
+
+.anime .ouvre {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.anime .ouvre.vu {
+  opacity: 1;
+  transform: none;
+  transition: opacity 620ms var(--entree), transform 620ms var(--entree);
 }
 
 /* ---------- Le stepper latéral ----------
