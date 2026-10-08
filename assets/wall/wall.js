@@ -151,11 +151,14 @@ var LIENS = [
 
   document.getElementById("projets").innerHTML = PROJETS.map(function (p) {
     return "<li>" + enveloppe(p.url, "projet",
-      "<span>" +
-        '<h3 class="projet__nom">' + esc(p.nom) + "</h3>" +
-        '<p class="projet__quoi">' + esc(p.quoi) + "</p>" +
-      "</span>" +
+      /* Quatre enfants de la grille, et non le nom et la description
+         emballés ensemble. Sur petit écran l'année doit remonter sur la
+         ligne du nom, ce qui est impossible tant que le nom est imbriqué
+         dans un autre élément. Les deux mises en page se font donc par
+         placement explicite, voir wall.css. */
+      '<h3 class="projet__nom">' + esc(p.nom) + "</h3>" +
       '<span class="projet__annee">' + I.annee + esc(p.annee) + "</span>" +
+      '<p class="projet__quoi">' + esc(p.quoi) + "</p>" +
       '<span class="projet__lien">' + esc(p.lien) + FLECHE + "</span>",
       p.nom + ", " + p.lien) + "</li>";
   }).join("");
