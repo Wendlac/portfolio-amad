@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Amad Louis, design partner</title>
-<meta name="description" content="Amad Louis, design partner basé à Ouagadougou : design UI et développement d'applications et de sites web mémorables, qui ont du sens pour leurs utilisateurs.">
+<meta name="description" content="Design partner de vos projets d’application métier, spécialisé en design d’interaction. J’accompagne les équipes de développement sur des applications exigeantes.">
 <link rel="canonical" href="https://amadlouis.site/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Amad Louis">
 <meta property="og:title" content="Amad Louis, design partner">
-<meta property="og:description" content="Amad Louis, design partner basé à Ouagadougou : design UI et développement d'applications et de sites web mémorables, qui ont du sens pour leurs utilisateurs.">
+<meta property="og:description" content="Design partner de vos projets d’application métier, spécialisé en design d’interaction. J’accompagne les équipes de développement sur des applications exigeantes.">
 <meta property="og:url" content="https://amadlouis.site/">
 <meta property="og:image" content="https://amadlouis.site/assets/img/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -18,7 +18,7 @@
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Amad Louis, design partner">
-<meta name="twitter:description" content="Amad Louis, design partner basé à Ouagadougou : design UI et développement d'applications et de sites web mémorables, qui ont du sens pour leurs utilisateurs.">
+<meta name="twitter:description" content="Design partner de vos projets d’application métier, spécialisé en design d’interaction. J’accompagne les équipes de développement sur des applications exigeantes.">
 <meta name="twitter:image" content="https://amadlouis.site/assets/img/og-image.png">
 
 <script type="application/ld+json">
@@ -26,9 +26,10 @@
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Amad Louis",
+  "alternateName": "Wendlacida Amad Louis LOURE",
   "url": "https://amadlouis.site/",
   "image": "https://amadlouis.site/assets/img/portrait-home.jpg",
-  "jobTitle": "UI Designer",
+  "jobTitle": "UI / Product Designer",
   "email": "mailto:hello@amadlouis.site",
   "address": {
     "@type": "PostalAddress",
@@ -37,6 +38,8 @@
   },
   "sameAs": [
     "https://www.linkedin.com/in/amad-louis-loure",
+    "https://www.tiktok.com/@amadloure",
+    "https://www.youtube.com/@louisamad9118",
     "https://www.instagram.com/kraafte?igsh=N3RlN240NXVlNmlu"
   ],
   "memberOf": {
@@ -54,187 +57,152 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/favicon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
 
-<link rel="preload" href="/assets/fonts/bebas-neue/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/satoshi/satoshi-400.woff2" as="font" type="font/woff2" crossorigin>
+<!--
+  Le sous-ensemble latin est préchargé : c'est la SEULE police de la page,
+  et sans ça le navigateur ne la découvre qu'après avoir lu la feuille de
+  style. L'adresse doit être identique à celle de fonts.css, ?v=2 compris,
+  sinon le fichier est demandé deux fois. latin-ext n'est pas préchargé :
+  en français il n'est jamais demandé.
+-->
+<link rel="preload" href="/assets/fonts/teachers/teachers-latin.woff2?v=2" as="font" type="font/woff2" crossorigin>
 
-<link rel="stylesheet" href="/assets/css/fonts.css">
-<link rel="stylesheet" href="/assets/css/tokens.css">
-<link rel="stylesheet" href="/assets/css/base.css">
-<link rel="stylesheet" href="/assets/css/layout.css">
-<link rel="stylesheet" href="/assets/css/components.css">
-<link rel="stylesheet" href="/assets/css/motion.css">
+<!--
+  Une seule page, une seule colonne.
+
+  Le contenu (projets, parcours, livres, liens) est dans
+  /assets/wall/wall.js et nulle part ailleurs. Les valeurs relevées sur la
+  maquette sont en tête de /assets/wall/wall.css. L'avatar et la signature
+  sont les SVG d'Amad, repris tels quels. Les icônes sont celles de
+  Phosphor, tracés d'origine.
+-->
+
+<link rel="stylesheet" href="/assets/wall/fonts.css">
+<link rel="stylesheet" href="/assets/wall/wall.css">
+
+<!--
+  Ce drapeau doit être posé AVANT le premier rendu, sinon la page se
+  dessine visible puis saute à l'état caché : un flash. C'est la seule
+  raison pour laquelle ce script est ici et pas dans wall.js.
+  Sans JS, ou si le système demande moins d'animations, la classe
+  n'arrive jamais et tout reste simplement visible.
+-->
+<script>
+  if (window.IntersectionObserver &&
+      !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.classList.add("anime");
+  }
+</script>
 </head>
 <body>
-<a class="skip-link" href="#main">Aller au contenu</a>
 
-<header class="site-header">
-  <!--
-    Bande technique : d'où je travaille et quelle heure il est là-bas. L'heure
-    est celle de Ouagadougou, pas celle du visiteur, voir assets/js/meta-bar.js.
-  -->
-  <div class="meta-bar">
-    <div class="container meta-bar__inner">
-      <span class="meta-bar__item">Ouagadougou, (BF)</span>
-      <span class="meta-bar__sep" aria-hidden="true">//</span>
-      <span class="meta-bar__item meta-bar__time">
-        <span class="meta-bar__dot" aria-hidden="true"></span>
-        <time data-clock>--:--:--</time>
-      </span>
-      <span class="meta-bar__focus" aria-hidden="true">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2">
-          <path d="M1 5V1h4M11 1h4v4M15 11v4h-4M5 15H1v-4"/>
-          <path d="M8 6.5v3M6.5 8h3"/>
-        </svg>
-      </span>
-      <span class="meta-bar__item meta-bar__status">Disponible, projets 2026</span>
-    </div>
-  </div>
+<!-- le stepper suit le défilement, voir la fin de wall.js -->
+<div class="stepper" id="stepper" aria-hidden="true">
+  <span></span><span></span><span></span>
+</div>
 
-  <div class="container site-header__inner">
-    <a class="site-header__brand" href="/">
-      <img src="/assets/img/logo-amad.png" alt="Amad Louis" width="193" height="80">
-    </a>
+<main class="page">
 
-    <nav class="site-nav" aria-label="Navigation principale">
-      <ul class="site-nav__list">
-        <li><a href="/" aria-current="page">Mon travail<span class="site-nav__count" aria-hidden="true">(4)</span></a></li>
-        <li><a href="/mes-lectures/">Mes lectures<span class="site-nav__count" aria-hidden="true">(5)</span></a></li>
-        <li><a href="/qui-suis-je/">Qui suis je?</a></li>
-        <span class="site-nav__indicator" aria-hidden="true"></span>
-      </ul>
-    </nav>
+  <img class="avatar ouvre" src="/assets/img/wall/avatar.svg" alt="" width="58" height="70">
 
-    <button class="nav-toggle" type="button" data-nav-toggle aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" width="22" height="22"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-    </button>
-  </div>
+  <h1 class="salut ouvre">Hello, c&rsquo;est Amad Louis</h1>
 
-  <div class="mobile-nav" id="mobile-nav" data-mobile-nav data-open="false">
-    <ul class="mobile-nav__list container">
-      <li><a href="/" aria-current="page">Mon travail</a></li>
-      <li><a href="/mes-lectures/">Mes lectures</a></li>
-      <li><a href="/qui-suis-je/">Qui suis je?</a></li>
-    </ul>
-  </div>
-</header>
+  <p class="chapeau ouvre">
+    Le design partner de vos projets d&rsquo;application m&eacute;tier, sp&eacute;cialis&eacute; en
+    design d&rsquo;interaction, et fascin&eacute; par les interfaces vivantes. J&rsquo;accompagne
+    les &eacute;quipes de d&eacute;veloppement dans la conception des applications
+    exigeantes et complexes.
+  </p>
 
-<main id="main">
+  <section class="section ouvre" aria-labelledby="t-projets">
+    <h2 id="t-projets">Mes projets</h2>
+    <ul class="projets" id="projets"></ul>
+  </section>
 
-  <section class="hero">
-    <div class="container hero__grid" data-load-in>
-      <div>
-        <span class="accent-line">Hello,</span>
-        <img class="accent-line__swash" src="/assets/icons/headline-swash.svg" alt="" width="130" height="19">
-        <h1 class="hero__headline" data-focus-in>c'est Amad Louis</h1>
-        <p class="hero__body">Le <strong>design partner</strong> des porteurs de projets qui veulent des applications et des sites web <strong>mémorables</strong>, qui ont du <strong>sens</strong> pour leurs <strong>utilisateurs</strong>.</p>
-      </div>
-      <div class="hero__portrait" data-drift>
-        <picture>
-          <source srcset="/assets/img/portrait-home.webp" type="image/webp">
-          <img src="/assets/img/portrait-home.jpg" alt="Portrait d'Amad Louis" width="700" height="1166">
-        </picture>
-      </div>
+  <section class="section ouvre" aria-labelledby="t-profil">
+    <h2 id="t-profil">Qui suis je?</h2>
+    <!--
+      Texte repris mot pour mot de la page « Qui suis je? » du site en
+      ligne, orthographe comprise : c'est sa voix, pas à moi de la
+      réécrire au passage.
+
+      Le dernier paragraphe est celui de la maquette, gardé parce qu'il
+      porte les mots en couleur. Ses passions correspondent bien aux
+      hobbies de la page source (MMA, judo, musique, dessin, cinéma).
+      Seule « lecture » est un lien, vers les livres plus bas ; les trois
+      autres n'ont nulle part où mener, donc ce sont des mots colorés et
+      non des liens morts.
+    -->
+    <div class="prose">
+      <p>J&rsquo;ai toujours &eacute;t&eacute; passion&eacute; de bricolage et de conception, depuis tout
+        petit. De la fabrication d&rsquo;objets physiques au dessin d&rsquo;artefacts je me suis
+        toujours interess&eacute; aux disciplines qui permettent de donner vie &agrave; une id&eacute;e,
+        et c&rsquo;est naturellement que je me suis interess&eacute; tr&egrave;s vite &agrave; la tech. J&rsquo;ai
+        &eacute;cris mon premier programme en langage BASIC &agrave; l&rsquo;&acirc;ge de 12 ans.</p>
+      <p>Apr&egrave;s des ann&eacute;es &agrave; apprendre des langages informatiques et des &eacute;tudes en
+        gestion &agrave; l&rsquo;universit&eacute;, les postes qui ont suivi m&rsquo;ont appris le m&eacute;tier&nbsp;:
+        faire des maquettes, parler aux clients, parler aux d&eacute;veloppeurs, et
+        traduire les uns aux autres.</p>
+      <p>Aujourd&rsquo;hui je propose des services de designer et de strat&egrave;ge produit, et
+        je suis membre fondateur de
+        <a class="a-cyan" href="https://www.instagram.com/kraafte?igsh=N3RlN240NXVlNmlu"
+           target="_blank" rel="noopener">Kraafte</a>, un collectif de freelances
+        cr&eacute;atifs. Etant moi meme issu du monde des startups je saurai accompagner
+        les fondateurs et entreprises &agrave; ne pas r&eacute;produire mes erreurs pass&eacute;es.</p>
+      <p>J&rsquo;ai travaill&eacute; sur divers type de projets. Du design de sites web serious
+        game, mais les projets majeurs sur lesquels j&rsquo;ai travaill&eacute; concernent les
+        domaines de la finance, de l&rsquo;assurance ainsi que des applications m&eacute;tiers.</p>
+      <p>Etant curieux de tout j&rsquo;ai aussi d&rsquo;autres passions, tels que la
+        <a class="a-cyan" href="#t-livres">lecture</a>, le
+        <span class="a-cyan">cinema</span>, la
+        <span class="a-cyan">musique</span> et les
+        <span class="a-rouge">arts martiaux</span>.</p>
     </div>
   </section>
 
-  <!--
-    Refonte "liens directs" (cahier des charges du 25/07/2026) : chaque carte
-    pointe vers le livrable réel (site hébergé ou PDF), pas vers une étude de
-    cas interne. Le contenu est piloté depuis assets/js/projects-data.js,
-    ajouter/retirer un projet ne nécessite aucune modification de ce balisage.
-  -->
-  <section aria-labelledby="projects-heading">
-    <div class="container">
-      <h2 id="projects-heading" data-focus-in>Mes projets</h2>
-
-      <!--
-        Vitrine à molette : un projet en grand, une bague graduée pour passer de
-        l'un à l'autre (assets/js/showcase.js). Elle est masquée dans le
-        balisage et n'est révélée qu'une fois construite ; tant qu'elle ne l'est
-        pas, c'est la grille de cartes ci-dessous qui reste affichée.
-      -->
-      <div class="showcase" data-showcase hidden style="margin-top: var(--space-6);">
-        <div class="showcase__stage">
-          <div class="showcase__media" data-showcase-media></div>
-          <div class="showcase__meta" data-showcase-meta></div>
-        </div>
-
-        <div class="dial" data-dial tabindex="0" role="group" aria-label="Sélecteur de projet, flèches gauche et droite">
-          <div class="dial__ticks dial__ticks--major" data-dial-ticks aria-hidden="true"></div>
-          <div class="dial__track" data-dial-track></div>
-          <div class="dial__ticks" data-dial-ticks aria-hidden="true"></div>
-          <div class="dial__needle" aria-hidden="true"></div>
-        </div>
-
-        <div class="transport">
-          <button class="transport__btn" type="button" data-dial-prev aria-label="Projet précédent">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>
-          </button>
-          <span class="transport__count" data-dial-current>01</span>
-          <span aria-hidden="true">//</span>
-          <span class="transport__total" data-dial-total>03</span>
-          <button class="transport__btn" type="button" data-dial-next aria-label="Projet suivant">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <div id="projects-list" class="grid grid--projects" data-showcase-fallback style="margin-top: var(--space-6);"></div>
-    </div>
+  <section class="section ouvre" aria-labelledby="t-parcours">
+    <h2 id="t-parcours">Mon parcours</h2>
+    <ul class="parcours" id="parcours"></ul>
   </section>
 
-  <section aria-labelledby="contact-heading">
-    <div class="container">
-      <span class="accent-line" id="contact-heading" data-reveal>Vous voulez travailler avec moi?</span>
-      <div class="contact-panel" style="margin-top: var(--space-5);" data-reveal>
-        <p class="contact-panel__heading">Contactez-moi via</p>
-        <div class="contact-panel__grid">
-          <a class="contact-pill" href="mailto:hello@amadlouis.site" data-focus-label="Écrire">
-            <img class="contact-pill__icon" src="/assets/icons/mail-send-fill.svg" alt="" width="24" height="24">
-            <span>
-              <span class="contact-pill__label">Mon adresse email</span>
-              <span class="contact-pill__value">hello@amadlouis.site</span>
-            </span>
-          </a>
-          <a class="contact-pill" href="https://www.linkedin.com/in/amad-louis-loure" target="_blank" rel="noopener" data-focus-label="Ouvrir LinkedIn">
-            <img class="contact-pill__icon" src="/assets/icons/linkedin-box-fill.svg" alt="" width="24" height="24">
-            <span>
-              <span class="contact-pill__label">Mon compte LinkedIn</span>
-              <span class="contact-pill__value">amad-louis-loure</span>
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
+  <section class="section ouvre" id="livres-section" aria-labelledby="t-livres">
+    <h2 id="t-livres">Mes livres pr&eacute;f&eacute;r&eacute;s</h2>
+    <ul class="livres" id="livres"></ul>
   </section>
+
+  <section class="section ouvre" aria-labelledby="t-liens">
+    <h2 id="t-liens">Vous me retrouvrez</h2>
+    <ul class="liens" id="liens"></ul>
+  </section>
+
+  <div class="fin ouvre">
+    <!--
+      La signature s'écrit quand le pied de page arrive. Pour ça il faut
+      atteindre ses cinq tracés, donc elle est ici en clair et non plus en
+      <img> ; assets/img/wall/signature.svg reste la source, inchangée.
+      Chaque tracé porte sa longueur et son temps, calculés à vitesse de
+      plume constante — voir .signature dans wall.css.
+
+      WALL n'est pas un mot, ce sont tes initiales : Wendlacida Amad
+      Louis LOURE. Le nom accessible porte donc les deux, ce que le dessin
+      écrit et ce que ça veut dire. À ne pas « corriger » : j'avais mis
+      « Amad Louis » en croyant que l'ancien alt venait du nom de mon
+      dossier de travail, alors que c'était ta signature qui disait vrai.
+    -->
+    <svg class="signature" viewBox="0 0 187 104" width="140" height="78"
+         role="img" aria-labelledby="signature-nom" fill="none"
+         xmlns="http://www.w3.org/2000/svg">
+      <title id="signature-nom">wall, signature de Wendlacida Amad Louis LOURE</title>
+      <path style="--l: 265.94; --duree: 886ms; --retard: 250ms" d="M95.5949 13.752C96.6139 29.5056 97.633 45.2592 97.9031 51.3419C97.9933 53.3713 97.8883 45.4173 94.5798 41.8867C92.2473 39.3977 87.4333 37.8828 79.3176 37.8828C69.2233 37.8828 57.32 38.8915 45.6283 41.5787C36.9715 43.5684 31.7982 48.6316 28.3281 53.7519C25.2012 58.366 25.5992 66.0638 26.4947 74.0099C27.1277 79.6275 30.9876 83.288 34.5812 86.364C37.7264 89.0563 43.8334 89.4632 53.0625 89.467C58.476 89.4693 65.3486 88.4545 77.9358 84.5046C90.523 80.5546 108.611 73.4401 119.075 69.0128C129.539 64.5854 131.832 63.0609 133.268 61.7673C134.704 60.4738 135.213 59.4574 136.51 57.6403" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path style="--l: 77.82; --duree: 259ms; --retard: 1216ms" d="M109.491 34.5414C111.019 48.2623 112.316 56.8552 113.215 58.2758C116.12 62.8644 118.159 48.5886 118.286 47.0525C118.351 46.271 118.812 46.3629 119.109 46.5058C121.62 47.7142 124.552 56.0088 125.961 57.1676C128.134 56.5478 128.154 48.1461 129.547 39.9813C130.086 36.8221 130.334 34.5876 131.106 33.0015" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path style="--l: 49.95; --duree: 167ms; --retard: 1555ms" d="M143.836 39.1246C143.327 39.1246 143.314 38.6858 140.488 40.2181C134.774 43.3171 135.497 49.9887 136.651 51.4267C137.747 52.7936 141.191 54.3712 143.503 47.0526C144.541 44.8159 143.442 36.8356 143.836 39.8962C144.23 42.9568 144.051 48.6929 145.422 54.1605" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path style="--l: 41.3; --duree: 138ms; --retard: 1802ms" d="M153.494 13.752C153.748 21.1206 154.003 28.4892 154.134 35.3342C154.266 42.1793 154.266 48.2774 154.266 50.0214C154.266 51.7654 154.266 48.9704 154.266 46.0907" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path style="--l: 42.39; --duree: 141ms; --retard: 2020ms" d="M161.214 16.832C160.704 24.9629 160.195 33.0938 159.932 40.2045C159.67 47.3152 159.67 53.1593 159.67 59.1804" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <p class="copyright">&copy; Copyrights 2026. Tous droits reserv&eacute;s.</p>
+  </div>
 
 </main>
 
-<footer class="site-footer">
-  <div class="container">
-    <p class="accent-line accent-line--md" style="color: var(--color-footer-accent);">C'etait Amad Louis!</p>
-    <p class="site-footer__note">Ce site web a été conçu avec amour <img class="heart-icon" src="/assets/icons/heart.svg" alt="" width="11" height="10">, rigueur et il continuera à s'améliorer. J'espère te revoir très bientôt pour parler de tes projets!</p>
-    <p class="site-footer__copyright"><span>©</span><span>Copyrights 2026. TOUS DROITS RESERVés</span></p>
-  </div>
-</footer>
-
-<!--
-  GSAP est chargé en defer : il ne bloque pas le premier rendu, et motion.js
-  n'anime que du contenu déjà visible. Three.js n'apparaît pas ici, il est
-  importé dynamiquement par webgl-media.js, uniquement à l'approche de la
-  vitrine (voir assets/vendor/README.md).
--->
-<script defer src="/assets/vendor/gsap.min.js"></script>
-<script defer src="/assets/vendor/ScrollTrigger.min.js"></script>
-
-<script defer src="/assets/js/nav.js"></script>
-<script defer src="/assets/js/reveal.js"></script>
-<script defer src="/assets/js/meta-bar.js"></script>
-<script defer src="/assets/js/focus-ring.js"></script>
-<script defer src="/assets/js/projects-data.js"></script>
-<script defer src="/assets/js/projects-render.js"></script>
-<script defer src="/assets/js/showcase.js"></script>
-<script defer src="/assets/js/webgl-media.js"></script>
-<script defer src="/assets/js/motion.js"></script>
+<script src="/assets/wall/wall.js"></script>
 </body>
 </html>
