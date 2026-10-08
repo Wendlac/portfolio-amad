@@ -160,8 +160,26 @@ var LIENS = [
       p.nom + ", " + p.lien) + "</li>";
   }).join("");
 
+  /*
+    LE RYTHME D'ARRIVÉE EST LA CHRONOLOGIE.
+
+    Les entrées n'arrivent pas à intervalle fixe : l'écart entre deux est
+    proportionnel au nombre d'années qui les sépare. 70 ms de base, plus
+    50 ms par année. Les trois postes de 2020 arrivent donc presque
+    ensemble — ce qui est vrai, tu les menais en parallèle — et il y a un
+    vrai silence avant 2025. La liste seule ne dit pas ça ; le rythme si.
+
+    Calculé ici et non écrit en dur : si tu changes une année, la cadence
+    suit. Le dernier part à 700 ms et se pose à 1,2 s.
+  */
+  var BASE = 70, PAR_AN = 50;
+  var retard = 0, anPrecedent = null;
+
   document.getElementById("parcours").innerHTML = PARCOURS.map(function (p) {
-    return "<li>" +
+    var an = parseInt(p.quand, 10);
+    if (anPrecedent !== null) retard += BASE + (an - anPrecedent) * PAR_AN;
+    anPrecedent = an;
+    return '<li style="--retard: ' + retard + 'ms">' +
       "<span>" +
         '<span class="parcours__poste">' + esc(p.poste) + "</span>" +
         '<span class="parcours__ou">' + esc(p.ou) + "</span>" +

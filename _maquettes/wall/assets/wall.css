@@ -65,8 +65,10 @@
   --rouge:       #FF7877;
   --rouge-texte: #BA5857;
 
-  /* Le survol, un seul geste pour tout ce qui est cliquable. */
+  /* Le survol, un seul geste pour tout ce qui est cliquable, et un cran
+     plus franc sous le doigt ou sous le clic. */
   --survol:       #DFF7FF;
+  --survol-appui: #A8E7FE;
   --survol-encre: #032430;
 
   --stepper-vide: #A3B8BC;
@@ -223,6 +225,29 @@ body {
 
 .a-cyan  { color: var(--cyan-texte); }
 .a-rouge { color: var(--rouge-texte); }
+
+/* ---------- L'arrivée du parcours ----------
+
+   La section arrive comme les autres, en fondu. Les entrées, elles,
+   glissent horizontalement — un geste DIFFÉRENT, sinon ce serait la même
+   phrase dite deux fois, à deux échelles.
+
+   Et elles ne se suivent pas à intervalle fixe : leur retard est
+   proportionnel aux années qui les séparent, calculé dans wall.js. Les
+   trois postes de 2020 arrivent donc en grappe et un silence précède
+   2025. C'est la seule liste de la page où l'ordre porte un sens, donc la
+   seule qui gagne quelque chose à arriver en séquence : ailleurs ce
+   serait de la décoration.
+
+   Pas d'opacité propre aux entrées : c'est la section qui s'en charge.
+   Deux fondus superposés ne feraient qu'un fondu plus mou. */
+
+.anime .parcours li { transform: translateX(-14px); }
+
+.anime .section.vu .parcours li {
+  transform: none;
+  transition: transform 520ms var(--entree) var(--retard, 0ms);
+}
 
 /* ---------- Mon parcours ----------
 
@@ -454,6 +479,38 @@ body {
   outline-offset: 2px;
 }
 
+/* ---------- SOUS LE DOIGT ----------
+
+   Sur un écran tactile il n'y a pas de survol. Le seul état qui annonçait
+   « ceci se touche » ne pouvait donc jamais s'afficher : sept grandes
+   cartes tapables et rien pour le dire. La pastille est donc remplie DÈS
+   LE REPOS là où le survol n'existe pas. Rien ne change sur ordinateur.
+
+   hover:none décrit l'incapacité du pointeur principal à survoler, pas la
+   présence d'un écran tactile : un portable à écran tactile avec un pavé
+   garde hover:hover et garde donc le comportement de bureau. */
+
+@media (hover: none) {
+  .projet__lien,
+  .lien-ligne__aller {
+    background-color: var(--survol);
+    color: var(--survol-encre);
+  }
+}
+
+/* L'APPUI, lui, existe partout, et il part de la ligne entière : toucher
+   le titre d'un projet allume sa pastille. C'est ce qui apprend que la
+   carte est le bouton, sans que la carte elle-même ne bouge — ta règle
+   portait sur le survol, l'appui est autre chose ; dis-moi si tu veux que
+   je le retire aussi. */
+
+.projet:active .projet__lien,
+.lien-ligne:active .lien-ligne__aller,
+.prose a:active {
+  background-color: var(--survol-appui);
+  color: var(--survol-encre);
+}
+
 /* ---------- La flèche ----------
 
    Au survol elle part le long de son propre axe — vers le haut-droit,
@@ -575,6 +632,8 @@ body {
   .projet { grid-template-columns: 1fr; gap: 10px; }
   .projet__annee, .projet__lien { justify-self: start; }
   .parcours li { grid-template-columns: 1fr; gap: 4px; }
+  /* 8 au lieu de 14 : les marges tombent à 20 de chaque côté. */
+  .anime .parcours li { transform: translateX(-8px); }
   .parcours__quand { justify-self: start; order: -1; }
   .lien-ligne { grid-template-columns: 1fr; gap: 6px; }
   .stepper { display: none; }   /* pas de place, et rien à y gagner */
