@@ -160,19 +160,19 @@ body {
       lien     finit à 667 sur toutes, et commence à 549 pour le plus
                long (« Regarder le projet »), 574 pour les autres
 
-  Donc l'année est à une abscisse FIXE et le lien est calé à droite. Une
-  grille « 1fr auto auto » ne peut pas faire ça : la largeur du lien y
-  repousse l'année, et elle se déplaçait d'une ligne à l'autre. D'où trois
-  colonnes dont les deux dernières ne dépendent plus du texte :
-      1fr | 96 (année) | 120 (lien, calé à droite)
-  ce qui pose l'année à 452 et le lien de 548 à 668.
+  L'ANNÉE A ÉTÉ RETIRÉE. Les sept projets disaient tous 2026 : une colonne
+  dont toutes les valeurs sont identiques ne distingue rien, elle occupe.
+  Le relevé ci-dessus la mentionne encore parce qu'il décrit la maquette,
+  qui la portait.
 
-  Le minmax laisse la dernière colonne grandir si un libellé dépassait
-  120 : l'année se décalerait alors, mais rien ne casserait.
+  Il reste deux colonnes : le texte prend ce qu'il veut, le lien est calé
+  à droite sur une largeur qui ne dépend pas de lui, donc son bord droit
+  tombe au même endroit sur les sept lignes. Le minmax le laisse grandir
+  si un libellé dépassait 132.
 */
 .projet {
   display: grid;
-  grid-template-columns: 1fr 80px minmax(132px, max-content);
+  grid-template-columns: 1fr minmax(132px, max-content);
   align-items: center;
   gap: 0;
   padding: 9px 15px;
@@ -204,7 +204,6 @@ body {
   color: var(--texte);
 }
 
-.projet__annee,
 .projet__lien {
   display: inline-flex;
   align-items: center;
@@ -214,17 +213,13 @@ body {
   white-space: nowrap;
 }
 
-.projet__annee { color: var(--encre); justify-self: start; }
 .projet__lien { color: var(--cyan-texte); justify-self: end; }
 
-/* Le nom et la description sont deux enfants séparés depuis qu'il faut
-   pouvoir les découper autrement sur petit écran. Sur grand écran on
-   reconstruit exactement ce qu'ils formaient : empilés dans la première
-   colonne, l'année et le lien centrés sur les deux rangées. */
+/* Placement explicite : le nom et la description empilés dans la première
+   colonne, le lien centré sur les deux rangées dans la seconde. */
 .projet__nom   { grid-column: 1; grid-row: 1; }
 .projet__quoi  { grid-column: 1; grid-row: 2; }
-.projet__annee { grid-row: 1 / 3; }
-.projet__lien  { grid-row: 1 / 3; }
+.projet__lien  { grid-column: 2; grid-row: 1 / 3; }
 
 .projet svg { width: 14px; height: 14px; flex: none; }
 
@@ -684,21 +679,17 @@ body {
     sépare désormais.
   */
   .projet {
-    grid-template-columns: 1fr auto;
-    gap: 4px 16px;
+    grid-template-columns: 1fr;
+    gap: 4px;
     background: none;
     border-color: transparent;
     border-radius: 0;
     padding: 0;
   }
   .projets li + li { margin-top: 28px; }
-  .projet__nom   { grid-column: 1;      grid-row: 1; }
-  .projet__annee { grid-column: 2;      grid-row: 1; justify-self: end; }
-  .projet__quoi  { grid-column: 1 / -1; grid-row: 2; }
-  .projet__lien  { grid-column: 1 / -1; grid-row: 3; justify-self: start; }
-  .projet__annee { color: var(--texte); font-size: 13px; }
-  .projet__annee svg { display: none; }
-  .projet__lien { margin-top: 6px; }
+  .projet__nom  { grid-column: 1; grid-row: 1; }
+  .projet__quoi { grid-column: 1; grid-row: 2; }
+  .projet__lien { grid-column: 1; grid-row: 3; justify-self: start; margin-top: 6px; }
   .parcours li { grid-template-columns: 1fr; gap: 4px; }
   /* 8 au lieu de 14 : les marges tombent à 20 de chaque côté. */
   .anime .parcours li { transform: translateX(-8px); }

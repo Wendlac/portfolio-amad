@@ -6,7 +6,7 @@
 var PROJETS = [
   { nom: "Kalaan",
     quoi: "Une application mobile qui permet de lire des documents et livres en format epub et pdf",
-    annee: "2026", lien: "Etude de cas",
+    lien: "Etude de cas",
     /* Le Play Store est sur la page de l'étude de cas :
        play.google.com/store/apps/details?id=com.pelerain.kalaan
        La ligne mène donc à l'étude, comme sur la maquette, et le
@@ -14,27 +14,27 @@ var PROJETS = [
     url: "/projets/kalaan/" },
   { nom: "Design system Petrogest",
     quoi: "Conception du design system d’une application de gestion de stations d’essence",
-    annee: "2026", lien: "Regarder le projet",
+    lien: "Regarder le projet",
     url: "https://wendlac.github.io/petrogest-design-system/design-system.html" },
   { nom: "Site web Quotidien économique",
     quoi: "Site web du média d’information économique Quotidien économique",
-    annee: "2026", lien: "Visiter le site",
+    lien: "Visiter le site",
     url: "https://quotidieneconomique.net/" },
   { nom: "Site web Faissel",
     quoi: "Site web d’une entreprise de vente et installation de materiel de réseaux informatiques",
-    annee: "2026", lien: "Visiter le site",
+    lien: "Visiter le site",
     url: "https://www.faissel.com/" },
   { nom: "Site web Bil Aka Kora",
     quoi: "Projet fictif, site web de l’artiste musicien burkinabé Bil Aka Kora",
-    annee: "2026", lien: "Visiter le site",
+    lien: "Visiter le site",
     url: "https://wendlac.github.io/bil-aka-kora/" },
   { nom: "Application web Dispoz",
     quoi: "Une application web qui permet de trouver la palette de couleurs d’un visuel",
-    annee: "2026", lien: "Visiter le site",
+    lien: "Visiter le site",
     url: "https://wendlac.github.io/dispoz/" },
   { nom: "Site web Rakiire",
     quoi: "Site web pour le marque de vetement streetwear africain",
-    annee: "2026", lien: "Visiter le site",
+    lien: "Visiter le site",
     url: "https://wendlac.github.io/rakiire/" }
 ];
 
@@ -117,7 +117,6 @@ var LIENS = [
     return '<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="' + d + '"/></svg>';
   }
   var I = {
-    annee: ic("M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-68-76a12,12,0,1,1-12-12A12,12,0,0,1,140,132Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,132ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"),
     fleche: ic("M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"),
     lieu: ic("M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"),
     tiktok: ic("M224,72a48.05,48.05,0,0,1-48-48,8,8,0,0,0-8-8H128a8,8,0,0,0-8,8V156a20,20,0,1,1-28.57-18.08A8,8,0,0,0,96,130.69V88a8,8,0,0,0-9.4-7.88C50.91,86.48,24,119.1,24,156a76,76,0,0,0,152,0V116.29A103.25,103.25,0,0,0,224,128a8,8,0,0,0,8-8V80A8,8,0,0,0,224,72Zm-8,39.64a87.19,87.19,0,0,1-43.33-16.15A8,8,0,0,0,160,102v54a60,60,0,0,1-120,0c0-25.9,16.64-49.13,40-57.6v27.67A36,36,0,1,0,136,156V32h24.5A64.14,64.14,0,0,0,216,87.5Z"),
@@ -151,13 +150,9 @@ var LIENS = [
 
   document.getElementById("projets").innerHTML = PROJETS.map(function (p) {
     return "<li>" + enveloppe(p.url, "projet",
-      /* Quatre enfants de la grille, et non le nom et la description
-         emballés ensemble. Sur petit écran l'année doit remonter sur la
-         ligne du nom, ce qui est impossible tant que le nom est imbriqué
-         dans un autre élément. Les deux mises en page se font donc par
-         placement explicite, voir wall.css. */
+      /* Trois enfants de la grille, placés explicitement dans wall.css :
+         le nom et la description empilés à gauche, le lien à droite. */
       '<h3 class="projet__nom">' + esc(p.nom) + "</h3>" +
-      '<span class="projet__annee">' + I.annee + esc(p.annee) + "</span>" +
       '<p class="projet__quoi">' + esc(p.quoi) + "</p>" +
       '<span class="projet__lien">' + esc(p.lien) + FLECHE + "</span>",
       p.nom + ", " + p.lien) + "</li>";
