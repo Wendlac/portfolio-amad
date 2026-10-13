@@ -52,6 +52,8 @@
 
 /* ---------- Le haut de la page ---------- */
 
+.retour--bas { margin-top: 64px; }
+
 .etude__sur {
   margin: 48px 0 0;
   font-size: 14px;
@@ -272,7 +274,15 @@
   .figure--paire img { max-width: 300px; margin-inline: auto; }
 
   /* la pastille disparaît ici comme partout ailleurs */
-  .retour,
+  /*
+    La pastille disparaît ici comme partout, mais son padding tenait aussi
+    lieu de surface de touche : sans lui le lien de retour ne faisait plus
+    que 18px de haut, sous les 24 exigés. On garde donc une marge verticale
+    invisible, annulée par une marge négative pour que rien ne se décale :
+    18 + 22 = 40px sous le pouce.
+  */
+  .retour { padding: 11px 0; margin: -11px 0; border-radius: 0; }
+  .retour--bas { margin-top: 53px; }
   .fiche dd a { padding: 0; margin: 0; border-radius: 0; }
   .retour:active,
   .fiche dd a:active { background-color: transparent; color: var(--survol-encre); }
