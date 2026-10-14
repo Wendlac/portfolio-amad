@@ -12,10 +12,6 @@ var PROJETS = [
        La ligne mène donc à l'étude, comme sur la maquette, et le
        téléchargement est à un clic de plus. */
     url: "/projets/kalaan/" },
-  { nom: "Design system Petrogest",
-    quoi: "Conception du design system d’une application de gestion de stations d’essence",
-    lien: "Regarder le projet",
-    url: "https://wendlac.github.io/petrogest-design-system/design-system.html" },
   { nom: "Site web Quotidien économique",
     quoi: "Site web du média d’information économique Quotidien économique",
     lien: "Visiter le site",
