@@ -97,7 +97,7 @@ var LIENS = [
   { icone: "youtube",  ou: "Sur Youtube",
     quoi: "Vous y trouverez aussi du contenu sur le design, et mes chroniques sur la tech",
     aller: "Visiter", url: "https://www.youtube.com/@louisamad9118" },
-  { icone: "linkedin", ou: "Sur linkedIn",
+  { icone: "linkedin", ou: "Sur LinkedIn",
     quoi: "Mon espace pro où je donne mon avis sur l’industrie de la tech",
     aller: "Visiter", url: "https://www.linkedin.com/in/amad-louis-loure" },
   { icone: "email",    ou: "Par email",
