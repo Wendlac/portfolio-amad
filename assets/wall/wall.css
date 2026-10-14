@@ -31,7 +31,18 @@
   avait permis d'identifier Teachers, et la maquette le porte.
 */
 
+/* CLAIR, ET SEULEMENT CLAIR.
+
+   Sans cette déclaration, le thème sombre automatique de Chrome sur
+   Android peut décider d'assombrir lui-même une page qui ne dit rien de
+   ses intentions : il inverserait le blanc, le gris des lignes et les
+   cyans, c'est-à-dire toute la palette relevée sur la maquette. La dire
+   claire, c'est s'en protéger. Ce n'est pas un refus du mode sombre : le
+   jour où tu en dessines un, on passe à « light dark » et on écrit les
+   couleurs du sombre. */
 :root {
+  color-scheme: light;
+
   --blanc:   #FFFFFF;
   --encre:   #021C21;   /* titres */
   --texte:   #5D696C;   /* paragraphes — voir le relevé de contraste plus bas */
