@@ -273,20 +273,25 @@
   .figure--paire { grid-template-columns: 1fr; gap: 20px; }
   .figure--paire img { max-width: 300px; margin-inline: auto; }
 
-  /* la pastille disparaît ici comme partout ailleurs */
-  /*
-    La pastille disparaît ici comme partout, mais son padding tenait aussi
-    lieu de surface de touche : sans lui le lien de retour ne faisait plus
-    que 18px de haut, sous les 24 exigés. On garde donc une marge verticale
-    invisible, annulée par une marge négative pour que rien ne se décale :
-    18 + 22 = 40px sous le pouce.
-  */
+  /* Le bouton prend toute la largeur : une affaire de place, pas de
+     pointeur, donc ça reste ici. Il garde sa pastille, qui est sa forme et
+     non un état de survol. */
+  .bouton { width: 100%; justify-content: center; }
+}
+
+/* Même condition que dans wall.css : c'est le toucher qui commande, pas la
+   largeur.
+
+   Le lien de retour garde cependant une surface. Le padding de la pastille
+   lui tenait aussi lieu de cible, et sans lui il ne faisait plus que 18px
+   de haut, sous les 24 exigés. D'où un padding vertical invisible, annulé
+   par une marge négative pour que rien ne se décale : 18 + 22 = 40px sous
+   le pouce. Et d'où les 53 du bas, qui redonnent les 64 d'origine. */
+
+@media (hover: none) {
   .retour { padding: 11px 0; margin: -11px 0; border-radius: 0; }
   .retour--bas { margin-top: 53px; }
   .fiche dd a { padding: 0; margin: 0; border-radius: 0; }
   .retour:active,
   .fiche dd a:active { background-color: transparent; color: var(--survol-encre); }
-
-  /* le bouton garde sa pastille : c'est sa forme, pas un état de survol */
-  .bouton { width: 100%; justify-content: center; }
 }

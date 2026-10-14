@@ -671,33 +671,8 @@ body {
   .salut { font-size: 30px; line-height: 36px; }
   .section { margin-top: 72px; }
   .section > h2 { font-size: 26px; line-height: 32px; }
-  /*
-    L'année remonte sur la ligne du nom, calée à droite, comme sur grand
-    écran. Elle avait une ligne à elle, avec son icône, au même poids que
-    le nom du projet — alors que les sept projets disent tous 2026. La
-    mise en page promouvait ce qui distingue le moins.
-
-    L'icône calendrier disparaît ici : à côté du nom, quatre chiffres se
-    lisent comme une année sans qu'on ait à le dessiner. Elle reste sur
-    grand écran, où elle est dans la maquette et où la colonne est isolée.
-  */
-  /*
-    PLUS DE CADRE. Sur 684 il tenait une grille de trois colonnes : c'est
-    lui qui empêchait l'année et le lien de flotter à droite. Sur une seule
-    colonne il ne retient plus rien, il trace une limite que le blanc
-    traçait déjà, et il coûtait 32px sur 375, soit 9% de l'écran. Le texte
-    reprend toute la largeur, et c'est l'écart entre deux projets qui les
-    sépare désormais.
-  */
-  .projet {
-    grid-template-columns: 1fr;
-    gap: 4px;
-    background: none;
-    border-color: transparent;
-    border-radius: 0;
-    padding: 0;
-  }
-  .projets li + li { margin-top: 28px; }
+  /* Une seule colonne : le nom, la description, le lien. */
+  .projet { grid-template-columns: 1fr; gap: 4px; }
   .projet__nom  { grid-column: 1; grid-row: 1; }
   .projet__quoi { grid-column: 1; grid-row: 2; }
   .projet__lien { grid-column: 1; grid-row: 3; justify-self: start; margin-top: 6px; }
@@ -708,20 +683,40 @@ body {
   .lien-ligne { grid-template-columns: 1fr; gap: 6px; }
   .stepper { display: none; }   /* pas de place, et rien à y gagner */
   .fin { margin-top: 96px; }
+}
 
-  /*
-    PLUS DE PASTILLE. Sans survol elle ne pouvait que rester allumée en
-    permanence ou n'apparaître qu'à l'appui, et aucune des deux ne valait
-    son bruit. Le padding et la marge négative qui la portaient tombent
-    avec elle.
+/* ---------- Là où l'on ne peut pas survoler ----------
 
-    L'appui répond quand même, par l'encre : le lien passe de #007189 à
-    #032430, un écart de luminosité franc, visible même sans couleur. On
-    perd la capsule, pas la réponse.
+   Le cadre et la pastille ne partent plus à une LARGEUR mais à une
+   CAPACITÉ : hover:none décrit un pointeur incapable de survoler.
 
-    Appliqué à tous les liens et pas seulement aux projets : deux gestes
-    différents sur le même écran seraient pire que celui qu'on retire.
-  */
+   C'est la bonne condition, parce que c'est le toucher que les deux
+   servaient. La pastille est la forme d'un état de survol : là où le
+   survol n'existe pas, elle ne peut que rester allumée en permanence ou
+   n'apparaître qu'à l'appui, et aucune des deux ne vaut son bruit. Le
+   cadre, lui, tenait une grille de plusieurs colonnes, et le toucher
+   s'accompagne presque toujours d'une colonne unique où il ne retient
+   plus rien.
+
+   Un téléphone couché fait 812px de large : il échappait à la requête de
+   largeur et retrouvait cadre et pastille alors qu'on ne peut toujours pas
+   y survoler. Il n'y échappe plus, une tablette non plus.
+
+   En retour, une fenêtre de bureau rétrécie sous 760 garde son cadre : on
+   peut y survoler, donc la pastille y fonctionne. */
+
+@media (hover: none) {
+  .projet {
+    background: none;
+    border-color: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+  .projets li + li { margin-top: 28px; }
+
+  /* L'appui répond quand même, par l'encre : le lien passe de #007189 à
+     #032430, un écart de luminosité franc, visible même sans couleur. On
+     perd la capsule, pas la réponse. */
   .projet__lien,
   .lien-ligne__aller,
   .prose a {
@@ -732,13 +727,7 @@ body {
 
   .projet:active .projet__lien,
   .lien-ligne:active .lien-ligne__aller,
-  .prose a:active {
-    background-color: transparent;
-    color: var(--survol-encre);
-  }
-
-  /* Le focus clavier n'a plus de pastille à remplir ici non plus : il reste
-     l'anneau, qui se voit très bien. */
+  .prose a:active,
   .projet:focus-visible .projet__lien,
   .lien-ligne:focus-visible .lien-ligne__aller,
   .prose a:focus-visible {
