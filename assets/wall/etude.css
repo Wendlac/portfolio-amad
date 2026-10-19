@@ -224,6 +224,10 @@
 .bouton:focus-visible .fleche svg:first-child { transform: translate(100%, -100%); }
 .bouton:focus-visible .fleche svg:last-child { transform: translate(0, 0); }
 
+/* Le bouton de téléchargement porte une icône fixe : une flèche qui
+   s'envole vers le haut-droit dirait « ailleurs », pas « chez vous ». */
+.bouton__icone { width: 16px; height: 16px; flex: none; }
+
 /* Le lien de la fiche n'est pas dans .prose : il lui faut sa couleur et sa
    pastille à lui. */
 .fiche dd a {

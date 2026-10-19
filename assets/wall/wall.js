@@ -12,6 +12,10 @@ var PROJETS = [
        La ligne mène donc à l'étude, comme sur la maquette, et le
        téléchargement est à un clic de plus. */
     url: "/projets/kalaan/" },
+  { nom: "Identité visuelle Rakiiré",
+    quoi: "Direction artistique et charte graphique de la marque de vêtements Rakiiré, à télécharger en PDF",
+    lien: "Etude de cas",
+    url: "/projets/rakiire/" },
   { nom: "Site web Quotidien économique",
     quoi: "Site web du média d’information économique Quotidien économique",
     lien: "Visiter le site",
