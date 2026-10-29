@@ -4,6 +4,10 @@
 */
 
 var PROJETS = [
+  { nom: "Application bancaire Coris Bank",
+    quoi: "Application de transferts conçue pour être utilisable sans savoir lire",
+    lien: "Etude de cas",
+    url: "/projets/coris-bank/" },
   { nom: "Kalaan",
     quoi: "Une application mobile qui permet de lire des documents et livres en format epub et pdf",
     lien: "Etude de cas",
