@@ -3,27 +3,250 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Page d&eacute;plac&eacute;e</title>
+<title>MyCoris Assur, refactoring - Amad Louis</title>
+<meta name="description" content="Refactoring du design de l&rsquo;application d&rsquo;assurance de Coris Assurances C&ocirc;te d&rsquo;Ivoire : souscription, contrats et d&eacute;claration de sinistre. D&eacute;velopp&eacute;e et publi&eacute;e sur le Play Store.">
+<link rel="canonical" href="https://amadlouis.site/projets/mycoris-assur/">
 
 <!--
-  Cette page n'existe plus, mais son adresse a circulé : elle était dans le
-  sitemap et probablement indexée. Plutôt que de renvoyer un 404 à qui
-  possède le lien, on l'emmène à l'accueil.
-
-  GitHub Pages ne sait pas faire de redirection 301 : pas de .htaccess, pas
-  de _redirects. Le rafraîchissement à 0 seconde est ce que Google traite
-  comme une redirection permanente, et le canonical dit vers quoi les
-  signaux doivent être report&eacute;s. Le location.replace sert au navigateur,
-  et il remplace l'entr&eacute;e d'historique au lieu de l'empiler, pour que le
-  bouton Retour ne ram&egrave;ne pas ici en boucle.
-
-  Le lien visible est l&agrave; pour le cas o&ugrave; ni l'un ni l'autre ne fonctionne.
+  La barre du navigateur sur téléphone prend cette couleur. Sans elle, iOS
+  échantillonne le haut de la page et Android met un gris par défaut : la
+  page flottait dans un cadre qui n'était pas le sien.
 -->
-<link rel="canonical" href="https://amadlouis.site/">
-<meta http-equiv="refresh" content="0; url=/">
-<script>location.replace("/");</script>
+<meta name="theme-color" content="#FFFFFF">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Amad Louis">
+<meta property="og:title" content="MyCoris Assur, refactoring - Amad Louis">
+<meta property="og:description" content="Refactoring du design de l&rsquo;application d&rsquo;assurance de Coris Assurances C&ocirc;te d&rsquo;Ivoire. D&eacute;velopp&eacute;e et publi&eacute;e sur le Play Store.">
+<meta property="og:url" content="https://amadlouis.site/projets/mycoris-assur/">
+<meta property="og:image" content="https://amadlouis.site/assets/img/projects/assurance/partage.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MyCoris Assur, refactoring - Amad Louis">
+<meta name="twitter:description" content="Refactoring du design de l&rsquo;application d&rsquo;assurance de Coris Assurances C&ocirc;te d&rsquo;Ivoire. D&eacute;velopp&eacute;e et publi&eacute;e sur le Play Store.">
+<meta name="twitter:image" content="https://amadlouis.site/assets/img/projects/assurance/partage.jpg">
+
+<!--
+  Le SVG d'abord : les navigateurs qui le comprennent le préfèrent, et il
+  reste net à toutes les tailles, y compris sur les écrans très denses. Les
+  PNG restent pour les autres.
+-->
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon/favicon.svg">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
+
+<!-- Même construction que les autres études : wall.css, plus etude.css. -->
+<link rel="preload" href="/assets/fonts/teachers/teachers-latin.woff2?v=2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/wall/fonts.css?v=2026-10-29d">
+<link rel="stylesheet" href="/assets/wall/wall.css?v=2026-10-29d">
+<link rel="stylesheet" href="/assets/wall/etude.css?v=2026-10-29d">
 </head>
 <body>
-<p>Cette page n&rsquo;existe plus. <a href="/">Aller &agrave; l&rsquo;accueil</a></p>
+
+<main class="page page--etude" id="texte">
+
+  <a class="retour" href="/">
+    <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg>
+    Retour aux projets
+  </a>
+
+  <p class="etude__sur"><span>Refactoring de design</span><span>Assurance</span></p>
+
+  <h1 class="etude__titre">MyCoris Assur, refondre une assurance d&eacute;j&agrave; en service</h1>
+
+  <figure class="figure">
+    <img src="/assets/img/projects/assurance/banniere.webp" alt="Trois &eacute;crans de l&rsquo;application : l&rsquo;accueil avec la prime mensuelle, le choix du type d&rsquo;assurance, et le d&eacute;tail d&rsquo;un contrat" width="984" height="654">
+  </figure>
+
+  <div class="prose etude__intro">
+    <p>Coris Assurances C&ocirc;te d&rsquo;Ivoire avait d&eacute;j&agrave; son application. Refondre le design d&rsquo;une application qui tourne n&rsquo;est pas la redessiner par go&ucirc;t&nbsp;: c&rsquo;est nommer ce qui bloque, et refaire les pi&egrave;ces une par une sans casser ce qui marche.</p>
+    <p>J&rsquo;ai men&eacute; la revue de l&rsquo;existant, red&eacute;coup&eacute; les trois parcours &mdash; souscrire, g&eacute;rer ses contrats, d&eacute;clarer un sinistre &mdash; et reconstruit la biblioth&egrave;que de composants. <strong>Le travail a &eacute;t&eacute; d&eacute;velopp&eacute;&nbsp;: l&rsquo;application est publi&eacute;e sur le Play Store.</strong></p>
+  </div>
+
+  <h2 class="sr-only">Informations sur le projet</h2>
+  <dl class="fiche">
+    <div>
+      <dt>R&ocirc;le</dt>
+      <dd>Revue de l&rsquo;existant, architecture des parcours, conception des &eacute;crans, syst&egrave;me de composants</dd>
+    </div>
+    <div>
+      <dt>Client</dt>
+      <dd>Coris Assurances C&ocirc;te d&rsquo;Ivoire, groupe Coris</dd>
+    </div>
+    <div>
+      <dt>Nature</dt>
+      <dd>Refactoring du design d&rsquo;une application d&eacute;j&agrave; en service</dd>
+    </div>
+    <div>
+      <dt>&Eacute;tat</dt>
+      <dd><a href="https://play.google.com/store/apps/details?id=com.myCorisAssur.appmobile" target="_blank" rel="noopener">D&eacute;velopp&eacute;e et publi&eacute;e sur Google Play</a></dd>
+    </div>
+  </dl>
+
+  <section class="chapitre" aria-labelledby="existant">
+    <p class="chapitre__tete">
+      <span class="chapitre__no" aria-hidden="true">01</span>
+      <span class="chapitre__titre" id="existant">Une application qui existait d&eacute;j&agrave;</span>
+    </p>
+    <div class="prose">
+      <p>Un refactoring de design commence par une liste, pas par une humeur. La mienne tenait en deux colonnes. Les <strong>pages</strong> &agrave; reprendre&nbsp;: l&rsquo;onboarding, le tableau de bord, les listes de param&egrave;tres et de notifications. Les <strong>pi&egrave;ces</strong> &agrave; refaire&nbsp;: les onglets, les boutons, les cartes, les s&eacute;lecteurs, les champs, les indicateurs de chargement, et jusqu&rsquo;au bouton retour.</p>
+      <p>&Eacute;crire cette liste avant de dessiner change la nature du travail. On ne cherche plus &agrave; am&eacute;liorer une impression, on traite des objets qu&rsquo;on peut cocher &mdash; et une &eacute;quipe de d&eacute;veloppement peut suivre.</p>
+    </div>
+    <figure class="figure figure--paire">
+      <img src="/assets/img/projects/assurance/splash.webp" alt="&Eacute;cran de lancement&nbsp;: MyCoris Assur, &laquo;&nbsp;Simple, Rapide et s&eacute;curis&eacute;&nbsp;&raquo;, et un motif de symboles en bas de page" width="700" height="1558" loading="lazy">
+      <img src="/assets/img/projects/assurance/onboarding.webp" alt="&Eacute;cran d&rsquo;accueil avant connexion&nbsp;: &laquo;&nbsp;Prenez enfin en main votre assurance&nbsp;&raquo;, se connecter ou d&eacute;couvrir les produits" width="700" height="1558" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="chapitre" aria-labelledby="frictions">
+    <p class="chapitre__tete">
+      <span class="chapitre__no" aria-hidden="true">02</span>
+      <span class="chapitre__titre" id="frictions">Les six frictions</span>
+    </p>
+    <div class="prose">
+      <p>Avant de toucher au premier &eacute;cran, j&rsquo;ai list&eacute; ce qui fait fuir les assur&eacute;s dans ce secteur, pour que chaque d&eacute;cision ait quelque chose &agrave; r&eacute;parer&nbsp;:</p>
+      <p>Les <strong>d&eacute;marches complexes</strong>, qu&rsquo;il fallait rendre plus claires &agrave; la souscription comme &agrave; la d&eacute;claration. Les <strong>temps de traitement longs</strong>. Le <strong>manque d&rsquo;acc&egrave;s aux informations</strong>. L&rsquo;<strong>adaptation aux mobiles</strong>. Le <strong>rappel du renouvellement, encore manuel</strong>. Et le <strong>suivi des sinistres et du remboursement</strong>.</p>
+      <p>Elles ne viennent pas d&rsquo;un manuel d&rsquo;UX, elles viennent du m&eacute;tier. C&rsquo;est pour &ccedil;a qu&rsquo;elles sont utiles&nbsp;: chacune d&eacute;signe un endroit pr&eacute;cis de l&rsquo;application, et deux d&rsquo;entre elles ont produit les d&eacute;cisions dont je suis le plus content, aux chapitres 04 et 05.</p>
+    </div>
+  </section>
+
+  <section class="chapitre" aria-labelledby="loi">
+    <p class="chapitre__tete">
+      <span class="chapitre__no" aria-hidden="true">03</span>
+      <span class="chapitre__titre" id="loi">La loi d&rsquo;abord</span>
+    </p>
+    <div class="prose">
+      <p>Avant la premi&egrave;re question d&rsquo;un devis, l&rsquo;assur&eacute; doit lire ceci&nbsp;: en cas de fausse d&eacute;claration intentionnelle, <strong>le contrat est nul et de nul effet</strong>, et les primes vers&eacute;es restent acquises &agrave; l&rsquo;assureur &agrave; titre de dommage. C&rsquo;est l&rsquo;article 1 du code CIMA, qui r&eacute;git les assurances de quatorze pays africains.</p>
+      <p>Aucune application grand public ne fait lire un texte juridique avant de laisser quiconque avancer. Celle-ci le doit. La seule question de design est donc&nbsp;: o&ugrave; le mettre&nbsp;?</p>
+      <p>Il a sa propre page, &agrave; l&rsquo;entr&eacute;e du parcours, avec une barre de progression encore vide derri&egrave;re lui. <strong>Pas une case &agrave; cocher sous un bouton, pas une ligne en petits caract&egrave;res&nbsp;: une &eacute;tape.</strong> On ne peut pas l&rsquo;esquiver, et on sait qu&rsquo;on ne l&rsquo;a pas esquiv&eacute;e &mdash; ce qui est exactement ce que la loi demande.</p>
+    </div>
+    <figure class="figure figure--ecran">
+      <img src="/assets/img/projects/assurance/cima.webp" alt="L&rsquo;avertissement du code CIMA sur fausse d&eacute;claration, seul au centre de l&rsquo;&eacute;cran, avec le bouton &laquo;&nbsp;J&rsquo;ai compris&nbsp;&raquo;" width="700" height="1558" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="chapitre" aria-labelledby="souscrire">
+    <p class="chapitre__tete">
+      <span class="chapitre__no" aria-hidden="true">04</span>
+      <span class="chapitre__titre" id="souscrire">Souscrire, c&rsquo;est configurer</span>
+    </p>
+    <div class="prose">
+      <p>Un devis d&rsquo;assurance n&rsquo;est pas un formulaire, c&rsquo;est un configurateur&nbsp;: auto ou vie, puis la formule &mdash; au tiers, tiers&nbsp;+, tous risques &mdash; puis le v&eacute;hicule, puis les garanties qu&rsquo;on ajoute ou non.</p>
+      <p>Le vocabulaire, lui, n&rsquo;est pas n&eacute;gociable. <strong>&laquo;&nbsp;Puissance fiscale&nbsp;&raquo;, &laquo;&nbsp;zone de circulation&nbsp;&raquo;&nbsp;: ces mots viennent du m&eacute;tier et du tarif, pas de l&rsquo;interface</strong>, et les remplacer par des mots plus doux donnerait un devis faux. Le design ne peut pas simplifier les termes. Il peut en revanche simplifier l&rsquo;ordre, n&rsquo;en poser qu&rsquo;un petit nombre par &eacute;cran, et dire o&ugrave; l&rsquo;on en est &mdash; d&rsquo;o&ugrave; la barre de progression, pr&eacute;sente du premier &eacute;cran au dernier.</p>
+      <p>Et le devis se termine en PDF. Ce n&rsquo;est pas un d&eacute;tail&nbsp;: <strong>un devis d&rsquo;assurance sert &agrave; &ecirc;tre compar&eacute;</strong>, montr&eacute; &agrave; un proche, gard&eacute; le temps de r&eacute;fl&eacute;chir. S&rsquo;il ne peut pas sortir du t&eacute;l&eacute;phone, il ne sert pas.</p>
+    </div>
+    <figure class="figure figure--paire">
+      <img src="/assets/img/projects/assurance/formule.webp" alt="Choix de la formule&nbsp;: assurance au tiers, tiers&nbsp;+, tous risques, chacune d&eacute;pliable" width="700" height="2122" loading="lazy">
+      <img src="/assets/img/projects/assurance/vehicule.webp" alt="Informations sur le v&eacute;hicule&nbsp;: usage, puissance fiscale, zone de circulation" width="700" height="1558" loading="lazy">
+    </figure>
+    <figure class="figure figure--paire">
+      <img src="/assets/img/projects/assurance/garanties.webp" alt="Garanties additionnelles&nbsp;: v&eacute;hicule de remplacement, indemnisation, r&eacute;paration" width="700" height="1558" loading="lazy">
+      <img src="/assets/img/projects/assurance/devis.webp" alt="R&eacute;capitulatif du devis&nbsp;: informations du v&eacute;hicule, dur&eacute;e, total &agrave; r&eacute;gler et t&eacute;l&eacute;chargement du devis" width="700" height="2486" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="chapitre" aria-labelledby="contrats">
+    <p class="chapitre__tete">
+      <span class="chapitre__no" aria-hidden="true">05</span>
+      <span class="chapitre__titre" id="contrats">Un contrat a trois &eacute;tats</span>
+    </p>
+    <div class="prose">
+      <p>Une des six frictions &eacute;tait que le rappel de renouvellement restait manuel. La r&eacute;ponse ne demandait pas une notification de plus&nbsp;: elle demandait que <strong>l&rsquo;&eacute;tat du contrat soit visible sans qu&rsquo;on le cherche</strong>.</p>
+      <p>Chaque contrat porte donc son &eacute;tat sur lui&nbsp;: <strong>actif</strong>, <strong>presqu&rsquo;&agrave; terme</strong>, <strong>expir&eacute;</strong>. Et le bouton suit l&rsquo;&eacute;tat au lieu de rester le m&ecirc;me partout&nbsp;: un contrat actif propose son attestation, un contrat qui approche du terme ou qui a expir&eacute; propose de le renouveler.</p>
+      <p>C&rsquo;est une petite d&eacute;cision et elle fait beaucoup, parce qu&rsquo;elle d&eacute;place le rappel&nbsp;: il n&rsquo;est plus un message qu&rsquo;on envoie, il est une propri&eacute;t&eacute; de l&rsquo;objet. L&rsquo;assur&eacute; qui ouvre sa liste voit lequel de ses contrats r&eacute;clame quelque chose, et quoi.</p>
+    </div>
+    <figure class="figure figure--ecran">
+      <img src="/assets/img/projects/assurance/contrats-liste.webp" alt="Liste des souscriptions&nbsp;: trois contrats portant les &eacute;tats presqu&rsquo;&agrave; terme, expir&eacute; et actif, chacun avec l&rsquo;action qui correspond &agrave; son &eacute;tat" width="700" height="2229" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="chapitre" aria-labelledby="sinistre">
+    <p class="chapitre__tete">
+      <span class="chapitre__no" aria-hidden="true">06</span>
+      <span class="chapitre__titre" id="sinistre">D&eacute;clarer un sinistre, c&rsquo;est rassembler des preuves</span>
+    </p>
+    <div class="prose">
+      <p>C&rsquo;est le parcours qui ne ressemble &agrave; aucun autre, et c&rsquo;est pour &ccedil;a qu&rsquo;il m&rsquo;int&eacute;resse le plus. <strong>On ne souscrit pas et on ne d&eacute;clare pas dans le m&ecirc;me &eacute;tat.</strong> On souscrit tranquillement chez soi, on compare, on r&eacute;fl&eacute;chit. On d&eacute;clare un sinistre dans un mauvais moment, souvent au bord d&rsquo;une route, parfois en ayant peur.</p>
+      <p>L&rsquo;entr&eacute;e du parcours est donc presque vide&nbsp;: un dessin, une question, un bouton, et une phrase qui dit combien de temps &ccedil;a prendra. Rien d&rsquo;autre &agrave; d&eacute;cider &agrave; ce moment-l&agrave;.</p>
+      <p>Ensuite l&rsquo;application ne demande pas de raconter, elle demande de <strong>montrer</strong>&nbsp;: des photos, des vid&eacute;os, des documents. Et elle nomme lesquels, parce que personne ne sait ce qu&rsquo;un assureur attend &mdash; le rapport de police, les devis de r&eacute;paration, le permis, les bulletins de sant&eacute;. Dire &laquo;&nbsp;t&eacute;l&eacute;versez vos documents&nbsp;&raquo; sans cette liste, c&rsquo;est garantir un dossier incomplet et un d&eacute;lai de plus.</p>
+      <p>Pour les vid&eacute;os, on peut t&eacute;l&eacute;verser un fichier <strong>ou coller un lien</strong>. Une vid&eacute;o p&egrave;se lourd, et beaucoup de gens l&rsquo;ont d&eacute;j&agrave; d&eacute;pos&eacute;e quelque part avant d&rsquo;ouvrir l&rsquo;application. Exiger l&rsquo;envoi, c&rsquo;est exiger de la connexion que tout le monde n&rsquo;a pas.</p>
+      <p>Et le r&eacute;capitulatif contient ce qui fait de ce formulaire une d&eacute;claration d&rsquo;assurance et non un ticket de support&nbsp;: <strong>les tiers concern&eacute;s</strong>, avec leur nom, leur &acirc;ge et leur &eacute;tat. C&rsquo;est l&agrave; que le m&eacute;tier se rappelle au design.</p>
+    </div>
+    <figure class="figure figure--paire">
+      <img src="/assets/img/projects/assurance/sinistre-entree.webp" alt="Entr&eacute;e du parcours de d&eacute;claration&nbsp;: une illustration, la question &laquo;&nbsp;Vous avez subi un sinistre&#63;&nbsp;&raquo; et un seul bouton" width="700" height="1558" loading="lazy">
+      <img src="/assets/img/projects/assurance/documents.webp" alt="&Eacute;cran des documents&nbsp;: la liste des pi&egrave;ces attendues et un t&eacute;l&eacute;versement en cours" width="700" height="1558" loading="lazy">
+    </figure>
+    <figure class="figure figure--paire">
+      <img src="/assets/img/projects/assurance/video.webp" alt="&Eacute;cran des vid&eacute;os&nbsp;: t&eacute;l&eacute;verser un fichier, ou saisir le lien d&rsquo;une vid&eacute;o h&eacute;berg&eacute;e ailleurs" width="700" height="1558" loading="lazy">
+      <img src="/assets/img/projects/assurance/sinistre-recap.webp" alt="R&eacute;capitulatif du sinistre&nbsp;: d&eacute;tails du dommage, objets concern&eacute;s, et les tiers avec leur &acirc;ge et leur &eacute;tat" width="700" height="2607" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="chapitre" aria-labelledby="pieces">
+    <p class="chapitre__tete">
+      <span class="chapitre__no" aria-hidden="true">07</span>
+      <span class="chapitre__titre" id="pieces">Refaire les pi&egrave;ces</span>
+    </p>
+    <div class="prose">
+      <p>C&rsquo;est ce qui s&eacute;pare un refactoring d&rsquo;un simple rhabillage&nbsp;: l&rsquo;&eacute;chelle typographique, les champs dans leurs trois &eacute;tats &mdash; au repos, actif, en erreur &mdash; les boutons dans toutes leurs variantes jusqu&rsquo;&agrave; l&rsquo;&eacute;tat d&eacute;sactiv&eacute; et &agrave; l&rsquo;action destructrice, les cartes de notification, et les lignes de moyen de paiement.</p>
+      <p>Ces derni&egrave;res disent o&ugrave; l&rsquo;application vit&nbsp;: on y paie son assurance par <strong>Coris Money</strong> ou <strong>Orange Money</strong>. Une biblioth&egrave;que de composants n&rsquo;est pas un exercice de style, c&rsquo;est ce qui part &agrave; l&rsquo;&eacute;quipe de d&eacute;veloppement &mdash; et ce qui fait que le dixi&egrave;me &eacute;cran ressemble au premier sans qu&rsquo;on ait eu &agrave; le redemander.</p>
+    </div>
+    <figure class="figure">
+      <img src="/assets/img/projects/assurance/composants.webp" alt="Planche de la biblioth&egrave;que&nbsp;: &eacute;chelle typographique, champs dans leurs &eacute;tats, variantes de boutons, cartes de notification et moyens de paiement" width="1400" height="788" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="chapitre" aria-labelledby="production">
+    <p class="chapitre__tete">
+      <span class="chapitre__no" aria-hidden="true">08</span>
+      <span class="chapitre__titre" id="production">En production</span>
+    </p>
+    <div class="prose">
+      <p>Le refactoring a &eacute;t&eacute; livr&eacute; &agrave; l&rsquo;&eacute;quipe de d&eacute;veloppement, d&eacute;velopp&eacute;, et publi&eacute;. <strong>MyCoris Assur est sur Google Play</strong>, &eacute;dit&eacute;e par Coris Invest Group.</p>
+      <p>C&rsquo;est le seul de mes projets qui parcourt la cha&icirc;ne enti&egrave;re&nbsp;: un client r&eacute;el, un domaine r&eacute;glement&eacute;, un design remis &agrave; une &eacute;quipe qui l&rsquo;a construit, et une application que n&rsquo;importe qui peut installer. Les autres s&rsquo;arr&ecirc;tent avant l&rsquo;un de ces maillons.</p>
+    </div>
+
+    <a class="bouton" href="https://play.google.com/store/apps/details?id=com.myCorisAssur.appmobile" target="_blank" rel="noopener">
+      Voir MyCoris Assur sur Google Play
+      <!-- deux copies : la première sort, la seconde arrive, voir .fleche -->
+      <span class="fleche" aria-hidden="true">
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></svg>
+        <svg viewBox="0 0 256 256" fill="currentColor"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></svg>
+      </span>
+    </a>
+  </section>
+
+  <p class="parlons">Un projet similaire&#63; Parlons-en.</p>
+  <div class="prose">
+    <p>Par email &agrave; <a href="mailto:hello@amadlouis.site">hello@amadlouis.site</a>, ou sur <a href="https://www.linkedin.com/in/amad-louis-loure" target="_blank" rel="noopener">LinkedIn</a>.</p>
+  </div>
+
+  <a class="retour retour--bas" href="/">
+    <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg>
+    Retour aux projets
+  </a>
+
+  <div class="fin">
+    <svg class="signature" viewBox="0 0 187 104" width="140" height="78"
+         role="img" aria-labelledby="signature-nom" fill="none"
+         xmlns="http://www.w3.org/2000/svg">
+      <title id="signature-nom">wall, signature de Wendlacida Amad Louis LOURE</title>
+      <path d="M95.5949 13.752C96.6139 29.5056 97.633 45.2592 97.9031 51.3419C97.9933 53.3713 97.8883 45.4173 94.5798 41.8867C92.2473 39.3977 87.4333 37.8828 79.3176 37.8828C69.2233 37.8828 57.32 38.8915 45.6283 41.5787C36.9715 43.5684 31.7982 48.6316 28.3281 53.7519C25.2012 58.366 25.5992 66.0638 26.4947 74.0099C27.1277 79.6275 30.9876 83.288 34.5812 86.364C37.7264 89.0563 43.8334 89.4632 53.0625 89.467C58.476 89.4693 65.3486 88.4545 77.9358 84.5046C90.523 80.5546 108.611 73.4401 119.075 69.0128C129.539 64.5854 131.832 63.0609 133.268 61.7673C134.704 60.4738 135.213 59.4574 136.51 57.6403" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M109.491 34.5414C111.019 48.2623 112.316 56.8552 113.215 58.2758C116.12 62.8644 118.159 48.5886 118.286 47.0525C118.351 46.271 118.812 46.3629 119.109 46.5058C121.62 47.7142 124.552 56.0088 125.961 57.1676C128.134 56.5478 128.154 48.1461 129.547 39.9813C130.086 36.8221 130.334 34.5876 131.106 33.0015" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M143.836 39.1246C143.327 39.1246 143.314 38.6858 140.488 40.2181C134.774 43.3171 135.497 49.9887 136.651 51.4267C137.747 52.7936 141.191 54.3712 143.503 47.0526C144.541 44.8159 143.442 36.8356 143.836 39.8962C144.23 42.9568 144.051 48.6929 145.422 54.1605" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M153.494 13.752C153.748 21.1206 154.003 28.4892 154.134 35.3342C154.266 42.1793 154.266 48.2774 154.266 50.0214C154.266 51.7654 154.266 48.9704 154.266 46.0907" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M161.214 16.832C160.704 24.9629 160.195 33.0938 159.932 40.2045C159.67 47.3152 159.67 53.1593 159.67 59.1804" stroke="#00C0E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <p class="copyright">&copy; Copyrights 2026. Tous droits reserv&eacute;s.</p>
+  </div>
+
+</main>
+
 </body>
 </html>
