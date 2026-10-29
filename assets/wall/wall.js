@@ -4,6 +4,10 @@
 */
 
 var PROJETS = [
+  { nom: "Application MyCoris Assur",
+    quoi: "Refactoring du design de l’application d’assurance de Coris Assurances, développée et publiée",
+    lien: "Etude de cas",
+    url: "/projets/mycoris-assur/" },
   { nom: "Application bancaire Coris Bank",
     quoi: "Concept d’une alternative pour les clients qui ne savent ni lire ni écrire",
     lien: "Etude de cas",
