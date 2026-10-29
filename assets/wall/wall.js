@@ -5,7 +5,7 @@
 
 var PROJETS = [
   { nom: "Application bancaire Coris Bank",
-    quoi: "Application de transferts conçue pour être utilisable sans savoir lire",
+    quoi: "Concept d’une alternative pour les clients qui ne savent ni lire ni écrire",
     lien: "Etude de cas",
     url: "/projets/coris-bank/" },
   { nom: "Kalaan",
