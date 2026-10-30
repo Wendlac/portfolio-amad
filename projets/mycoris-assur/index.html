@@ -66,7 +66,7 @@
 
   <div class="prose etude__intro">
     <p>Coris Assurances C&ocirc;te d&rsquo;Ivoire avait d&eacute;j&agrave; son application. Refondre le design d&rsquo;une application qui tourne n&rsquo;est pas la redessiner par go&ucirc;t&nbsp;: c&rsquo;est nommer ce qui bloque, et refaire les pi&egrave;ces une par une sans casser ce qui marche.</p>
-    <p>J&rsquo;ai men&eacute; la revue de l&rsquo;existant, red&eacute;coup&eacute; les trois parcours &mdash; souscrire, g&eacute;rer ses contrats, d&eacute;clarer un sinistre &mdash; et reconstruit la biblioth&egrave;que de composants. <strong>Le travail a &eacute;t&eacute; d&eacute;velopp&eacute;&nbsp;: l&rsquo;application est publi&eacute;e sur le Play Store.</strong></p>
+    <p>J&rsquo;ai men&eacute; la revue de l&rsquo;existant, red&eacute;coup&eacute; les trois parcours (souscrire, g&eacute;rer ses contrats, d&eacute;clarer un sinistre) et reconstruit la biblioth&egrave;que de composants. <strong>Le travail a &eacute;t&eacute; d&eacute;velopp&eacute;&nbsp;: l&rsquo;application est publi&eacute;e sur le Play Store.</strong></p>
   </div>
 
   <h2 class="sr-only">Informations sur le projet</h2>
@@ -96,7 +96,7 @@
     </p>
     <div class="prose">
       <p>Un refactoring de design commence par une liste, pas par une humeur. La mienne tenait en deux colonnes. Les <strong>pages</strong> &agrave; reprendre&nbsp;: l&rsquo;onboarding, le tableau de bord, les listes de param&egrave;tres et de notifications. Les <strong>pi&egrave;ces</strong> &agrave; refaire&nbsp;: les onglets, les boutons, les cartes, les s&eacute;lecteurs, les champs, les indicateurs de chargement, et jusqu&rsquo;au bouton retour.</p>
-      <p>&Eacute;crire cette liste avant de dessiner change la nature du travail. On ne cherche plus &agrave; am&eacute;liorer une impression, on traite des objets qu&rsquo;on peut cocher &mdash; et une &eacute;quipe de d&eacute;veloppement peut suivre.</p>
+      <p>&Eacute;crire cette liste avant de dessiner change la nature du travail. On ne cherche plus &agrave; am&eacute;liorer une impression, on traite des objets qu&rsquo;on peut cocher, et une &eacute;quipe de d&eacute;veloppement peut suivre.</p>
     </div>
     <figure class="figure figure--paire">
       <img src="/assets/img/projects/assurance/splash.webp" alt="&Eacute;cran de lancement&nbsp;: MyCoris Assur, &laquo;&nbsp;Simple, Rapide et s&eacute;curis&eacute;&nbsp;&raquo;, et un motif de symboles en bas de page" width="700" height="1558" loading="lazy">
@@ -124,7 +124,7 @@
     <div class="prose">
       <p>Avant la premi&egrave;re question d&rsquo;un devis, l&rsquo;assur&eacute; doit lire ceci&nbsp;: en cas de fausse d&eacute;claration intentionnelle, <strong>le contrat est nul et de nul effet</strong>, et les primes vers&eacute;es restent acquises &agrave; l&rsquo;assureur &agrave; titre de dommage. C&rsquo;est l&rsquo;article 1 du code CIMA, qui r&eacute;git les assurances de quatorze pays africains.</p>
       <p>Aucune application grand public ne fait lire un texte juridique avant de laisser quiconque avancer. Celle-ci le doit. La seule question de design est donc&nbsp;: o&ugrave; le mettre&nbsp;?</p>
-      <p>Il a sa propre page, &agrave; l&rsquo;entr&eacute;e du parcours, avec une barre de progression encore vide derri&egrave;re lui. <strong>Pas une case &agrave; cocher sous un bouton, pas une ligne en petits caract&egrave;res&nbsp;: une &eacute;tape.</strong> On ne peut pas l&rsquo;esquiver, et on sait qu&rsquo;on ne l&rsquo;a pas esquiv&eacute;e &mdash; ce qui est exactement ce que la loi demande.</p>
+      <p>Il a sa propre page, &agrave; l&rsquo;entr&eacute;e du parcours, avec une barre de progression encore vide derri&egrave;re lui. <strong>Pas une case &agrave; cocher sous un bouton, pas une ligne en petits caract&egrave;res&nbsp;: une &eacute;tape.</strong> On ne peut pas l&rsquo;esquiver, et on sait qu&rsquo;on ne l&rsquo;a pas esquiv&eacute;e, ce qui est exactement ce que la loi demande.</p>
     </div>
     <figure class="figure figure--ecran">
       <img src="/assets/img/projects/assurance/cima.webp" alt="L&rsquo;avertissement du code CIMA sur fausse d&eacute;claration, seul au centre de l&rsquo;&eacute;cran, avec le bouton &laquo;&nbsp;J&rsquo;ai compris&nbsp;&raquo;" width="700" height="1558" loading="lazy">
@@ -137,8 +137,8 @@
       <span class="chapitre__titre" id="souscrire">Souscrire, c&rsquo;est configurer</span>
     </p>
     <div class="prose">
-      <p>Un devis d&rsquo;assurance n&rsquo;est pas un formulaire, c&rsquo;est un configurateur&nbsp;: auto ou vie, puis la formule &mdash; au tiers, tiers&nbsp;+, tous risques &mdash; puis le v&eacute;hicule, puis les garanties qu&rsquo;on ajoute ou non.</p>
-      <p>Le vocabulaire, lui, n&rsquo;est pas n&eacute;gociable. <strong>&laquo;&nbsp;Puissance fiscale&nbsp;&raquo;, &laquo;&nbsp;zone de circulation&nbsp;&raquo;&nbsp;: ces mots viennent du m&eacute;tier et du tarif, pas de l&rsquo;interface</strong>, et les remplacer par des mots plus doux donnerait un devis faux. Le design ne peut pas simplifier les termes. Il peut en revanche simplifier l&rsquo;ordre, n&rsquo;en poser qu&rsquo;un petit nombre par &eacute;cran, et dire o&ugrave; l&rsquo;on en est &mdash; d&rsquo;o&ugrave; la barre de progression, pr&eacute;sente du premier &eacute;cran au dernier.</p>
+      <p>Un devis d&rsquo;assurance n&rsquo;est pas un formulaire, c&rsquo;est un configurateur&nbsp;: auto ou vie, puis la formule (au tiers, tiers&nbsp;+, tous risques), puis le v&eacute;hicule, puis les garanties qu&rsquo;on ajoute ou non.</p>
+      <p>Le vocabulaire, lui, n&rsquo;est pas n&eacute;gociable. <strong>&laquo;&nbsp;Puissance fiscale&nbsp;&raquo;, &laquo;&nbsp;zone de circulation&nbsp;&raquo;&nbsp;: ces mots viennent du m&eacute;tier et du tarif, pas de l&rsquo;interface</strong>, et les remplacer par des mots plus doux donnerait un devis faux. Le design ne peut pas simplifier les termes. Il peut en revanche simplifier l&rsquo;ordre, n&rsquo;en poser qu&rsquo;un petit nombre par &eacute;cran, et dire o&ugrave; l&rsquo;on en est. D&rsquo;o&ugrave; la barre de progression, pr&eacute;sente du premier &eacute;cran au dernier.</p>
       <p>Et le devis se termine en PDF. Ce n&rsquo;est pas un d&eacute;tail&nbsp;: <strong>un devis d&rsquo;assurance sert &agrave; &ecirc;tre compar&eacute;</strong>, montr&eacute; &agrave; un proche, gard&eacute; le temps de r&eacute;fl&eacute;chir. S&rsquo;il ne peut pas sortir du t&eacute;l&eacute;phone, il ne sert pas.</p>
     </div>
     <figure class="figure figure--paire">
@@ -174,7 +174,7 @@
     <div class="prose">
       <p>C&rsquo;est le parcours qui ne ressemble &agrave; aucun autre, et c&rsquo;est pour &ccedil;a qu&rsquo;il m&rsquo;int&eacute;resse le plus. <strong>On ne souscrit pas et on ne d&eacute;clare pas dans le m&ecirc;me &eacute;tat.</strong> On souscrit tranquillement chez soi, on compare, on r&eacute;fl&eacute;chit. On d&eacute;clare un sinistre dans un mauvais moment, souvent au bord d&rsquo;une route, parfois en ayant peur.</p>
       <p>L&rsquo;entr&eacute;e du parcours est donc presque vide&nbsp;: un dessin, une question, un bouton, et une phrase qui dit combien de temps &ccedil;a prendra. Rien d&rsquo;autre &agrave; d&eacute;cider &agrave; ce moment-l&agrave;.</p>
-      <p>Ensuite l&rsquo;application ne demande pas de raconter, elle demande de <strong>montrer</strong>&nbsp;: des photos, des vid&eacute;os, des documents. Et elle nomme lesquels, parce que personne ne sait ce qu&rsquo;un assureur attend &mdash; le rapport de police, les devis de r&eacute;paration, le permis, les bulletins de sant&eacute;. Dire &laquo;&nbsp;t&eacute;l&eacute;versez vos documents&nbsp;&raquo; sans cette liste, c&rsquo;est garantir un dossier incomplet et un d&eacute;lai de plus.</p>
+      <p>Ensuite l&rsquo;application ne demande pas de raconter, elle demande de <strong>montrer</strong>&nbsp;: des photos, des vid&eacute;os, des documents. Et elle nomme lesquels, parce que personne ne sait ce qu&rsquo;un assureur attend&nbsp;: le rapport de police, les devis de r&eacute;paration, le permis, les bulletins de sant&eacute;. Dire &laquo;&nbsp;t&eacute;l&eacute;versez vos documents&nbsp;&raquo; sans cette liste, c&rsquo;est garantir un dossier incomplet et un d&eacute;lai de plus.</p>
       <p>Pour les vid&eacute;os, on peut t&eacute;l&eacute;verser un fichier <strong>ou coller un lien</strong>. Une vid&eacute;o p&egrave;se lourd, et beaucoup de gens l&rsquo;ont d&eacute;j&agrave; d&eacute;pos&eacute;e quelque part avant d&rsquo;ouvrir l&rsquo;application. Exiger l&rsquo;envoi, c&rsquo;est exiger de la connexion que tout le monde n&rsquo;a pas.</p>
       <p>Et le r&eacute;capitulatif contient ce qui fait de ce formulaire une d&eacute;claration d&rsquo;assurance et non un ticket de support&nbsp;: <strong>les tiers concern&eacute;s</strong>, avec leur nom, leur &acirc;ge et leur &eacute;tat. C&rsquo;est l&agrave; que le m&eacute;tier se rappelle au design.</p>
     </div>
@@ -194,8 +194,8 @@
       <span class="chapitre__titre" id="pieces">Refaire les pi&egrave;ces</span>
     </p>
     <div class="prose">
-      <p>C&rsquo;est ce qui s&eacute;pare un refactoring d&rsquo;un simple rhabillage&nbsp;: l&rsquo;&eacute;chelle typographique, les champs dans leurs trois &eacute;tats &mdash; au repos, actif, en erreur &mdash; les boutons dans toutes leurs variantes jusqu&rsquo;&agrave; l&rsquo;&eacute;tat d&eacute;sactiv&eacute; et &agrave; l&rsquo;action destructrice, les cartes de notification, et les lignes de moyen de paiement.</p>
-      <p>Ces derni&egrave;res disent o&ugrave; l&rsquo;application vit&nbsp;: on y paie son assurance par <strong>Coris Money</strong> ou <strong>Orange Money</strong>. Une biblioth&egrave;que de composants n&rsquo;est pas un exercice de style, c&rsquo;est ce qui part &agrave; l&rsquo;&eacute;quipe de d&eacute;veloppement &mdash; et ce qui fait que le dixi&egrave;me &eacute;cran ressemble au premier sans qu&rsquo;on ait eu &agrave; le redemander.</p>
+      <p>C&rsquo;est ce qui s&eacute;pare un refactoring d&rsquo;un simple rhabillage&nbsp;: l&rsquo;&eacute;chelle typographique, les champs dans leurs trois &eacute;tats (au repos, actif, en erreur), les boutons dans toutes leurs variantes jusqu&rsquo;&agrave; l&rsquo;&eacute;tat d&eacute;sactiv&eacute; et &agrave; l&rsquo;action destructrice, les cartes de notification, et les lignes de moyen de paiement.</p>
+      <p>Ces derni&egrave;res disent o&ugrave; l&rsquo;application vit&nbsp;: on y paie son assurance par <strong>Coris Money</strong> ou <strong>Orange Money</strong>. Une biblioth&egrave;que de composants n&rsquo;est pas un exercice de style, c&rsquo;est ce qui part &agrave; l&rsquo;&eacute;quipe de d&eacute;veloppement, et ce qui fait que le dixi&egrave;me &eacute;cran ressemble au premier sans qu&rsquo;on ait eu &agrave; le redemander.</p>
     </div>
     <figure class="figure">
       <img src="/assets/img/projects/assurance/composants.webp" alt="Planche de la biblioth&egrave;que&nbsp;: &eacute;chelle typographique, champs dans leurs &eacute;tats, variantes de boutons, cartes de notification et moyens de paiement" width="1400" height="788" loading="lazy">
