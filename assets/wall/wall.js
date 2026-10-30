@@ -24,8 +24,8 @@ var PROJETS = [
        La ligne mène donc à l'étude, comme sur la maquette, et le
        téléchargement est à un clic de plus. */
     url: "/projets/kalaan/" },
-  { nom: "Identité visuelle Rakiiré",
-    quoi: "Direction artistique et charte graphique de la marque de vêtements Rakiiré, à télécharger en PDF",
+  { nom: "Identité et boutique Rakiiré",
+    quoi: "Direction artistique, charte graphique et boutique en ligne de la marque de vêtements Rakiiré",
     lien: "Etude de cas",
     url: "/projets/rakiire/" },
   { nom: "Site web Quotidien économique",
@@ -43,11 +43,7 @@ var PROJETS = [
   { nom: "Application web Dispoz",
     quoi: "Une application web qui permet de trouver la palette de couleurs d’un visuel",
     lien: "Visiter le site",
-    url: "https://wendlac.github.io/dispoz/" },
-  { nom: "Site web Rakiire",
-    quoi: "Site web pour le marque de vetement streetwear africain",
-    lien: "Visiter le site",
-    url: "https://wendlac.github.io/rakiire/" }
+    url: "https://wendlac.github.io/dispoz/" }
 ];
 
 /*
