@@ -61,10 +61,13 @@
   color: var(--texte);
 }
 
+/* Une virgule, pas un point médian. Elle se comporte comme de la
+   ponctuation et non comme un ornement : collée au mot qui précède, un
+   espace après, et la couleur du texte. Le point, lui, était gris clair et
+   écarté de 8 des deux côtés, ce qui n'a de sens que pour un séparateur. */
 .etude__sur span + span::before {
-  content: "·";
-  margin: 0 8px;
-  color: var(--filet-d);
+  content: ",";
+  margin-right: 4px;
 }
 
 .etude__titre {
