@@ -144,9 +144,14 @@
 }
 
 /* Les captures ont leur propre fond, souvent clair : sans ce filet elles
-   flottent sur le blanc de la page. La bannière, elle, porte déjà le sien. */
+   flottent sur le blanc de la page. La bannière, elle, porte déjà le sien.
+
+   --web, c'est la capture qui prend la colonne entière : un tableau de bord,
+   un parcours. Pas de bride en largeur, mais le même filet, pour la même
+   raison. */
 .figure--paire img,
-.figure--ecran img {
+.figure--ecran img,
+.figure--web img {
   border: 1px solid var(--filet-d);
 }
 
