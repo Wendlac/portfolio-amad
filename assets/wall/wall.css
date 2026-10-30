@@ -163,6 +163,12 @@ body {
 .projets { margin: 0; padding: 0; list-style: none; }
 .projets li + li { margin-top: 12px; }
 
+/* La ligne qui précède la liste. Son dernier paragraphe est aussi le
+   dernier de son .prose, donc .prose p:last-child lui retire sa marge et
+   la liste venait se coller dessous. On redonne les 24 du titre, pour
+   qu'elle respire autant au-dessus qu'en dessous. */
+.projets__mot { margin-bottom: 24px; }
+
 /*
   Relevé sur les sept lignes de la maquette, en coordonnées relatives au
   cadre (684 de large, padding 16, donc 16..668 utiles) :

@@ -8,6 +8,10 @@ var PROJETS = [
     quoi: "Refactoring du design de l’application d’assurance de Coris Assurances, développée et publiée",
     lien: "Etude de cas",
     url: "/projets/mycoris-assur/" },
+  { nom: "Plateforme Barka Energies",
+    quoi: "Cinq applications pour les cartes carburant, du terminal de paiement au tableau de bord web",
+    lien: "Etude de cas",
+    url: "/projets/barka-energies/" },
   { nom: "Application bancaire Coris Bank",
     quoi: "Concept d’une alternative pour les clients qui ne savent ni lire ni écrire",
     lien: "Etude de cas",
@@ -73,7 +77,7 @@ var PARCOURS = [
   { quand: "2020 – 2021",         poste: "Chief Operating Officer",
     ou: "Kumakan Studio" },
   { quand: "2020 – 2023",         poste: "Formateur Product / UI-UX Design",
-    ou: "Incubateur Université Joseph Ki-Zerbo · Simplon.co · Orange Digital Center" },
+    ou: "Incubateur Université Joseph Ki-Zerbo, Simplon.co, Orange Digital Center" },
   { quand: "2025",                poste: "UI / Product Designer",
     ou: "EXCELIS S.A. (ex-M2i, groupe Coris)" }
 ];
